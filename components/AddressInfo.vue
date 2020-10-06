@@ -16,7 +16,14 @@
       </b-form-group>
 
       <b-form-group>
-        <b-form-select v-model="state" :options="options"></b-form-select>
+        <b-form-select v-model="state">
+          <b-form-select-option value>Please select a state</b-form-select-option>
+          <b-form-select-option
+            v-for="computedState in computedNigerianStates"
+            :key="computedState.id"
+            :value="computedState.name"
+          >{{ computedState.name }}</b-form-select-option>
+        </b-form-select>
       </b-form-group>
 
       <b-form-group id="input-group-5" label-for="input-5">
@@ -56,25 +63,50 @@
       </b-button>
     </b-form>
 
-    <!-- <pre class="mt-3 mb-0">{{ text }}</pre> -->
+    <!-- <pre class="mt-3 mb-0">{{ stateFromServer }}</pre> -->
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
+import { mapState } from "vuex";
+
+interface AddressData {
+  address: string;
+  state: null | string;
+  suburb: string;
+  home_phone: string;
+  postcode: string;
+  phone: string;
+  email: string;
+  mobile: string;
+  nigerianStates: any[];
+}
+
 export default Vue.extend({
-  data() {
+  data(): AddressData {
     return {
       address: "",
-      state: null,
+      state: "",
       suburb: "",
       home_phone: "",
       postcode: "",
       phone: "",
       email: "",
       mobile: "",
-      options: [{ value: null, text: "Please select a state" }]
+      nigerianStates: []
     };
+  },
+
+  computed: {
+    ...mapState({
+      stateFromServer: "states"
+    }),
+
+    computedNigerianStates(): any[] {
+      this.nigerianStates = [...this.stateFromServer];
+      return this.nigerianStates;
+    }
   }
 });
 </script>

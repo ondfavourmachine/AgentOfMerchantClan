@@ -53,8 +53,17 @@ import PersonalInfo from "~/components/PersonalInfo.vue";
 import AddressInfo from "~/components/AddressInfo.vue";
 import BankDetails from "~/components/BankDetails.vue";
 import NextOfKin from "~/components/NextOfKin.vue";
+import axios from "@nuxtjs/axios";
 
+interface Bank {
+  bank_id: string;
+  bank_name: string;
+}
 export default Vue.extend({
+  created() {
+    this.$store.dispatch("fetchAllBanks");
+    this.$store.dispatch("fetchAllStates");
+  },
   components: {
     PersonalInfo,
     AddressInfo,
@@ -73,6 +82,7 @@ export default Vue.extend({
     },
 
     hideModal() {
+      console.log("i am clicked!");
       (this.$refs["my-modal"] as any).hide();
     }
   }

@@ -53,7 +53,10 @@ export default {
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: {},
+  axios: {
+    baseURL:
+      "https://covidreliefbackend.covidrelief.com.ng/merchantclan/public/index.php/api/"
+  },
   /*
    ** Build configuration
    */

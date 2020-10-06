@@ -4,14 +4,22 @@
     <b-form>
       <!-- Bank Name -->
       <b-form-group>
-        <b-form-select v-model="bank_name" :options="options"></b-form-select>
+        <b-form-select v-model="bank_name">
+          <b-form-select-option selected value>Please select your bank</b-form-select-option>
+          <b-form-select-option
+            v-for="nigerianBank in computedBanks"
+            :key="nigerianBank.bank_id"
+            :value="nigerianBank.bank_name"
+          >{{ nigerianBank.bank_name }}</b-form-select-option>
+        </b-form-select>
       </b-form-group>
 
       <!-- account number -->
       <b-form-group id="input-group-5" label-for="input-5">
         <b-form-input
           id="input-5"
-          v-model.number="account_number"
+          type="number"
+          v-model="account_number"
           required
           placeholder="Account number: eg 08033445059"
         ></b-form-input>
@@ -40,27 +48,64 @@
         ></b-form-input>
       </b-form-group>
 
-      <b-button class="mt-3" type="button" variant="primary">
+      <b-button
+        :disabled="!bank_name || !account_number"
+        @click="submitBankDetailsToStore"
+        class="mt-3"
+        type="button"
+        variant="primary"
+      >
         Next
-        <span class="btn-child"></span>
+        <span :class="!bank_name || !account_number ? '': 'btn-child'"></span>
       </b-button>
     </b-form>
 
-    <!-- <pre class="mt-3 mb-0">{{ text }}</pre> -->
+    <pre class="mt-3 mb-0">{{ $data }}</pre>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from "vue";
+import { mapState } from "vuex";
+
+interface Bank {
+  bank_id: string;
+  bank_name: string;
+}
+
+interface BankDetailsData {
+  bank_name: null | string;
+  account_name: string;
+  account_number: null | string;
+  bank_branch: string;
+  allBanks: Bank[];
+}
+
 export default Vue.extend({
-  data() {
+  data(): BankDetailsData {
     return {
       bank_name: null,
       account_name: "",
-      account_number: "",
+      account_number: null,
       bank_branch: "",
-      options: [{ value: null, text: "Please select a bank" }]
+      allBanks: []
     };
+  },
+
+  computed: {
+    ...mapState({
+      banks: "NigerianBanks"
+    }),
+    computedBanks(): Bank[] {
+      this.allBanks = [...this.banks];
+      return this.allBanks;
+    }
+  },
+
+  methods: {
+    submitBankDetailsToStore(): void {
+      console.log(this.$data);
+    }
   }
 });
 </script>

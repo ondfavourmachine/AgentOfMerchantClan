@@ -1,3 +1,9 @@
+import { NuxtApp } from "@nuxt/types/app";
+import axios from "@nuxtjs/axios";
+import { ActionTree } from "vuex/types/index";
+
+// import axios from '@nuxtjs/axios';
+
 interface State {
   agentDetails: {
     first_name?: string;
@@ -32,23 +38,70 @@ interface State {
     employee_signature?: "";
     date_signed?: "";
   };
+
+  states: Array<NigerianState>;
+
+  NigerianBanks: Array<Bank>;
 }
 
+interface Bank {
+  bank_id: string;
+  bank_name: string;
+}
+
+interface NigerianState {
+  id: string;
+  value: string;
+}
+
+export type RootState = ReturnType<typeof state>;
+
 export const state = (): State => ({
-  agentDetails: {}
+  agentDetails: {},
+  states: [],
+  NigerianBanks: []
 });
 
 export const mutations = {
-  fetchValues(state: State, newValue: any) {
+  addBanksToStore(state: State, banks: Bank[]) {
+    state.NigerianBanks = [...banks];
+    //   this.$hello('store mutation')
+    //   state.someValue = newValue
+  },
+
+  addStateToStore(state: State, states: NigerianState[]) {
+    state.states = [...states];
     //   this.$hello('store mutation')
     //   state.someValue = newValue
   }
 };
 
-export const actions = {
-  setSomeValueToWhatever(context: Vue) {
-    //   this.$hello('store action')
-    //   const newValue = 'whatever'
-    //   context.$store.commit('changeSomeValue', newValue)
+export const actions: ActionTree<RootState, RootState> = {
+  async fetchAllBanks({ commit, state }) {
+    try {
+      const response = await this.$axios.$get<{
+        data: Bank[];
+        status: boolean;
+      }>("banks");
+
+      const { data } = response;
+      commit("addBanksToStore", data);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  async fetchAllStates({ commit, state }) {
+    try {
+      const response = await this.$axios.$get<{
+        data: NigerianState[];
+        status: boolean;
+      }>("states");
+
+      const { data } = response;
+      commit("addStateToStore", data);
+    } catch (error) {
+      console.log(error);
+    }
   }
 };
