@@ -9,7 +9,7 @@
       <b-form-group id="input-group-5" label-for="input-5">
         <b-form-input
           id="input-5"
-          v-model.lazy="suburb"
+          v-model="suburb"
           required
           placeholder="Suburb: eg Victoria Island"
         ></b-form-input>
@@ -32,8 +32,9 @@
 
       <b-form-group id="input-group-5" label-for="input-5">
         <b-form-input
+          type="number"
           id="input-5"
-          v-model.number="home_phone"
+          v-model="home_phone"
           required
           placeholder="Home phone: eg 08033445059"
         ></b-form-input>
@@ -42,34 +43,41 @@
       <b-form-group id="input-group-5" label-for="input-5">
         <b-form-input
           id="input-5"
-          v-model.number="mobile"
+          type="number"
+          v-model="mobile"
           required
           placeholder="Mobile no: eg 090334567890"
         ></b-form-input>
       </b-form-group>
 
       <b-form-group id="input-group-5" label-for="input-5">
-        <b-form-input
-          id="input-5"
-          v-model.lazy="email"
-          required
-          placeholder="Email: eg nuc@sahwn.com"
-        ></b-form-input>
+        <b-form-input id="input-5" v-model="email" required placeholder="Email: eg nuc@sahwn.com"></b-form-input>
       </b-form-group>
 
-      <b-button class="mt-3" type="button" variant="primary">
+      <b-button
+        :disabled="!$data.address || !$data.state || !$data.suburb || !$data.home_phone 
+        || !$data.postcode || !$data.mobile || !$data.email "
+        class="mt-3"
+        @click="submitAddressForm"
+        type="button"
+        variant="primary"
+      >
         Next
-        <span class="btn-child"></span>
+        <span
+          :class="!$data.address || !$data.state || !$data.suburb || !$data.home_phone || !$data.postcode || !$data.mobile || !$data.email ? '': 'btn-child'"
+        ></span>
       </b-button>
     </b-form>
 
-    <!-- <pre class="mt-3 mb-0">{{ stateFromServer }}</pre> -->
+    <!-- <b-card class="mt-3" header="Data Result">
+      <pre class="m-0">{{ $data }}</pre>
+    </b-card>-->
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 interface AddressData {
   address: string;
@@ -77,7 +85,6 @@ interface AddressData {
   suburb: string;
   home_phone: string;
   postcode: string;
-  phone: string;
   email: string;
   mobile: string;
   nigerianStates: any[];
@@ -91,7 +98,6 @@ export default Vue.extend({
       suburb: "",
       home_phone: "",
       postcode: "",
-      phone: "",
       email: "",
       mobile: "",
       nigerianStates: []
@@ -106,6 +112,33 @@ export default Vue.extend({
     computedNigerianStates(): any[] {
       this.nigerianStates = [...this.stateFromServer];
       return this.nigerianStates;
+    }
+  },
+
+  methods: {
+    ...mapActions({
+      saveAddressInStore: "setAddress"
+    }),
+    async submitAddressForm() {
+      const {
+        address,
+        state,
+        suburb,
+        home_phone,
+        postcode,
+        email,
+        mobile
+      } = this.$data;
+      await this.saveAddressInStore({
+        address,
+        state,
+        suburb,
+        home_phone,
+        postcode,
+        email,
+        mobile
+      });
+      this.$store.dispatch("setNextStage", "bank-details");
     }
   }
 });

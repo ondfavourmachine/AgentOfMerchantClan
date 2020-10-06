@@ -39,15 +39,26 @@
         <!-- <p>Value: '{{ startDate }}'</p> -->
       </div>
 
-      <b-button class="mt-1" @click="handleSubmitOfPersonalInfo" type="button" variant="primary">
+      <b-button
+        class="mt-1"
+        :disabled="!$data.date_of_birth || !$data.first_name || !$data.last_name || !$data.gender || !$data.title || !$data.start_date "
+        @click="handleSubmitOfPersonalInfo"
+        type="button"
+        variant="primary"
+      >
         Next
-        <span class="btn-child"></span>
+        <span
+          :class="!$data.date_of_birth 
+        || !$data.first_name || 
+        !$data.last_name || 
+        !$data.gender || !$data.title || !$data.start_date  ? '': 'btn-child'"
+        ></span>
       </b-button>
       <!-- <b-button type="reset" variant="danger">Reset</b-button> -->
     </b-form>
-    <b-card class="mt-3" header="Form Data Result">
-      <!-- <pre class="m-0">{{ form }}</pre> -->
-    </b-card>
+    <!-- <b-card class="mt-3" header="Form Data Result">
+       <pre class="m-0">{{ form }}</pre> 
+    </b-card>-->
   </div>
 </template>
 
@@ -56,9 +67,19 @@
 
 <script lang="ts">
 import Vue from "vue";
+import { mapActions } from "vuex";
+
+interface PersonalData {
+  first_name: string;
+  last_name: string;
+  gender: string;
+  title: string;
+  date_of_birth: string;
+  start_date: string;
+}
 
 export default Vue.extend({
-  data() {
+  data(): PersonalData {
     return {
       first_name: "",
       last_name: "",
@@ -70,8 +91,28 @@ export default Vue.extend({
   },
 
   methods: {
-    handleSubmitOfPersonalInfo(e: Event) {
-      console.log(e);
+    ...mapActions({
+      savePersonalDetailsInStore: "setPersonalDetails"
+    }),
+
+    async handleSubmitOfPersonalInfo(e: Event) {
+      const {
+        date_of_birth,
+        start_date,
+        first_name,
+        last_name,
+        title,
+        gender
+      } = this.$data;
+      await this.savePersonalDetailsInStore({
+        date_of_birth,
+        start_date,
+        first_name,
+        last_name,
+        title,
+        gender
+      });
+      this.$store.dispatch("setNextStage", "address");
     }
   }
 });
@@ -90,6 +131,7 @@ export default Vue.extend({
   border-radius: 50px;
   position: relative;
   cursor: pointer;
+  transition: all 0.4s ease-in-out;
 }
 </style>
 

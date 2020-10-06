@@ -1,6 +1,4 @@
-import { NuxtApp } from "@nuxt/types/app";
-import axios from "@nuxtjs/axios";
-import { ActionTree } from "vuex/types/index";
+import { ActionTree, MutationTree } from "vuex/types/index";
 
 // import axios from '@nuxtjs/axios';
 
@@ -21,7 +19,6 @@ interface State {
     suburb?: string;
     home_phone?: string;
     postcode?: string;
-    phone?: string;
     email?: string;
     mobile?: string;
 
@@ -40,7 +37,7 @@ interface State {
   };
 
   states: Array<NigerianState>;
-
+  currentState: "personal" | "bank-details" | "address" | "next-of-kin";
   NigerianBanks: Array<Bank>;
 }
 
@@ -59,10 +56,11 @@ export type RootState = ReturnType<typeof state>;
 export const state = (): State => ({
   agentDetails: {},
   states: [],
-  NigerianBanks: []
+  NigerianBanks: [],
+  currentState: "personal"
 });
 
-export const mutations = {
+export const mutations: MutationTree<RootState> = {
   addBanksToStore(state: State, banks: Bank[]) {
     state.NigerianBanks = [...banks];
     //   this.$hello('store mutation')
@@ -73,6 +71,34 @@ export const mutations = {
     state.states = [...states];
     //   this.$hello('store mutation')
     //   state.someValue = newValue
+  },
+
+  changeCurrentState(
+    state: State,
+    newValue: "personal" | "bank-details" | "address" | "next-of-kin"
+  ) {
+    state.currentState = newValue;
+  },
+
+  modifyAddressPartOfState(state: State, newValue: Partial<State>) {
+    state.agentDetails = { ...state.agentDetails, ...newValue };
+  },
+
+  modifyPersonalDetailsOfAgentInOfState(
+    state: State,
+    newValue: Partial<State>
+  ) {
+    state.agentDetails = { ...state.agentDetails, ...newValue };
+  },
+
+  modifyBankDetailsOfAgentInOfState(state: State, newValue: Partial<State>) {
+    state.agentDetails = { ...state.agentDetails, ...newValue };
+  },
+  modifyNextOfKinDetailsOfAgentInOfState(
+    state: State,
+    newValue: Partial<State>
+  ) {
+    state.agentDetails = { ...state.agentDetails, ...newValue };
   }
 };
 
@@ -103,5 +129,29 @@ export const actions: ActionTree<RootState, RootState> = {
     } catch (error) {
       console.log(error);
     }
+  },
+
+  setNextStage({ commit }, newValue) {
+    commit("changeCurrentState", newValue);
+  },
+
+  setPersonalDetails({ commit }, newValue) {
+    console.log(this.state.agentDetails);
+    commit("modifyPersonalDetailsOfAgentInOfState", newValue);
+    console.log(this.state.agentDetails);
+  },
+
+  setBankDetails({ commit }, newValue: Partial<State>) {
+    commit("modifyBankDetailsOfAgentInOfState", newValue);
+  },
+
+  setAddress({ commit }, newValue: Partial<State>) {
+    console.log(this.state.agentDetails);
+    commit("modifyAddressPartOfState", newValue);
+    console.log(this.state.agentDetails);
+  },
+
+  setNextOfKinDetails({ commit }, newValue: Partial<State>) {
+    commit("modifyNextOfKinDetailsOfAgentInOfState", newValue);
   }
 };

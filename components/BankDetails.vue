@@ -15,11 +15,14 @@
       </b-form-group>
 
       <!-- account number -->
-      <b-form-group id="input-group-5" label-for="input-5">
+      <b-form-group class="spinnerParent" id="input-group-5" label-for="input-5">
+        <div v-if="fetching" class="text-right spinner">
+          <b-spinner label="Spinning"></b-spinner>
+        </div>
         <b-form-input
           id="input-5"
           type="number"
-          v-model="account_number"
+          v-model.lazy="account_number"
           required
           placeholder="Account number: eg 08033445059"
         ></b-form-input>
@@ -40,7 +43,7 @@
       <b-form-group id="input-group-5" label-for="input-5">
         <b-form-input
           id="input-5"
-          v-model.number="account_name"
+          v-model="account_name"
           required
           disabled
           readonly
@@ -49,24 +52,27 @@
       </b-form-group>
 
       <b-button
-        :disabled="!bank_name || !account_number"
+        :disabled="!bank_name || !account_number || !account_name || !bank_branch"
         @click="submitBankDetailsToStore"
         class="mt-3"
         type="button"
         variant="primary"
       >
         Next
-        <span :class="!bank_name || !account_number ? '': 'btn-child'"></span>
+        <span
+          :class="!bank_name || !account_number || !account_name || !bank_branch ? '': 'btn-child'"
+        ></span>
       </b-button>
     </b-form>
 
-    <pre class="mt-3 mb-0">{{ $data }}</pre>
+    <!-- <pre class="mt-3 mb-0">{{ $data }}</pre> -->
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import { mapState } from "vuex";
+import axios from "@nuxtjs/axios";
+import { mapState, mapActions } from "vuex";
 
 interface Bank {
   bank_id: string;
@@ -79,6 +85,7 @@ interface BankDetailsData {
   account_number: null | string;
   bank_branch: string;
   allBanks: Bank[];
+  fetching: boolean;
 }
 
 export default Vue.extend({
@@ -88,7 +95,8 @@ export default Vue.extend({
       account_name: "",
       account_number: null,
       bank_branch: "",
-      allBanks: []
+      allBanks: [],
+      fetching: false
     };
   },
 
@@ -102,13 +110,46 @@ export default Vue.extend({
     }
   },
 
+  watch: {
+    account_number(oldValue: string, newValue: string) {
+      if (oldValue.length < 10) return;
+      this.fetching = true;
+    }
+  },
+
   methods: {
-    submitBankDetailsToStore(): void {
-      console.log(this.$data);
+    ...mapActions({
+      saveBankDetailsInStore: "setBankDetails"
+    }),
+    async submitBankDetailsToStore(e: Event): Promise<any> {
+      console.log(e.target);
+      //   const {
+      //     bank_name,
+      //     account_name,
+      //     bank_branch,
+      //   } = this.$data;
+      //   await this.saveBankDetailsInStore({
+      //     bank_name,
+      //     account_name,
+      //     bank_branch,
+      //   });
+      //   this.$store.dispatch("setNextStage", "next-of-kin");
+    },
+    async sendStoreToFetchBankDetails() {
+      // const response = await
     }
   }
 });
 </script>
 
 <style scoped>
+.spinnerParent {
+  position: relative;
+}
+
+.spinnerParent .spinner {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
 </style>

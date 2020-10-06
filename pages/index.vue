@@ -2,16 +2,31 @@
   <div class="container">
     <div class="mx-auto my-4">
       <b-tabs content-class="mt-3" fill>
-        <b-tab title="Personal" :active="false">
+        <b-tab
+          @click="setTabToShow"
+          class="personal"
+          title="Personal"
+          :active="tabToShow == 'personal'"
+        >
           <PersonalInfo />
         </b-tab>
-        <b-tab title="Address" :active="true">
+        <b-tab title="Address" @click="setTabToShow" id="address" :active="tabToShow == 'address'">
           <AddressInfo />
         </b-tab>
-        <b-tab title="Acc Info">
+        <b-tab
+          title="Acc Info"
+          @click="setTabToShow"
+          id="bank-details"
+          :active="tabToShow == 'bank-details'"
+        >
           <BankDetails />
         </b-tab>
-        <b-tab title="Next Of Kin">
+        <b-tab
+          title="Next Of Kin"
+          @click="setTabToShow"
+          id="next-of-kin"
+          :active="tabToShow == 'next-of-kin'"
+        >
           <NextOfKin />
         </b-tab>
       </b-tabs>
@@ -53,7 +68,8 @@ import PersonalInfo from "~/components/PersonalInfo.vue";
 import AddressInfo from "~/components/AddressInfo.vue";
 import BankDetails from "~/components/BankDetails.vue";
 import NextOfKin from "~/components/NextOfKin.vue";
-import axios from "@nuxtjs/axios";
+import { mapState, mapActions } from "vuex";
+// import axios from "@nuxtjs/axios";
 
 interface Bank {
   bank_id: string;
@@ -70,20 +86,52 @@ export default Vue.extend({
     BankDetails,
     NextOfKin
   },
+
+  computed: {
+    ...mapState({
+      tabToShow: "currentState"
+    })
+  },
   mounted() {
     this.toggleModal();
   },
 
   methods: {
+    ...mapActions({
+      closeAndBegin: "setNextStage"
+    }),
     toggleModal() {
       // We pass the ID of the button that we want to return focus to
       // when the modal has hidden
       (this.$refs["my-modal"] as any).toggle("#toggle-btn");
     },
 
-    hideModal() {
-      console.log("i am clicked!");
-      (this.$refs["my-modal"] as any).hide();
+    setTabToShow(e: Event) {
+      const textContent: any = (e.target as HTMLLIElement).textContent;
+      if ((textContent as string).toLowerCase() == "personal") {
+        this.$store.commit("changeCurrentState", "personal");
+      }
+
+      if ((textContent as string).toLowerCase() == "address") {
+        this.$store.commit("changeCurrentState", "address");
+      }
+
+      if ((textContent as string).toLowerCase() == "acc info") {
+        this.$store.commit("changeCurrentState", "bank-details");
+      }
+
+      if ((textContent as string).toLowerCase() == "next of kin") {
+        this.$store.commit("changeCurrentState", "next-of-kin");
+      }
+    },
+
+    async hideModal() {
+      try {
+        await this.closeAndBegin("personal");
+        (this.$refs["my-modal"] as any).hide();
+      } catch (err) {
+        console.log(err);
+      }
     }
   }
 });
