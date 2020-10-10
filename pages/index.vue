@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="mx-auto my-4">
+    <!-- <div class="mx-auto my-4">
       <b-tabs content-class="mt-3" fill>
         <b-tab
           @click="setTabToShow"
@@ -30,9 +30,37 @@
           <NextOfKin />
         </b-tab>
       </b-tabs>
+    </div>-->
+
+    <div class="picture-container">
+      <img src="../assets/css/images/working-laptop.svg" style="width: 100%; height: 100%;" alt />
     </div>
 
-    <div>
+    <div class="content-page">
+      <div class="welcome-section">
+        <div class="company-logo">
+          <span style>
+            <img src alt />
+          </span>
+          <nuxt-link to="/login">
+            <a>Sign in</a>
+          </nuxt-link>
+        </div>
+
+        <div class="welcome-text">
+          <span>Welcome</span>
+          <small>to</small>
+          <p>Agents of MerchantClan</p>
+
+          <span class="join-us">
+            Join Us
+            <span class="btn-child"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div>
       <b-button v-b-modal.modal-center @click="toggleModal" hidden>Launch centered modal</b-button>
 
       <b-modal ref="my-modal" id="modal-center" centered title>
@@ -58,7 +86,7 @@
           </div>
         </div>
       </b-modal>
-    </div>
+    </div>-->
   </div>
 </template>
 
@@ -93,18 +121,18 @@ export default Vue.extend({
     })
   },
   mounted() {
-    this.toggleModal();
+    // this.toggleModal();
   },
 
   methods: {
     ...mapActions({
       closeAndBegin: "setNextStage"
     }),
-    toggleModal() {
-      // We pass the ID of the button that we want to return focus to
-      // when the modal has hidden
-      (this.$refs["my-modal"] as any).toggle("#toggle-btn");
-    },
+    // toggleModal() {
+    //   // We pass the ID of the button that we want to return focus to
+    //   // when the modal has hidden
+    //   (this.$refs["my-modal"] as any).toggle("#toggle-btn");
+    // },
 
     setTabToShow(e: Event) {
       const textContent: any = (e.target as HTMLLIElement).textContent;
@@ -138,150 +166,87 @@ export default Vue.extend({
 </script>
 
 <style>
-.btn-secondary {
-  width: 50%;
-  background-color: white;
-  color: rgba(20, 0, 204, 0.789);
-  text-align: left;
-  border-radius: 50px;
+.container {
+  height: 100vh;
+  width: 100vw;
   position: relative;
-  cursor: pointer;
-  overflow: hidden;
+  background-color: #e5e5e5;
 }
-
-/* .btn-secondary::before {
-  content: "";
+.picture-container {
   position: absolute;
-  width: 0%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  background: rgba(20, 0, 204, 0.789);
-  transform-origin: center;
-  transition: all 0.5s ease-in-out;
-} */
+  right: 0;
+  bottom: 0;
+  height: 395px;
+  width: 207px;
 
-/* .btn-secondary:hover::before {
-  transform: translateX(50px);
-  background: rgba(20, 0, 204, 0.789) !important;
-  width: 100%;
-} */
-
-.sub-main {
-  padding-left: 10px;
-  color: white;
-}
-.heading h1 {
-  font-size: 3rem;
-  line-height: 2.5;
-  letter-spacing: 2px;
-}
-
-.child-one {
-  padding: 1.5rem 0;
-  width: 100%;
-  display: flex;
-  flex-flow: column wrap;
-  justify-content: space-between;
-}
-
-.child-one span {
-  line-height: 1.1;
-  padding: 1rem 0;
-  text-align: left;
-  letter-spacing: 1px;
-  font-size: 1.7rem;
-}
-
-.child-one span:last-child {
-  font-size: 1.3rem;
-}
-
-.modal-content {
-  /* transform: translateY(45%); */
-
-  background-image: url(../assets/css/images/smiling-agent3.png);
-  background-position: 100px 0;
-  background-position: -269px;
+  /* background-repeat: no-repeat;
   background-size: cover;
-  background-repeat: no-repeat;
-  /* padding: 0;
-  margin: 0; */
-}
-.modal-body {
-  padding: 0;
+  background-position: 70% 100%; */
 }
 
-.main {
-  min-height: 80vh;
-  max-height: 85vh;
+.picture-container img {
+  object-fit: cover;
+}
+/* .picture-container .content-page {
+  background-color: rgba(0, 0, 0, 0.7);
+  height: 100%;
+  width: 100%;
+} */
+
+.welcome-section {
+  position: absolute;
+  display: grid;
+  height: 90vw;
+  padding: 10px;
+  /* border: 1px solid white; */
+  grid-template-rows: 90px 300px 150px;
+  justify-content: start;
+  z-index: 10;
+}
+
+.company-logo {
+  grid-row: 1/2;
+  padding: 10px 7px 10px 7px;
   display: flex;
-  flex-flow: column wrap;
   justify-content: space-between;
-  background: linear-gradient(rgba(53 50 76 / 79%), rgba(44 42 62 / 79%));
-}
-/* .sub-main {
-  
-} */
-
-.heading,
-.child-one,
-.footer {
-  min-height: 5rem;
-}
-.modal-header {
-  display: none;
-  border-bottom: none !important;
-}
-.modal-footer {
-  border-top: none;
-  display: none;
-}
-.close {
-  display: none;
 }
 
-.footer {
-  display: flex;
-  flex-flow: column wrap;
-  justify-content: flex-end;
+.welcome-text {
+  grid-row: 2/3;
+  padding: 10px 7px 10px 7px;
+  font-size: 2rem;
+  color: white;
+  line-height: 1.2;
 }
 
-.nav-tabs .nav-link {
-  padding: 0.1rem 0.25rem;
+.welcome-text p {
+  color: #6562cf;
 }
 
-/* .container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+.welcome-text span {
+  font-size: 1.25rem;
+  line-height: 0.5;
+  color: black;
 }
 
-.title {
-  font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
+.welcome-text small {
+  font-size: 1.1rem;
+  line-height: 0.5;
+  color: black;
 }
 
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
+.join-us {
+  width: 150px;
+  border: 1px solid black;
+  position: relative;
+  padding: 15px 50px 15px 10px;
+  border-radius: 29px;
+  cursor: pointer;
 }
 
-.links {
-  padding-top: 15px;
-} */
+.company-logo a {
+  cursor: pointer;
+}
 
 @keyframes continuousSlide {
   0% {
