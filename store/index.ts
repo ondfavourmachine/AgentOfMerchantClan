@@ -39,6 +39,8 @@ interface State {
   states: Array<NigerianState>;
   currentState: "personal" | "bank-details" | "address" | "next-of-kin";
   NigerianBanks: Array<Bank>;
+  agentsInterest: Set<string>;
+  apiCall: boolean;
 }
 
 interface Bank {
@@ -57,7 +59,9 @@ export const state = (): State => ({
   agentDetails: {},
   states: [],
   NigerianBanks: [],
-  currentState: "personal"
+  currentState: "personal",
+  agentsInterest: new Set(),
+  apiCall: false
 });
 
 export const mutations: MutationTree<RootState> = {
@@ -71,6 +75,14 @@ export const mutations: MutationTree<RootState> = {
     state.states = [...states];
     //   this.$hello('store mutation')
     //   state.someValue = newValue
+  },
+
+  apiCallState(state: State, value: boolean) {
+    state.apiCall = value;
+  },
+
+  addToInterests(state: State, interest: string): void {
+    state.agentsInterest.add(interest);
   },
 
   changeCurrentState(
@@ -153,5 +165,13 @@ export const actions: ActionTree<RootState, RootState> = {
 
   setNextOfKinDetails({ commit }, newValue: Partial<State>) {
     commit("modifyNextOfKinDetailsOfAgentInOfState", newValue);
+  },
+
+  setAgentInterests({ commit }, valueToAdd: string) {
+    commit("addToInterests", valueToAdd);
+  },
+
+  setApiCallState({ commit }, valueToAdd: boolean) {
+    commit("apiCallState", valueToAdd);
   }
 };

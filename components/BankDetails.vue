@@ -64,8 +64,6 @@
         ></span>
       </b-button>
     </b-form>
-
-    <!-- <pre class="mt-3 mb-0">{{ $data }}</pre> -->
   </div>
 </template>
 
@@ -139,20 +137,24 @@ export default Vue.extend({
       // const response = await
     },
 
-    async confirmBankDetails(){
+    async confirmBankDetails() {
       let url = "https://mobile.creditclan.com/webapi/v1/banks";
       // "x-api-key": "z2BhpgFNUA99G8hZiFNv77mHDYcTlecgjybqDACv"
       let obj = {
         account_number: this.account_number,
         bank_code: this.bank_name
-      }
-      let response = await fetch(url, {body: JSON.stringify(obj),  method: 'POST', headers: {
-        "x-api-key": "z2BhpgFNUA99G8hZiFNv77mHDYcTlecgjybqDACv"
-      }});
+      };
+      let response = await fetch(url, {
+        body: JSON.stringify(obj),
+        method: "POST",
+        headers: {
+          "x-api-key": "z2BhpgFNUA99G8hZiFNv77mHDYcTlecgjybqDACv"
+        }
+      });
 
       response = await response.json();
       this.fetching = false;
-      console.log(response)
+      console.log(response);
     }
   }
 });

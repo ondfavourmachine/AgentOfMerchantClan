@@ -4,10 +4,25 @@
   </div>
 </template>
 
+<script lang="ts">
+import Vue from "vue";
+export default Vue.extend({
+  created() {
+    this.$nuxt.$on("RegistrationError", (e: any) => {
+      console.dir(e);
+    });
+  },
+
+  beforeDestroy() {
+    this.$nuxt.$off("RegistrationError");
+  }
+});
+</script>
+
 <style>
 html {
-  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
