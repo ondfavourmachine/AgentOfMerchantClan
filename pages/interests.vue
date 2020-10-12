@@ -72,7 +72,7 @@
     <div class="img-background">
       <span @click="addInterests" v-if="statusArray.length > 0" class="join-us">
         Next
-        <span class="btn-child"></span>
+        <span></span>
       </span>
       <!-- <img src="../assets/css/images/character 6.svg" alt /> -->
     </div>
@@ -131,9 +131,10 @@ export default {
       // console.log(e);
       // const element = document.getElementById(e);
       // console.log(element);
-      this.statusArray.forEach(element =>
-        this.$store.dispatch("setAgentInterests", element)
-      );
+      this.statusArray.forEach(element => {
+        console.log(element);
+        this.$store.dispatch("setAgentInterests", element);
+      });
 
       this.$router.push("register");
     }
@@ -219,8 +220,8 @@ export default {
 
 .child-inner-second span {
   align-self: flex-end;
-  padding-bottom: 10px;
-  font-size: 1.7rem;
+  padding-bottom: 18px;
+  font-size: 1.2rem;
 }
 
 /* .my-div:first-child {
@@ -242,7 +243,7 @@ export default {
 
 .img-background .join-us {
   position: absolute;
-  width: 100px;
+  width: 67px;
   top: 2%;
   left: 5%;
   padding: 10px;

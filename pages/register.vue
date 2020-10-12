@@ -157,7 +157,6 @@ export default Vue.extend({
         password
       };
       this.$store.dispatch("setApiCallState", true);
-      console.log(this.apiCall);
       try {
         const response = await this.$axios.$post<{
           data: Record<string, string>;
