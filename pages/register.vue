@@ -20,7 +20,7 @@
         </div>
 
         <div class="welcome-text">
-          <h3 style="color: #495057" class="py-3">Register</h3>
+          <h3 style="color: #495057" class="py-3">Finally, register</h3>
           <b-form>
             <!-- Full Name -->
             <b-form-group class="spinnerParent" id="input-group-10" label-for="input-10">
@@ -166,6 +166,7 @@ export default Vue.extend({
         }>("agent", formToSubmit);
         //   const { message } = response;
         this.$store.dispatch("setApiCallState", false);
+        this.$router.push("/dashboard");
       } catch (error) {
         console.log(error);
         this.$nuxt.$emit("RegistrationError", error);
@@ -212,6 +213,6 @@ export default Vue.extend({
 
 .btn-primary.disabled,
 .btn-primary:disabled {
-  width: 60%;
+  width: 57%;
 }
 </style>

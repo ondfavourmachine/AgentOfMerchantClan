@@ -8,7 +8,7 @@
           <a style="color: rgba(20, 0, 204, 0.789)">Sign in</a>
         </nuxt-link>
       </div>
-      <div class="text-home">Choose an interest</div>
+      <div class="text-home">What are you interested in?</div>
     </div>
 
     <VueSlickCarousel style="margin: 10px;" :dots="true" v-bind="setting">
@@ -135,7 +135,7 @@ export default {
         this.$store.dispatch("setAgentInterests", element)
       );
 
-      this.$router.push('register')
+      this.$router.push("register");
     }
   }
 };
