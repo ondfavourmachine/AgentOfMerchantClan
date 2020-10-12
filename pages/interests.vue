@@ -169,7 +169,7 @@ export default {
 }
 
 .text-home {
-  width: 70%;
+  width: 99%;
   font-size: 1.3rem;
   padding: 23px 3px 0 11px;
   /* line-height: 3.1; */

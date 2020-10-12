@@ -154,12 +154,13 @@ div.child-three {
 .child-one .heading .left h4 {
   font-size: 1.3rem;
   font-weight: 500;
+  padding: 2px;
 }
 
 .child-one .heading .left h1 {
   font-size: 2.5rem;
   font-weight: 900;
-  line-height: 0.25;
+  line-height: 0.55;
 }
 
 .child-one .heading .right img {
