@@ -35,6 +35,11 @@ export default Vue.extend({
       this.showDismissibleAlert = true;
     });
   },
+watch:{
+    $route (to, from){
+        this.showDismissibleAlert = false;
+    }
+} ,
 
   beforeDestroy() {
     this.$nuxt.$off("RegistrationError");
