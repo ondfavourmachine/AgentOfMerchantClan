@@ -6,8 +6,6 @@
       <img src="../assets/css/images/character 14.svg" style="width: 100%; height: 100%;" alt />
     </div>
 
-    <!-- <b-alert v-model="showDismissibleAlert" :variant="alertType" dismissible>Dismissible Alert!</b-alert>
-    <b-button hidden @click="showDismissibleAlert=!showDismissibleAlert" variant="info" class="m-1"></b-button>-->
     <div class="content-page">
       <div class="welcome-section">
         <div class="company-logo">
@@ -42,9 +40,11 @@
                 id="input-5"
                 type="number"
                 v-model.lazy="mobile"
+                @change="checkNumber"
                 required
                 placeholder="mobile eg: 09033456789"
               ></b-form-input>
+              <small v-html="phoneValidationMessage" style="color: tomato; font-size: 0.7rem;"></small>
             </b-form-group>
 
             <b-form-group class="gender">
@@ -70,8 +70,10 @@
                 type="email"
                 v-model.lazy="email"
                 required
+                @input="emailCheck"
                 placeholder="Email eg: cee@cee.com"
               ></b-form-input>
+              <small v-html="emailValidationMessage" style="color: tomato; font-size: 0.7rem;"></small>
             </b-form-group>
 
             <!-- Password -->
@@ -113,6 +115,9 @@ interface RegistrationData {
   message: string;
   showDismissibleAlert: boolean;
   alertType: string;
+  phoneValidationMessage: string;
+  emailValidationMessage: string;
+  emailRegex: RegExp;
 }
 import Vue from "vue";
 import Spinner from "~/components/Spinner.vue";
@@ -131,13 +136,17 @@ export default Vue.extend({
       password: "",
       message: "",
       showDismissibleAlert: false,
-      alertType: ""
+      alertType: "",
+      phoneValidationMessage: "",
+      emailValidationMessage: "",
+      emailRegex: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
     };
   },
 
   computed: {
-    ...mapState(["apiCall"])
+    ...mapState(["apiCall", "agentsInterest"])
   },
+
   methods: {
     async submitRegisterForm() {
       const {
@@ -154,22 +163,50 @@ export default Vue.extend({
         mobile,
         email,
         gender,
-        password
+        password,
+        interests: Array.from(this.agentsInterest).join(",")
       };
       this.$store.dispatch("setApiCallState", true);
       try {
         const response = await this.$axios.$post<{
-          data: Record<string, string>;
+          data: Record<string, any>;
           message: string;
           status: boolean;
         }>("agent", formToSubmit);
-        //   const { message } = response;
+        const { data } = response;
         this.$store.dispatch("setApiCallState", false);
         this.$router.push("/dashboard");
       } catch (error) {
-        console.log(error);
-        this.$nuxt.$emit("RegistrationError", error);
+        const { message } = error.response.data;
+        if ((message as string).includes("SQLSTATE")) {
+          this.$nuxt.$emit(
+            "RegistrationError",
+            `Sorry we couldn't register you at this time. Please try again later!`
+          );
+          this.$store.dispatch("setApiCallState", false);
+          return;
+        }
+
+        this.$nuxt.$emit("RegistrationError", message);
+        this.$store.dispatch("setApiCallState", false);
       }
+    },
+
+    checkNumber(event: string) {
+      if (event.length < 11 || event.length > 11) {
+        this.phoneValidationMessage = "The mobile number must be 11 digits.";
+        return;
+      }
+      this.phoneValidationMessage = "";
+    },
+
+    emailCheck(event: string) {
+      if (this.emailRegex.test(event)) {
+        this.emailValidationMessage = "";
+        return;
+      }
+
+      this.emailValidationMessage = "The email you entered is not valid!";
     }
   }
 });
@@ -180,8 +217,8 @@ export default Vue.extend({
   background-color: transparent;
   grid-template-rows: 50px 650px;
   width: 95vw;
-  height: 90vh;
-  grid-gap: 30px;
+  height: 95vh;
+  grid-gap: 20px;
   overflow: hidden;
 }
 

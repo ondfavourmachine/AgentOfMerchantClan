@@ -84,7 +84,7 @@ export default Vue.extend({
 
 <style scoped>
 .main-container {
-  background-color: #e5e5e5;
+  background-color: white;
   height: 100vh;
   width: 100vw;
   position: relative;
@@ -143,7 +143,6 @@ div.child-three {
 .child-one .heading .right {
   height: 85px;
   width: 85px;
-
   position: relative;
 }
 
@@ -176,7 +175,6 @@ div.child-three {
 div.other-stuff {
   width: 100%;
   min-height: 60%;
-  margin-top: 15px;
 
   display: flex;
   flex-direction: row;
@@ -244,7 +242,7 @@ div.other-stuff {
 
 .child-two-parent .sub-one,
 .child-two-parent .sub-two {
-  width: 40%;
+  width: 50%;
   margin: 10px;
   height: auto;
   border: 1px solid rgb(229 229 229 / 0.3);

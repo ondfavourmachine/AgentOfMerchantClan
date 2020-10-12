@@ -132,8 +132,15 @@ export default {
       // const element = document.getElementById(e);
       // console.log(element);
       this.statusArray.forEach(element => {
-        console.log(element);
-        this.$store.dispatch("setAgentInterests", element);
+        if (element == "avs") {
+          this.$store.dispatch("setAgentInterests", "1");
+        }
+        if (element == "collection") {
+          this.$store.dispatch("setAgentInterests", "2");
+        }
+        if (element == "merchant acquisition") {
+          this.$store.dispatch("setAgentInterests", "3");
+        }
       });
 
       this.$router.push("register");

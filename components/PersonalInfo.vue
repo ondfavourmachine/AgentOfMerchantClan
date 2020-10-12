@@ -124,7 +124,6 @@ export default Vue.extend({
 }
 
 .btn-primary {
-  width: 50%;
   background-color: white;
   color: rgba(20, 0, 204, 0.789);
   text-align: left;

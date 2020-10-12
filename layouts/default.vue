@@ -1,5 +1,15 @@
 <template>
-  <div>
+  <div style="position: relative">
+    <b-alert
+      style="margin-bottom: -5px; z-index: 10;"
+      v-model="showDismissibleAlert"
+      :max="dismissSecs"
+      variant="danger"
+      dismissible
+    >{{ message }}</b-alert>
+
+    <b-button @click="showDismissibleAlert=true" hidden variant="info" class="m-1"></b-button>
+
     <nuxt />
   </div>
 </template>
@@ -7,14 +17,28 @@
 <script lang="ts">
 import Vue from "vue";
 export default Vue.extend({
+  data() {
+    return {
+      dismissSecs: 10,
+      message: "",
+      showDismissibleAlert: false
+    };
+  },
   created() {
     this.$nuxt.$on("RegistrationError", (e: any) => {
-      console.dir(e);
+      this.message = e;
+      this.showDismissibleAlert = true;
+    });
+
+    this.$nuxt.$on("LoginError", (e: any) => {
+      this.message = e;
+      this.showDismissibleAlert = true;
     });
   },
 
   beforeDestroy() {
     this.$nuxt.$off("RegistrationError");
+    this.$nuxt.$off("LoginError");
   }
 });
 </script>

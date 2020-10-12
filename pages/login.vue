@@ -55,14 +55,16 @@ import { mapState } from "vuex";
 import Spinner from "~/components/Spinner.vue";
 
 interface LoginData {
-  username: "";
+  email: "";
   password: "";
 }
+
 export default Vue.extend({
   components: {
     Spinner
   },
-  data() {
+
+  data(): LoginData {
     return {
       email: "",
       password: ""
@@ -72,31 +74,37 @@ export default Vue.extend({
   computed: {
     ...mapState(["apiCall"])
   },
+
   methods: {
     async submitLoginForm() {
-      // console.log(this.apiCall);
       const { email, password } = this.$data;
       const formToSubmit = {
         email,
         password
       };
       this.$store.dispatch("setApiCallState", true);
-      // console.log(this.apiCall);
       try {
-        // const response = await this.$axios.$post<{
-        //   data: Record<string, string>;
-        //   message: string;
-        //   status: boolean;
-        // }>("agent", formToSubmit);
-        // //   const { message } = response;
-        // this.$store.dispatch("setApiCallState", false);
-        setTimeout(() => {
-          this.$store.dispatch("setApiCallState", false);
-          this.$router.push("/dashboard");
-        }, 1500);
+        const response = await this.$axios.$post<{
+          data: Record<string, string>;
+          message: string;
+          status: boolean;
+        }>("agent/login", formToSubmit);
+        const { data } = response;
+        this.$store.dispatch("setApiCallState", false);
+        this.$router.push("/dashboard");
       } catch (error) {
-        // console.log(error);
-        // this.$nuxt.$emit("RegistrationError", error);
+        const { message } = error.response.data;
+        if ((message as string).includes("SQLSTATE")) {
+          this.$nuxt.$emit(
+            "LoginError",
+            `Sorry we couldn't Log you in at this time. Please try again later!`
+          );
+          this.$store.dispatch("setApiCallState", false);
+          return;
+        }
+
+        this.$nuxt.$emit("LoginError", message);
+        this.$store.dispatch("setApiCallState", false);
       }
     }
   }
@@ -125,6 +133,10 @@ export default Vue.extend({
 button.join-us {
   background-color: transparent;
   color: #6562cf;
+}
+
+.btn:not(:disabled):not(.disabled) {
+  width: unset;
 }
 
 .btn-primary.disabled,
