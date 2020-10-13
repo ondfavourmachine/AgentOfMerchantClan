@@ -78,11 +78,18 @@ export default Vue.extend({
   },
 
   computed: {
-    ...mapState(["apiCall"])
+    ...mapState(["apiCall", "user"])
   },
 
   methods: {
     async submitLoginForm() {
+      if (!window.navigator.onLine) {
+        this.$nuxt.$emit(
+          "NotConnectedToInternet",
+          `Please check your internet and try again!`
+        );
+        return;
+      }
       const { email, password } = this.$data;
       const formToSubmit = {
         email,
@@ -92,11 +99,15 @@ export default Vue.extend({
       try {
         const response = await this.$axios.$post<{
           data: Record<string, string>;
-          message: string;
-          status: boolean;
+          token: string;
+          user: boolean;
         }>("agent/login", formToSubmit);
-        const { data } = response;
+        const { user, token } = response;
+
         this.$store.dispatch("setApiCallState", false);
+        this.$store.dispatch("setLoggedInUser", user);
+        console.log(this.user);
+        this.$store.dispatch("setToken", token);
         this.$router.push("/dashboard");
       } catch (error) {
         const { message } = error.response.data;

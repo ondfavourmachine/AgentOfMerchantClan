@@ -3,7 +3,7 @@ import { ActionTree, MutationTree } from "vuex/types/index";
 // import axios from '@nuxtjs/axios';
 
 interface State {
-  agentDetails: {
+  user: {
     first_name?: string;
     last_name?: string;
     gender?: string;
@@ -41,6 +41,7 @@ interface State {
   NigerianBanks: Array<Bank>;
   agentsInterest: Set<string>;
   apiCall: boolean;
+  token: string | undefined;
 }
 
 interface Bank {
@@ -56,12 +57,43 @@ interface NigerianState {
 export type RootState = ReturnType<typeof state>;
 
 export const state = (): State => ({
-  agentDetails: {},
+  user: {
+    first_name: "",
+    last_name: "",
+    gender: "",
+    title: "",
+    date_of_birth: "",
+    start_date: "",
+    bank_name: "",
+    account_name: "",
+    account_number: "",
+    bank_branch: "",
+    address: "",
+    state: "",
+    suburb: "",
+    home_phone: "",
+    postcode: "",
+    email: "",
+    mobile: "",
+
+    nok_name: "",
+    nok_relationship: "",
+    nok_address: "",
+    nok_suburb: "",
+    nok_state: undefined,
+    nok_postcode: "",
+    nok_home_phone: "",
+    nok_mobile: "",
+    nok_work: "",
+    employee_signature: "",
+    date_signed: ""
+  },
   states: [],
   NigerianBanks: [],
   currentState: "personal",
   agentsInterest: new Set(),
-  apiCall: false
+  apiCall: false,
+  token: undefined
 });
 
 export const mutations: MutationTree<RootState> = {
@@ -93,24 +125,33 @@ export const mutations: MutationTree<RootState> = {
   },
 
   modifyAddressPartOfState(state: State, newValue: Partial<State>) {
-    state.agentDetails = { ...state.agentDetails, ...newValue };
+    state.user = { ...state.user, ...newValue };
   },
 
   modifyPersonalDetailsOfAgentInOfState(
     state: State,
     newValue: Partial<State>
   ) {
-    state.agentDetails = { ...state.agentDetails, ...newValue };
+    state.user = { ...state.user, ...newValue };
   },
 
   modifyBankDetailsOfAgentInOfState(state: State, newValue: Partial<State>) {
-    state.agentDetails = { ...state.agentDetails, ...newValue };
+    state.user = { ...state.user, ...newValue };
   },
+
+  INSERT_LOGGED_IN_USER(state: State, user: Record<string, string>) {
+    state.user = { ...user };
+  },
+
+  INSERT_TOKEN(state: State, token: string) {
+    state.token = token;
+  },
+
   modifyNextOfKinDetailsOfAgentInOfState(
     state: State,
     newValue: Partial<State>
   ) {
-    state.agentDetails = { ...state.agentDetails, ...newValue };
+    state.user = { ...state.user, ...newValue };
   }
 };
 
@@ -148,9 +189,7 @@ export const actions: ActionTree<RootState, RootState> = {
   },
 
   setPersonalDetails({ commit }, newValue) {
-    console.log(this.state.agentDetails);
     commit("modifyPersonalDetailsOfAgentInOfState", newValue);
-    console.log(this.state.agentDetails);
   },
 
   setBankDetails({ commit }, newValue: Partial<State>) {
@@ -158,9 +197,7 @@ export const actions: ActionTree<RootState, RootState> = {
   },
 
   setAddress({ commit }, newValue: Partial<State>) {
-    console.log(this.state.agentDetails);
     commit("modifyAddressPartOfState", newValue);
-    console.log(this.state.agentDetails);
   },
 
   setNextOfKinDetails({ commit }, newValue: Partial<State>) {
@@ -173,5 +210,13 @@ export const actions: ActionTree<RootState, RootState> = {
 
   setApiCallState({ commit }, valueToAdd: boolean) {
     commit("apiCallState", valueToAdd);
+  },
+
+  setLoggedInUser({ commit }, user: Record<string, string>) {
+    commit("INSERT_LOGGED_IN_USER", user);
+  },
+
+  setToken({ commit }, token: string) {
+    commit("INSERT_TOKEN", token);
   }
 };

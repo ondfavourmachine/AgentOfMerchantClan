@@ -34,16 +34,23 @@ export default Vue.extend({
       this.message = e;
       this.showDismissibleAlert = true;
     });
+
+    this.$nuxt.$on("NotConnectedToInternet", (e: string) => {
+      this.message = e;
+      this.showDismissibleAlert = true;
+    });
   },
-watch:{
-    $route (to, from){
-        this.showDismissibleAlert = false;
+
+  watch: {
+    $route(to, from) {
+      this.showDismissibleAlert = false;
     }
-} ,
+  },
 
   beforeDestroy() {
     this.$nuxt.$off("RegistrationError");
     this.$nuxt.$off("LoginError");
+    this.$nuxt.$off("NotConnectedToInternet");
   }
 });
 </script>
