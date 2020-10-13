@@ -121,7 +121,8 @@ export default Vue.extend({
     ...mapState({
       banks: "NigerianBanks",
       currentUser: "user",
-      myApiCall: "apiCall"
+      myApiCall: "apiCall",
+      apiUrl: "url"
     }),
     computedBanks(): Bank[] {
       this.allBanks = [...this.banks];
@@ -157,7 +158,7 @@ export default Vue.extend({
         element => element.bank_code == (this.bank_name as string).trim()
       );
       await this.saveBankDetailsInStore({
-        bank_name: nameOfBank[0].name,
+        bank_name: nameOfBank[0].bank_code,
         account_name,
         account_number,
         bank_branch
@@ -166,24 +167,34 @@ export default Vue.extend({
       this.$store.dispatch("setApiCallState", true);
 
       try {
-        let url =
-          "https://covidreliefbackend.covidrelief.com.ng/merchantclan/public/index.php/api/agent/settings";
-        const response = await fetch(url, {
-          body: JSON.stringify(this.currentUser),
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${this.$store.state.token}`
+        let response: Response | any = await fetch(
+          `${this.apiUrl}agent/settings`,
+          {
+            body: JSON.stringify(this.currentUser),
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${this.$store.state.token}`,
+              "Content-Type": "application/json"
+            }
           }
-        });
-
-        console.log(response);
-        this.$store.dispatch("setApiCallState", false);
-        this.$nuxt.$emit(
-          "SuccessNotification",
-          "Bank Details updated successfully"
         );
+
+        response = await response.json();
+        const { data } = response;
+        this.$store.dispatch("setLoggedInUser", data);
+        this.$store.dispatch("setApiCallState", false);
+        this.$nuxt.$emit("SuccessNotification", {
+          message: "Bank details updated successfully",
+          variant: "success"
+        });
+        setTimeout(() => {
+          this.$router.push("/settings");
+        }, 2000);
       } catch (error) {
-        this.$nuxt.$emit("GeneralError", "Could not update your Bank Details");
+        this.$nuxt.$emit("GeneralError", {
+          message: "Could not update your Bank Details. Please try again later",
+          variant: "danger"
+        });
         setTimeout(() => {
           this.$nuxt.$emit("SwitchOffNotification");
         }, 3000);
@@ -217,7 +228,11 @@ export default Vue.extend({
           throw new Error("Account number not found!");
         }
       } catch (error) {
-        this.$nuxt.$emit("GeneralError", "Account number not found!");
+        this.$nuxt.$emit("GeneralError", {
+          message: "Account number not found!",
+          variant: "danger"
+        });
+        this.$nuxt.$emit("GeneralError", "");
         setTimeout(() => {
           this.$nuxt.$emit("SwitchOffNotification");
         }, 3000);

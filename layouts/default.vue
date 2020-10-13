@@ -4,21 +4,12 @@
       style="margin-bottom: -5px; z-index: 10;"
       v-model="showDismissibleAlert"
       :max="dismissSecs"
-      variant="danger"
+      :variant="variant"
       dismissible
     >{{ message }}</b-alert>
 
     <b-button @click="showDismissibleAlert=true" hidden variant="info" class="m-1"></b-button>
 
-     <b-alert
-      style="margin-bottom: -5px; z-index: 10;"
-      v-model="successMessages"
-      :max="dismissSecs"
-      variant="Success"
-      dismissible
-    >{{ message }}</b-alert>
-
-   <b-button @click="successMessages=true" hidden variant="info" class="m-1"></b-button>
     <nuxt />
   </div>
 </template>
@@ -31,7 +22,7 @@ export default Vue.extend({
       dismissSecs: 10,
       message: "",
       showDismissibleAlert: false,
-      successMessages: false
+      variant: "success"
     };
   },
 
@@ -54,18 +45,27 @@ export default Vue.extend({
       this.showDismissibleAlert = true;
     });
 
-    this.$nuxt.$on("GeneralError", (e: string) => {
-      this.message = e;
-      this.showDismissibleAlert = true;
-    });
+    this.$nuxt.$on(
+      "GeneralError",
+      (e: { message: string; variant: string }) => {
+        this.message = e.message;
+        this.variant = e["variant"];
+        this.showDismissibleAlert = true;
+      }
+    );
 
     this.$nuxt.$on("SwitchOffNotification", () => {
       this.showDismissibleAlert = false;
     });
 
-    this.$nuxt.$on('SuccessNotification', (e: string) =>{
-      this.message = e;
-    })
+    this.$nuxt.$on(
+      "SuccessNotification",
+      (e: { message: string; variant: string }) => {
+        this.showDismissibleAlert = true;
+        this.variant = e["variant"];
+        this.message = e["message"];
+      }
+    );
   },
 
   watch: {
@@ -80,7 +80,7 @@ export default Vue.extend({
     this.$nuxt.$off("NotConnectedToInternet");
     this.$nuxt.$off("GeneralError");
     this.$nuxt.$off("SwitchOffNotification");
-    this.$nuxt.$off('SuccessNotification')
+    this.$nuxt.$off("SuccessNotification");
   }
 });
 </script>

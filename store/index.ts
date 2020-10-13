@@ -8,6 +8,7 @@ interface State {
     last_name?: string;
     gender?: string;
     title?: string;
+    agent_no: string;
     date_of_birth?: string;
     start_date?: string;
     bank_name?: null | string;
@@ -21,7 +22,7 @@ interface State {
     postcode?: string;
     email?: string;
     mobile?: string;
-
+    full_name: string;
     nok_name?: "";
     nok_relationship?: "";
     nok_address?: "";
@@ -42,6 +43,7 @@ interface State {
   agentsInterest: Set<string>;
   apiCall: boolean;
   token: string | undefined;
+  url: string;
 }
 
 interface Bank {
@@ -62,6 +64,7 @@ export const state = (): State => ({
     last_name: "",
     gender: "",
     title: "",
+    agent_no: "",
     date_of_birth: "",
     start_date: "",
     bank_name: "",
@@ -75,7 +78,7 @@ export const state = (): State => ({
     postcode: "",
     email: "",
     mobile: "",
-
+    full_name: "",
     nok_name: "",
     nok_relationship: "",
     nok_address: "",
@@ -93,7 +96,9 @@ export const state = (): State => ({
   currentState: "personal",
   agentsInterest: new Set(),
   apiCall: false,
-  token: undefined
+  token: undefined,
+  url:
+    "https://covidreliefbackend.covidrelief.com.ng/merchantclan/public/index.php/api/"
 });
 
 export const mutations: MutationTree<RootState> = {

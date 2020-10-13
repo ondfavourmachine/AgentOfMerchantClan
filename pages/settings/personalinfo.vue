@@ -1,63 +1,4 @@
 <template>
-  <!-- <div>
-    <p class="heading-title">Personal Details</p>
-    <b-form>
-    
-      <b-form-group id="input-group-2" label-for="input-2">
-        <b-form-input id="input-2" v-model="title" required placeholder="Title eg: Mr/Mrs/Miss"></b-form-input>
-      </b-form-group>
-    
-      <b-form-group id="input-group-1" label-for="input-1">
-        <b-form-input
-          id="input-1"
-          v-model="first_name"
-          type="email"
-          required
-          placeholder="First name: eg Tosin"
-        ></b-form-input>
-      </b-form-group>
-    
-      <b-form-group id="input-group-2" label-for="input-2">
-        <b-form-input id="input-2" v-model="last_name" required placeholder="Last name:eg Chukwuma"></b-form-input>
-      </b-form-group>
-    
-      <b-form-group label="Gender">
-        <b-form-radio v-model="gender" name="some-radios-1" value="1">Male</b-form-radio>
-        <b-form-radio v-model="gender" name="some-radios-2" value="2">Female</b-form-radio>
-      </b-form-group>
-   
-      <div>
-        <label for="example-datepicker">Date of birth</label>
-        <b-form-datepicker id="example-datepicker" v-model="date_of_birth" class="mb-2"></b-form-datepicker>
-      
-      </div>
-
-      <div>
-        <label for="example-datepicker-1">Start Date</label>
-        <b-form-datepicker id="example-datepicker-1" v-model="start_date" class="mb-2"></b-form-datepicker>
-       
-      </div>
-
-      <b-button
-        class="mt-1"
-        :disabled="!$data.date_of_birth || !$data.first_name || !$data.last_name || !$data.gender || !$data.title || !$data.start_date "
-        @click="handleSubmitOfPersonalInfo"
-        type="button"
-        variant="primary"
-      >
-        Next
-        <span
-          :class="!$data.date_of_birth 
-        || !$data.first_name || 
-        !$data.last_name || 
-        !$data.gender || !$data.title || !$data.start_date  ? '': 'btn-child'"
-        ></span>
-      </b-button>
-  
-    </b-form>
- 
-  </div>-->
-
   <div class="main-container">
     <div class="parent">
       <div class="child-one">
@@ -125,7 +66,7 @@
         </b-form>
       </div>
     </div>
-    <Spinner v-if="apiCall" />
+    <Spinner v-if="myApiCall" />
   </div>
 </template>
 
@@ -152,6 +93,7 @@ export default Vue.extend({
     Header,
     Spinner
   },
+  created() {},
   data(): PersonalData {
     return {
       first_name: "",
@@ -163,7 +105,11 @@ export default Vue.extend({
     };
   },
   computed: {
-    ...mapState(["apiCall"])
+    ...mapState({
+      myApiCall: "apiCall",
+      currentUser: "user",
+      agentUrl: "url"
+    })
   },
 
   methods: {
@@ -188,13 +134,41 @@ export default Vue.extend({
         title,
         gender
       });
-      this.$store.dispatch("setNextStage", "address");
+      console.log(this.currentUser);
+      // this.$store.dispatch("setNextStage", "address");
+      this.$store.dispatch("setApiCallState", true);
+      const formData = new FormData();
+
+      for (let key in this.currentUser) {
+        formData.append(`${key}`, this.currentUser[key]);
+      }
+      try {
+        const response = await fetch(`${this.agentUrl}agent/settings`, {
+          body: formData,
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${this.$store.state.token}`
+          }
+        });
+
+        console.log(response);
+        this.$store.dispatch("setApiCallState", false);
+        this.$nuxt.$emit(
+          "SuccessNotification",
+          "Bank Details updated successfully"
+        );
+      } catch (error) {
+        this.$nuxt.$emit("GeneralError", "Could not update your Bank Details");
+        setTimeout(() => {
+          this.$nuxt.$emit("SwitchOffNotification");
+        }, 3000);
+      }
     }
   }
 });
 </script>
 
-<style>
+<style scoped>
 .parent {
   grid-template-rows: 10vh 75vh 1vh;
 }
@@ -209,7 +183,7 @@ div.child-two {
 div.child-two div,
 div.child-two fieldset {
   color: rgba(20, 0, 204, 0.789);
-  border-radius: 5px;
+  /* border-radius: 5px; */
   max-width: 100%;
 }
 
