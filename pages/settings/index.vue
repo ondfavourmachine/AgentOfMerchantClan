@@ -70,6 +70,11 @@ export default Vue.extend({
   components: {
     Header,
     BIconArrowRight
+  },
+
+  created() {
+    this.$store.dispatch("fetchAllStates");
+    this.$store.dispatch("fetchAllBanks");
   }
 });
 </script>

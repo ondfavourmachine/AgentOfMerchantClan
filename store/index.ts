@@ -158,13 +158,23 @@ export const mutations: MutationTree<RootState> = {
 export const actions: ActionTree<RootState, RootState> = {
   async fetchAllBanks({ commit, state }) {
     try {
-      const response = await this.$axios.$get<{
-        data: Bank[];
-        status: boolean;
-      }>("banks");
+      let url = "https://mobile.creditclan.com/webapi/v1/banks";
+      // "x-api-key": "z2BhpgFNUA99G8hZiFNv77mHDYcTlecgjybqDACv"
+      let response: any = await fetch(url, {
+        method: "GET",
+        headers: {
+          "x-api-key": "z2BhpgFNUA99G8hZiFNv77mHDYcTlecgjybqDACv"
+        }
+      });
 
-      const { data } = response;
-      commit("addBanksToStore", data);
+      response = await response.json();
+
+      // const response = await this.$axios.$get<{
+      //   data: Bank[];
+      //   status: boolean;
+      // }>("banks");
+
+      commit("addBanksToStore", response.data);
     } catch (error) {
       console.log(error);
     }

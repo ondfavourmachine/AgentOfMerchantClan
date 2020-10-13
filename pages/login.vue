@@ -106,7 +106,7 @@ export default Vue.extend({
 
         this.$store.dispatch("setApiCallState", false);
         this.$store.dispatch("setLoggedInUser", user);
-        console.log(this.user);
+
         this.$store.dispatch("setToken", token);
         this.$router.push("/dashboard");
       } catch (error) {
@@ -158,6 +158,6 @@ button.join-us {
 
 .btn-primary.disabled,
 .btn-primary:disabled {
-  width: 30%;
+  width: 26%;
 }
 </style>

@@ -10,6 +10,15 @@
 
     <b-button @click="showDismissibleAlert=true" hidden variant="info" class="m-1"></b-button>
 
+     <b-alert
+      style="margin-bottom: -5px; z-index: 10;"
+      v-model="successMessages"
+      :max="dismissSecs"
+      variant="Success"
+      dismissible
+    >{{ message }}</b-alert>
+
+   <b-button @click="successMessages=true" hidden variant="info" class="m-1"></b-button>
     <nuxt />
   </div>
 </template>
@@ -21,13 +30,18 @@ export default Vue.extend({
     return {
       dismissSecs: 10,
       message: "",
-      showDismissibleAlert: false
+      showDismissibleAlert: false,
+      successMessages: false
     };
   },
+
   created() {
     this.$nuxt.$on("RegistrationError", (e: any) => {
       this.message = e;
       this.showDismissibleAlert = true;
+
+      // this.$store.dispatch("fetchAllBanks");
+      // this.$store.dispatch("fetchAllStates");
     });
 
     this.$nuxt.$on("LoginError", (e: any) => {
@@ -39,6 +53,19 @@ export default Vue.extend({
       this.message = e;
       this.showDismissibleAlert = true;
     });
+
+    this.$nuxt.$on("GeneralError", (e: string) => {
+      this.message = e;
+      this.showDismissibleAlert = true;
+    });
+
+    this.$nuxt.$on("SwitchOffNotification", () => {
+      this.showDismissibleAlert = false;
+    });
+
+    this.$nuxt.$on('SuccessNotification', (e: string) =>{
+      this.message = e;
+    })
   },
 
   watch: {
@@ -51,6 +78,9 @@ export default Vue.extend({
     this.$nuxt.$off("RegistrationError");
     this.$nuxt.$off("LoginError");
     this.$nuxt.$off("NotConnectedToInternet");
+    this.$nuxt.$off("GeneralError");
+    this.$nuxt.$off("SwitchOffNotification");
+    this.$nuxt.$off('SuccessNotification')
   }
 });
 </script>

@@ -39,10 +39,6 @@ interface Bank {
   bank_name: string;
 }
 export default Vue.extend({
-  created() {
-    this.$store.dispatch("fetchAllBanks");
-    this.$store.dispatch("fetchAllStates");
-  },
   components: {},
 
   computed: {
