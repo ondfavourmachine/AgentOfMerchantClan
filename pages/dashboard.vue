@@ -8,7 +8,7 @@
         <div class="other-stuff" style>
           <div class="settings">
             <!-- ../assets/css/images/settings.svg -->
-            <div class="holder">
+            <div @click="routeToSettings" class="holder">
               <span class="settings-img">
                 <img src="../assets/css/images/settings-colored.svg" alt />
               </span>
@@ -74,9 +74,18 @@ export default Vue.extend({
         { "m-ID": 62, Type: "Order", time: "1:43pm" }
       ]
     };
+  },
+
+  methods: {
+    routeToSettings() {
+      this.$router.push("/settings");
+    }
   }
 });
 </script>
 
 <style scoped>
+.holder {
+  cursor: pointer;
+}
 </style>

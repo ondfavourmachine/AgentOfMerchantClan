@@ -27,9 +27,15 @@ export default Vue.extend({
 
     getInitials() {
       let userName: string | Array<string> = this.currentUser.full_name;
-      userName = (userName as string).split(" ");
-      userName = (userName as string[]).map(element => element.substring(0, 1));
-      return userName.join("").toUpperCase();
+      try {
+        userName = (userName as string).split(" ");
+        userName = (userName as string[]).map(element =>
+          element.substring(0, 1)
+        );
+        return userName.join("").toUpperCase();
+      } catch (error) {
+        return "mc".toUpperCase();
+      }
     }
   }
 });
