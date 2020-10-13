@@ -177,7 +177,7 @@
   padding: 15px;
   margin: 2px;
   display: grid;
-  grid-template-rows: 45vh 20vh 34vh;
+  grid-template-rows: 37vh 20vh 34vh;
   grid-gap: 20px;
 }
 
