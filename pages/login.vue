@@ -27,7 +27,13 @@
             </b-form-group>
 
             <b-form-group id="input-group-5" label-for="input-5">
-              <b-form-input id="input-5" type="password" v-model.lazy="password" required placeholder="Password"></b-form-input>
+              <b-form-input
+                id="input-5"
+                type="password"
+                v-model.lazy="password"
+                required
+                placeholder="Password"
+              ></b-form-input>
             </b-form-group>
 
             <b-button
@@ -127,7 +133,7 @@ export default Vue.extend({
 }
 
 .form-control {
-  background-color: #e5e5e5;
+  /* background-color: #e5e5e5; */
 }
 
 button.join-us {

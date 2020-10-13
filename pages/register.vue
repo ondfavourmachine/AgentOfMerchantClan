@@ -233,12 +233,7 @@ export default Vue.extend({
   font-size: unset;
 }
 
-.form-control {
-  background-color: #e5e5e5;
-}
-
 .custom-control {
-  background-color: #e5e5e5;
   display: inline-flex;
   flex-direction: column;
   justify-content: center;

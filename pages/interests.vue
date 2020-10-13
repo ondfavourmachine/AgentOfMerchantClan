@@ -152,7 +152,7 @@ export default {
 <style >
 .main {
   overflow: hidden;
-  background: #e5e5e5;
+  /* background: #e5e5e5; */
   height: 100vh;
 }
 
