@@ -21,12 +21,11 @@ import Vue from "vue";
 import { mapState } from "vuex";
 export default Vue.extend({
   computed: {
-    ...mapState({
-      currentUser: "user"
-    }),
+    ...mapState(["user"]),
 
     getInitials() {
-      let userName: string | Array<string> = this.currentUser.full_name;
+      let userName: string | Array<string> = this.user.full_name;
+      if (!userName) return "mc".toUpperCase();
       if (userName.length < 1) return "mc".toUpperCase();
       try {
         userName = (userName as string).split(" ");

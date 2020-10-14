@@ -54,15 +54,7 @@
             @click="handleSubmitOfPersonalInfo"
             type="button"
             variant="primary"
-          >
-            Next
-            <span
-              :class="!$data.date_of_birth 
-        || !$data.first_name || 
-        !$data.last_name || 
-        !$data.gender || !$data.title || !$data.start_date  ? '': 'btn-child'"
-            ></span>
-          </b-button>
+          >submit</b-button>
         </b-form>
       </div>
     </div>
@@ -134,30 +126,32 @@ export default Vue.extend({
         title,
         gender
       });
-  
+
       // this.$store.dispatch("setNextStage", "address");
       this.$store.dispatch("setApiCallState", true);
-      const formData = new FormData();
-
-       
       try {
-        const response: Response | any = await fetch(`${this.agentUrl}agent/settings`, {
-          body: JSON.stringify(this.currentUser),
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${this.$store.state.token}`,
+        let response: Response | any = await fetch(
+          `${this.agentUrl}agent/settings`,
+          {
+            body: JSON.stringify(this.currentUser),
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${this.$store.state.token}`,
               "Content-Type": "application/json"
+            }
           }
-        });
-
-        const {data} = response;
-
-        this.$store.dispatch("setLoggedInUser", );
-        this.$store.dispatch("setApiCallState", false);
-        this.$nuxt.$emit(
-          "SuccessNotification",
-          "Personal details updated successfully"
         );
+
+        response = await response.json();
+        this.$store.dispatch("setLoggedInUser", response.data);
+        this.$store.dispatch("setApiCallState", false);
+        this.$nuxt.$emit("SuccessNotification", {
+          message: "Personal details updated successfully",
+          variant: "success"
+        });
+        setTimeout(() => {
+          this.$router.push("/settings");
+        }, 2000);
       } catch (error) {
         this.$nuxt.$emit("GeneralError", "Could not update your Bank Details");
         setTimeout(() => {

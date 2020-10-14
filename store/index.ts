@@ -145,7 +145,7 @@ export const mutations: MutationTree<RootState> = {
   },
 
   INSERT_LOGGED_IN_USER(state: State, user: any) {
-    state.user = { ...user };
+    state.user = { ...state.user, ...user };
   },
 
   INSERT_TOKEN(state: State, token: string) {

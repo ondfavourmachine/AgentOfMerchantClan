@@ -47,8 +47,23 @@
           </b-form-group>
 
           <b-form-group>
-            <b-form-select v-model="nok_state" :options="options"></b-form-select>
+            <b-form-select v-model="nok_state">
+              <b-form-select-option value>Please select a state</b-form-select-option>
+              <b-form-select-option
+                v-for="computedState in computedNigerianStates"
+                :key="computedState.id"
+                :value="computedState.id"
+              >{{ computedState.name }}</b-form-select-option>
+            </b-form-select>
           </b-form-group>
+          <!-- <b-form-group>
+            <b-form-select
+              v-model="nok_state"
+              v-for="computedState in computedNigerianStates"
+              :key="computedState.id"
+              :value="computedState.name"
+            ></b-form-select>
+          </b-form-group>-->
 
           <b-form-group id="input-group-17" label-for="input-17">
             <b-form-input
@@ -62,19 +77,25 @@
           <b-form-group id="input-group-18" label-for="input-18">
             <b-form-input
               id="input-18"
-              v-model.number="nok_home_phone"
+              v-model="nok_home_phone"
               required
+              type="tel"
+              @input="checkNumber"
               placeholder="Home phone: eg 08033445059"
             ></b-form-input>
+            <small v-html="homePhoneValidationMessage" style="color: tomato; font-size: 0.7rem;"></small>
           </b-form-group>
 
           <b-form-group id="input-group-19" label-for="input-19">
             <b-form-input
               id="input-19"
-              v-model.number="nok_mobile"
+              type="number"
+              v-model="nok_mobile"
               required
+              @input="checkMobile"
               placeholder="Mobile no: eg 090334567890"
             ></b-form-input>
+            <small v-html="mobilePhoneValidation" style="color: tomato; font-size: 0.7rem;"></small>
           </b-form-group>
 
           <b-form-group id="input-group-5" label-for="input-5">
@@ -86,23 +107,26 @@
             ></b-form-input>
           </b-form-group>
 
-          <b-form-group id="input-group-5" label-for="input-5">
+          <!-- <b-form-group id="input-group-5" label-for="input-5">
             <b-form-input
               id="input-5"
               v-model.lazy="employee_signature"
               placeholder="Signature: eg nuc@sahwn.com"
             ></b-form-input>
-          </b-form-group>
+          </b-form-group>-->
 
           <div>
             <label for="example-datepicker-5">Date Signed</label>
             <b-form-datepicker id="example-datepicker-5" v-model="date_signed" class="mb-2"></b-form-datepicker>
           </div>
 
-          <b-button class="mt-3" type="submit" variant="primary">
-            Submit
-            <span class="btn-child"></span>
-          </b-button>
+          <!--:disabled="!$data.nok_name || !$data.nok_relationship 
+              || !$data.nok_address || !$data.nok_suburb 
+             || !$data.state || !$data.nok_postcode 
+             || !$data.nok_home_phone 
+          || !$data.nok_mobile || !$data.date_signed"-->
+
+          <b-button class="mt-3" type="submit" variant="primary">Submit</b-button>
         </b-form>
       </div>
     </div>
@@ -116,35 +140,153 @@ import Header from "~/components/Header.vue";
 import Spinner from "~/components/Spinner.vue";
 import { mapState } from "vuex";
 
+interface NOKDATA {
+  nok_name: string;
+  nok_relationship: string;
+  nok_address: string;
+  nok_suburb: string;
+  nok_state: string;
+  nok_postcode: string;
+  nok_home_phone: string;
+  nok_mobile: string;
+  nok_work: string;
+
+  date_signed: string;
+  nigerianStates: any[];
+  options: any[];
+  homePhoneValidationMessage: string;
+  mobilePhoneValidation: string;
+}
+
 export default Vue.extend({
   components: {
     Header,
     Spinner
   },
-  data() {
+  created() {
+    // console.log(this.states);
+  },
+
+  data(): Partial<NOKDATA> {
     return {
       nok_name: "",
       nok_relationship: "",
       nok_address: "",
       nok_suburb: "",
-      nok_state: null,
+      nok_state: "",
       options: [{ value: null, text: "Please select a state" }],
       nok_postcode: "",
       nok_home_phone: "",
       nok_mobile: "",
       nok_work: "",
-      employee_signature: "",
-      date_signed: ""
+      homePhoneValidationMessage: "",
+      mobilePhoneValidation: "",
+      date_signed: "",
+      nigerianStates: []
     };
   },
 
   computed: {
-    ...mapState(["apiCall"])
+    ...mapState(["apiCall", "states"]),
+
+    computedNigerianStates(): any[] {
+      this.nigerianStates = [...this.states];
+      return this.nigerianStates;
+    }
   },
 
   methods: {
-    onSubmitForm(e: Event) {
-      console.log(e);
+    async onSubmitForm() {
+      const {
+        nok_name,
+        nok_relationship,
+        nok_address,
+        nok_suburb,
+        nok_state,
+        nok_postcode,
+        nok_home_phone,
+        nok_mobile,
+        nok_work,
+        date_signed
+      } = this.$data;
+      // const nameOfBank = this.computedNigerianStates.filter(
+      //   element => element.bank_code == (this.bank_name as string).trim()
+      // );
+      if (nok_home_phone.length < 11 || nok_home_phone.length > 11) {
+        this.homePhoneValidationMessage = "";
+        this.homePhoneValidationMessage =
+          "The home phone number must be 11 digits.";
+        return;
+      }
+      if (nok_mobile.length < 11 || nok_mobile.length > 11) {
+        this.mobilePhoneValidation = "";
+        this.homePhoneValidationMessage =
+          "The mobile number must be 11 digits.";
+        return;
+      }
+      this.$store.dispatch("setPersonalDetails", {
+        nok_name,
+        nok_relationship,
+        nok_address,
+        nok_suburb,
+        nok_state,
+        nok_postcode,
+        nok_home_phone,
+        nok_mobile,
+        nok_work,
+        date_signed
+      });
+      this.$store.dispatch("setApiCallState", true);
+
+      try {
+        let response: Response | any = await fetch(
+          `${this.$store.state.url}agent/settings`,
+          {
+            body: JSON.stringify(this.$store.state.user),
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${this.$store.state.token}`,
+              "Content-Type": "application/json"
+            }
+          }
+        );
+        response = await response.json();
+        const { data } = response;
+        this.$store.dispatch("setLoggedInUser", data);
+        this.$store.dispatch("setApiCallState", false);
+        this.$nuxt.$emit("SuccessNotification", {
+          message: "Next of kin details updated successfully!",
+          variant: "success"
+        });
+        setTimeout(() => {
+          this.$router.push("/settings");
+        }, 2000);
+      } catch (error) {
+        this.$nuxt.$emit("GeneralError", {
+          message: "Could not update your Next of Kin details!",
+          variant: "danger"
+        });
+        this.$nuxt.$emit("GeneralError", "");
+        setTimeout(() => {
+          this.$nuxt.$emit("SwitchOffNotification");
+        }, 3000);
+      }
+    },
+    checkNumber(event: string) {
+      if (event.length < 11 || event.length > 11) {
+        this.homePhoneValidationMessage =
+          "The home phone number must be 11 digits.";
+        return;
+      }
+      this.homePhoneValidationMessage = "";
+    },
+
+    checkMobile(event: string) {
+      if (event.length < 11 || event.length > 11) {
+        this.mobilePhoneValidation = "The mobile number must be 11 digits.";
+        return;
+      }
+      this.mobilePhoneValidation = "";
     }
   }
 });
@@ -165,7 +307,7 @@ div.child-two {
 div.child-two div,
 div.child-two fieldset {
   color: rgba(20, 0, 204, 0.789);
-  border-radius: 5px;
+
   padding: 2px;
   max-width: 100%;
 }
@@ -173,6 +315,6 @@ div.child-two fieldset {
 .btn-primary,
 .btn-primary.disabled,
 .btn-primary:disabled {
-  width: 26%;
+  width: 30%;
 }
 </style>

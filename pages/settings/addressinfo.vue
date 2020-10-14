@@ -29,7 +29,7 @@
               <b-form-select-option
                 v-for="computedState in computedNigerianStates"
                 :key="computedState.id"
-                :value="computedState.name"
+                :value="computedState.id"
               >{{ computedState.name }}</b-form-select-option>
             </b-form-select>
           </b-form-group>
@@ -48,9 +48,11 @@
               type="number"
               id="input-5"
               v-model="home_phone"
+              @input="checkPhone"
               required
               placeholder="Home phone: eg 08033445059"
             ></b-form-input>
+            <small v-html="homePhoneNumberValidation" style="color: tomato; font-size: 0.7rem;"></small>
           </b-form-group>
 
           <b-form-group id="input-group-5" label-for="input-5">
@@ -58,33 +60,30 @@
               id="input-5"
               type="number"
               v-model="mobile"
+              @input="checkMobile"
               required
               placeholder="Mobile no: eg 090334567890"
             ></b-form-input>
+            <small v-html="mobilePhoneValidation" style="color: tomato; font-size: 0.7rem;"></small>
           </b-form-group>
 
-          <b-form-group id="input-group-5" label-for="input-5">
+          <!-- <b-form-group id="input-group-5" label-for="input-5">
             <b-form-input
               id="input-5"
               v-model="email"
               required
               placeholder="Email: eg nuc@sahwn.com"
             ></b-form-input>
-          </b-form-group>
+          </b-form-group>-->
 
           <b-button
             :disabled="!$data.address || !$data.state || !$data.suburb || !$data.home_phone 
-             || !$data.postcode || !$data.mobile || !$data.email "
+             || !$data.postcode || !$data.mobile "
             class="mt-3"
             @click="submitAddressForm"
             type="button"
             variant="primary"
-          >
-            Next
-            <span
-              :class="!$data.address || !$data.state || !$data.suburb || !$data.home_phone || !$data.postcode || !$data.mobile || !$data.email ? '': 'btn-child'"
-            ></span>
-          </b-button>
+          >Submit</b-button>
         </b-form>
       </div>
     </div>
@@ -107,6 +106,8 @@ interface AddressData {
   email: string;
   mobile: string;
   nigerianStates: any[];
+  mobilePhoneValidation: string;
+  homePhoneNumberValidation: string;
 }
 
 export default Vue.extend({
@@ -123,7 +124,9 @@ export default Vue.extend({
       postcode: "",
       email: "",
       mobile: "",
-      nigerianStates: []
+      nigerianStates: [],
+      mobilePhoneValidation: "",
+      homePhoneNumberValidation: ""
     };
   },
 
@@ -150,19 +153,78 @@ export default Vue.extend({
         suburb,
         home_phone,
         postcode,
-        email,
         mobile
       } = this.$data;
+      if (home_phone.length < 11 || home_phone.length > 11) {
+        this.homePhoneNumberValidation = "";
+        this.homePhoneNumberValidation = "The mobile number must be 11 digits.";
+        return;
+      }
+      if (mobile.length < 11 || mobile.length > 11) {
+        this.mobilePhoneValidation = "";
+        this.mobilePhoneValidation = "The mobile number must be 11 digits.";
+        return;
+      }
+
       await this.saveAddressInStore({
         address,
         state,
         suburb,
         home_phone,
         postcode,
-        email,
+
         mobile
       });
-      this.$store.dispatch("setNextStage", "bank-details");
+      console.log(state);
+      try {
+        let response: Response | any = await fetch(
+          `${this.$store.state.url}agent/settings`,
+          {
+            body: JSON.stringify(this.$store.state.user),
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${this.$store.state.token}`,
+              "Content-Type": "application/json"
+            }
+          }
+        );
+        response = await response.json();
+        const { data } = response;
+        this.$store.dispatch("setLoggedInUser", data);
+        this.$store.dispatch("setApiCallState", false);
+        this.$nuxt.$emit("SuccessNotification", {
+          message: "Address details updated successfully!",
+          variant: "success"
+        });
+        setTimeout(() => {
+          this.$router.push("/settings");
+        }, 2000);
+      } catch (error) {
+        this.$nuxt.$emit("GeneralError", {
+          message: "Could not update your Next of Kin details!",
+          variant: "danger"
+        });
+        this.$nuxt.$emit("GeneralError", "");
+        setTimeout(() => {
+          this.$nuxt.$emit("SwitchOffNotification");
+        }, 3000);
+      }
+    },
+
+    checkMobile(event: string) {
+      if (event.length < 11 || event.length > 11) {
+        this.mobilePhoneValidation = "The mobile number must be 11 digits.";
+        return;
+      }
+      this.mobilePhoneValidation = "";
+    },
+    checkPhone(event: string) {
+      if (event.length < 11 || event.length > 11) {
+        this.homePhoneNumberValidation =
+          "The home phone number must be 11 digits.";
+        return;
+      }
+      this.homePhoneNumberValidation = "";
     }
   }
 });

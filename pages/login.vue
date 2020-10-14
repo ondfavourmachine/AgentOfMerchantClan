@@ -158,6 +158,6 @@ button.join-us {
 
 .btn-primary.disabled,
 .btn-primary:disabled {
-  width: 26%;
+  width: 29%;
 }
 </style>
