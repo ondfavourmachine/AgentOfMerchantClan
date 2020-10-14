@@ -90,7 +90,8 @@ export const state = (): State => ({
     nok_mobile: "",
     nok_work: "",
     employee_signature: "",
-    date_signed: ""
+    date_signed: "",
+    passport: ''
   },
   states: [],
   NigerianBanks: [],

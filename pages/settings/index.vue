@@ -44,7 +44,7 @@
           </div>
         </nuxt-link>
 
-        <nuxt-link to="/settings/bankdetails">
+        <nuxt-link to="/settings/passportInfo">
           <div>
             Profile Photo
             <span>

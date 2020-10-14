@@ -157,7 +157,6 @@ export default Vue.extend({
       saveBankDetailsInStore: "setBankDetails"
     }),
     modify(e: string) {
-      debugger;
       this.bank_code = e;
       this.fromStore = false;
     },
