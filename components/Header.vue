@@ -6,7 +6,7 @@
       <div class="avatar">{{getInitials}}</div>
     </div>
     <div class="right">
-      <div class="hamburger">
+      <div @click="showSideBar" class="hamburger">
         <div></div>
         <div></div>
         <div></div>
@@ -20,6 +20,12 @@
 import Vue from "vue";
 import { mapState } from "vuex";
 export default Vue.extend({
+  methods: {
+    showSideBar() {
+      const sideBar = document.querySelector(".side-bar") as HTMLElement;
+      sideBar.classList.add("show");
+    }
+  },
   computed: {
     ...mapState(["user"]),
 

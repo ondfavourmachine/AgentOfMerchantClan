@@ -233,5 +233,9 @@ export const actions: ActionTree<RootState, RootState> = {
 
   setToken({ commit }, token: string) {
     commit("INSERT_TOKEN", token);
+  },
+
+  resetStore({ commit }) {
+    commit("RESET_STORE");
   }
 };

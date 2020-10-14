@@ -9,7 +9,25 @@
     >{{ message }}</b-alert>
 
     <b-button @click="showDismissibleAlert=true" hidden variant="info" class="m-1"></b-button>
-
+    <div class="side-bar">
+      <p class="closeBtn-parent">
+        <span @click="closeSideBar" ref="closeUp" class="closeBtn">+</span>
+      </p>
+      <ul class="link-parent">
+        <li class="li">
+          <a @click="routeToDashBoard">Dashboard</a>
+        </li>
+        <li class="li">
+          <a @click="routeToSettings">Settings</a>
+        </li>
+        <li class="li">
+          <a @click="routeToEarnings">Earnings</a>
+        </li>
+        <li class="li">
+          <a @click="routeToLogin">Logout</a>
+        </li>
+      </ul>
+    </div>
     <nuxt />
   </div>
 </template>
@@ -17,6 +35,32 @@
 <script lang="ts">
 import Vue from "vue";
 export default Vue.extend({
+  methods: {
+    closeSideBar() {
+      const sideBar = document.querySelector(".side-bar") as HTMLElement;
+      sideBar.classList.remove("show");
+    },
+
+    routeToDashBoard() {
+      this.$router.push("/dashboard");
+      (this.$refs.closeUp as HTMLElement).click();
+    },
+
+    routeToSettings() {
+      this.$router.push("/settings");
+      (this.$refs.closeUp as HTMLElement).click();
+    },
+
+    routeToEarnings() {
+      this.$router.push("/earnings");
+      (this.$refs.closeUp as HTMLElement).click();
+    },
+
+    routeToLogin() {
+      this.$router.push("/login");
+      (this.$refs.closeUp as HTMLElement).click();
+    }
+  },
   data() {
     return {
       dismissSecs: 10,
@@ -132,5 +176,88 @@ html {
 .button--grey:hover {
   color: #fff;
   background-color: #35495e;
+}
+
+.side-bar {
+  position: absolute;
+  width: 90%;
+  z-index: 10;
+  background-color: #1400ccc9;
+  height: 100vh;
+  transform: scale(0);
+  opacity: 0;
+  transform-origin: top left;
+  transition: all 0.3s ease-in-out;
+  padding: 10px;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  overflow: hidden;
+}
+
+/* .side-bar {
+  width: 100%;
+  height: 40px;
+  margin-bottom: 20px;
+  border: 1px solid white;
+  display: flex;
+  justify-content: flex-end;
+} */
+
+.side-bar .closeBtn-parent {
+  width: 100%;
+  height: 100px;
+  margin: 10px 5px;
+  display: flex;
+  padding: 5px;
+  justify-content: flex-end;
+}
+
+.side-bar .closeBtn-parent span {
+  font-size: 55px;
+  font-weight: 300;
+  color: white;
+  padding: 6px;
+  transform: rotate(44deg);
+}
+
+.side-bar .link-parent {
+  height: 50vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  list-style: none;
+  padding: 10px;
+}
+
+.side-bar .link-parent li {
+  padding: 7px;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+  border: 7px;
+}
+
+.side-bar .link-parent li:hover {
+  background: #35495e;
+}
+
+.side-bar .link-parent li:hover a {
+  color: white;
+}
+
+.side-bar .link-parent li a {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: white;
+}
+
+.side-bar.show {
+  transform: scale(1);
+  opacity: 1;
+  transition: all 0.3s ease-in-out;
 }
 </style>
