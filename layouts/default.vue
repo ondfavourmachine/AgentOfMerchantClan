@@ -57,8 +57,9 @@ export default Vue.extend({
     },
 
     routeToLogin() {
-      this.$router.push("/login");
       (this.$refs.closeUp as HTMLElement).click();
+      this.$store.dispatch("resetStore");
+      this.$router.push("/login");
     }
   },
   data() {
@@ -180,10 +181,12 @@ html {
 
 .side-bar {
   position: absolute;
-  width: 90%;
+  width: 100%;
   z-index: 10;
-  background-color: #1400ccc9;
-  height: 100vh;
+  background-color: rgba(20, 0, 204, 0.888);
+  backdrop-filter: blur(2px);
+  height: 120vh;
+  border-bottom-right-radius: 50px;
   transform: scale(0);
   opacity: 0;
   transform-origin: top left;

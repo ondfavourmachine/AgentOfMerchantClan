@@ -24,7 +24,7 @@
           </b-form-group>
 
           <b-form-group>
-            <b-form-select v-model="state">
+            <b-form-select id="address-state-select" v-model="state">
               <b-form-select-option value>Please select a state</b-form-select-option>
               <b-form-select-option
                 v-for="computedState in computedNigerianStates"
@@ -115,6 +115,19 @@ export default Vue.extend({
     Header,
     Spinner
   },
+
+  middleware: "authenticated",
+  mounted() {
+    this.address = this.currentUser.address;
+    let selectedstate = this.stateFromServer.find(
+      (element: any) => element.id == this.currentUser.state
+    );
+    this.state = selectedstate.id;
+    this.suburb = this.currentUser.suburb;
+    this.postcode = this.currentUser.postcode;
+    this.home_phone = this.currentUser.home_phone;
+    this.mobile = this.currentUser.mobile;
+  },
   data(): AddressData {
     return {
       address: "",
@@ -133,7 +146,8 @@ export default Vue.extend({
   computed: {
     ...mapState({
       stateFromServer: "states",
-      myApiCall: "apiCall"
+      myApiCall: "apiCall",
+      currentUser: "user"
     }),
 
     computedNigerianStates(): any[] {
@@ -244,7 +258,7 @@ div.child-two {
 }
 div.child-two div,
 div.child-two fieldset {
-  color: rgba(20, 0, 204, 0.789);
+  color: black !important;
   border-radius: 5px;
   padding: 2px;
   max-width: 100%;
@@ -255,4 +269,9 @@ div.child-two fieldset {
 .btn-primary:disabled {
   width: 26%;
 }
+
+/* legend,
+label {
+  color: black !important;
+} */
 </style>

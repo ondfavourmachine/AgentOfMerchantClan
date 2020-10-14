@@ -65,6 +65,8 @@ export default Vue.extend({
   components: {
     Header
   },
+
+  middleware: "authenticated",
   data() {
     return {
       items: [

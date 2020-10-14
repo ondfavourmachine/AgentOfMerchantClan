@@ -4,37 +4,38 @@ import { ActionTree, MutationTree } from "vuex/types/index";
 
 interface State {
   user: {
-    first_name?: string;
-    last_name?: string;
-    gender?: string;
-    title?: string;
-    agent_no: string;
-    date_of_birth?: string;
-    start_date?: string;
-    bank_name?: string;
-    account_name?: string;
-    account_number?: string;
-    bank_branch?: string;
-    address?: string;
-    state?: string;
-    suburb?: string;
-    home_phone?: string;
-    postcode?: string;
-    email?: string;
-    mobile?: string;
-    full_name: string;
-    nok_name?: string;
-    nok_relationship?: string;
-    nok_address?: string;
-    nok_suburb?: string;
-    nok_state?: string;
+    [x: string]: string | any;
+    // first_name?: string | any;
+    // last_name?:  string | any;
+    // gender?:  string | any;
+    // title?:  string | any;
+    // agent_no?:  string | any;
+    // date_of_birth?:  string | any;
+    // start_date?:  string | any;
+    // bank_name?:  string | any;
+    // account_name?:  string | any;
+    // account_number?:  string | any;
+    // bank_branch?:  string | any;
+    // address?:  string | any;
+    // state?:  string | any;
+    // suburb?:  string | any;
+    // home_phone?:  string | any;
+    // postcode?:  string | any;
+    // email?:  string | any;
+    // mobile?:  string | any;
+    // full_name:  string | any;
+    // nok_name?:  string | any;
+    // nok_relationship?:  string | any;
+    // nok_address?:  string | any;
+    // nok_suburb?:  string | any;
+    // nok_state?:  string | any;
 
-    nok_postcode?: string;
-    nok_home_phone?: string;
-    nok_mobile?: string;
-    nok_work?: string;
-    employee_signature?: string;
-    date_signed?: string;
+    // nok_postcode?:  string | any;
+    // nok_home_phone?:  string | any;
+    // nok_mobile?:  string | any;
+    // nok_work?:  string | any;
+    // employee_signature?:  string | any;
+    // date_signed?:  string | any;
   };
 
   states: Array<NigerianState>;
@@ -102,6 +103,21 @@ export const state = (): State => ({
 });
 
 export const mutations: MutationTree<RootState> = {
+  RESET_STORE(state: State) {
+    state.apiCall = false;
+    state.NigerianBanks = [];
+    state.states = [];
+    state.agentsInterest = new Set();
+    state.token = "";
+    state.url =
+      "https://covidreliefbackend.covidrelief.com.ng/merchantclan/public/index.php/api/";
+
+    let key: string;
+    for (key in state.user) {
+      state.user[key] = "";
+    }
+  },
+
   addBanksToStore(state: State, banks: Bank[]) {
     state.NigerianBanks = [...banks];
     //   this.$hello('store mutation')

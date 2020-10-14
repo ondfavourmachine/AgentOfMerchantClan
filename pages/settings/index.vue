@@ -71,7 +71,7 @@ export default Vue.extend({
     Header,
     BIconArrowRight
   },
-
+  middleware: "authenticated",
   created() {
     this.$store.dispatch("fetchAllStates");
     this.$store.dispatch("fetchAllBanks");

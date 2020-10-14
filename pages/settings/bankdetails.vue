@@ -97,6 +97,7 @@ interface BankDetailsData {
   allBanks: Bank[];
   fetching: boolean;
   bank_code: string;
+  fromStore: boolean;
 }
 
 export default Vue.extend({
@@ -104,6 +105,8 @@ export default Vue.extend({
     Header,
     Spinner
   },
+
+  middleware: "authenticated",
 
   data(): BankDetailsData {
     return {
@@ -113,10 +116,19 @@ export default Vue.extend({
       bank_branch: "",
       allBanks: [],
       bank_code: "",
-      fetching: false
+      fetching: false,
+      fromStore: false
     };
   },
 
+  mounted() {
+    this.bank_name = this.currentUser.bank_name;
+    this.account_name = this.currentUser.account_name;
+    this.account_number = this.currentUser.account_number;
+    this.bank_branch = this.currentUser.bank_branch;
+    // set this hear to prevent any unwarranted apicalls from watch
+    this.fromStore = true;
+  },
   computed: {
     ...mapState({
       banks: "NigerianBanks",
@@ -145,7 +157,9 @@ export default Vue.extend({
       saveBankDetailsInStore: "setBankDetails"
     }),
     modify(e: string) {
+      debugger;
       this.bank_code = e;
+      this.fromStore = false;
     },
     async submitBankDetailsToStore(e: Event): Promise<any> {
       const {
@@ -205,37 +219,41 @@ export default Vue.extend({
     },
 
     async confirmBankDetails() {
-      try {
-        let url = "https://mobile.creditclan.com/webapi/v1/account/resolve";
-        // "x-api-key": "z2BhpgFNUA99G8hZiFNv77mHDYcTlecgjybqDACv"
-        let obj = {
-          account_number: this.account_number,
-          bank_code: this.bank_code
-        };
-        let response: any = await fetch(url, {
-          body: JSON.stringify(obj),
-          method: "POST",
-          headers: {
-            "x-api-key": "z2BhpgFNUA99G8hZiFNv77mHDYcTlecgjybqDACv"
-          }
-        });
+      if (!this.fromStore) {
+        try {
+          let url = "https://mobile.creditclan.com/webapi/v1/account/resolve";
+          // "x-api-key": "z2BhpgFNUA99G8hZiFNv77mHDYcTlecgjybqDACv"
+          let obj = {
+            account_number: this.account_number,
+            bank_code: this.bank_code
+          };
+          let response: any = await fetch(url, {
+            body: JSON.stringify(obj),
+            method: "POST",
+            headers: {
+              "x-api-key": "z2BhpgFNUA99G8hZiFNv77mHDYcTlecgjybqDACv"
+            }
+          });
 
-        response = await response.json();
-        this.fetching = false;
-        if (response.hasOwnProperty("data")) {
-          this.account_name = response.data.account_name;
-        } else {
-          throw new Error("Account number not found!");
+          response = await response.json();
+          this.fetching = false;
+          if (response.hasOwnProperty("data")) {
+            this.account_name = response.data.account_name;
+          } else {
+            throw new Error("Account number not found!");
+          }
+        } catch (error) {
+          this.$nuxt.$emit("GeneralError", {
+            message: "Account number not found!",
+            variant: "danger"
+          });
+          this.$nuxt.$emit("GeneralError", "");
+          setTimeout(() => {
+            this.$nuxt.$emit("SwitchOffNotification");
+          }, 3000);
         }
-      } catch (error) {
-        this.$nuxt.$emit("GeneralError", {
-          message: "Account number not found!",
-          variant: "danger"
-        });
-        this.$nuxt.$emit("GeneralError", "");
-        setTimeout(() => {
-          this.$nuxt.$emit("SwitchOffNotification");
-        }, 3000);
+      } else {
+        this.fetching = false;
       }
     }
   }

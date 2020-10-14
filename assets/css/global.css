@@ -381,3 +381,8 @@ div.other-stuff {
   padding: 7px;
   overflow: auto;
 }
+
+fieldset legend,
+label {
+  color: black;
+}

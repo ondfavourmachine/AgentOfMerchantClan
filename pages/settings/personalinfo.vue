@@ -43,14 +43,14 @@
             <b-form-datepicker id="example-datepicker" v-model="date_of_birth" class="mb-2"></b-form-datepicker>
           </div>
 
-          <div>
+          <!-- <div>
             <label for="example-datepicker-1">Start Date</label>
             <b-form-datepicker id="example-datepicker-1" v-model="start_date" class="mb-2"></b-form-datepicker>
-          </div>
+          </div>-->
 
           <b-button
             class="mt-1"
-            :disabled="!$data.date_of_birth || !$data.first_name || !$data.last_name || !$data.gender || !$data.title || !$data.start_date "
+            :disabled="!$data.date_of_birth || !$data.first_name || !$data.last_name || !$data.gender || !$data.title "
             @click="handleSubmitOfPersonalInfo"
             type="button"
             variant="primary"
@@ -77,7 +77,7 @@ interface PersonalData {
   gender: string;
   title: string;
   date_of_birth: string;
-  start_date: string;
+  // start_date: string;
 }
 
 export default Vue.extend({
@@ -85,17 +85,25 @@ export default Vue.extend({
     Header,
     Spinner
   },
-  created() {},
+  mounted() {
+    this.first_name = this.currentUser.full_name.split(" ")[0];
+    this.last_name = this.currentUser.full_name.split(" ")[1];
+    this.title = this.currentUser.title;
+    this.date_of_birth = this.currentUser.date_of_birth;
+    this.gender = this.currentUser.gender;
+    // this.start_date = this.currentUser.start_date;
+  },
   data(): PersonalData {
     return {
       first_name: "",
       last_name: "",
       gender: "",
       title: "",
-      date_of_birth: "",
-      start_date: ""
+      date_of_birth: ""
+      // start_date: ""
     };
   },
+  middleware: "authenticated",
   computed: {
     ...mapState({
       myApiCall: "apiCall",
@@ -112,7 +120,7 @@ export default Vue.extend({
     async handleSubmitOfPersonalInfo(e: Event) {
       const {
         date_of_birth,
-        start_date,
+        // start_date,
         first_name,
         last_name,
         title,
@@ -120,7 +128,7 @@ export default Vue.extend({
       } = this.$data;
       await this.savePersonalDetailsInStore({
         date_of_birth,
-        start_date,
+
         first_name,
         last_name,
         title,

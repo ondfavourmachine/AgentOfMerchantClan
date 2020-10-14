@@ -163,10 +163,18 @@ export default Vue.extend({
     Header,
     Spinner
   },
-  created() {
-    // console.log(this.states);
+  middleware: "authenticated",
+  mounted() {
+    this.nok_name = this.user.nok_name;
+    this.nok_relationship = this.user.nok_relationship;
+    this.nok_address = this.user.nok_address;
+    this.nok_suburb = this.user.nok_suburb;
+    this.nok_postcode = this.user.nok_postcode;
+    this.nok_mobile = this.user.nok_mobile;
+    this.nok_work = this.user.nok_work;
+    this.nok_home_phone = this.user.nok_home_phone;
+    this.nok_state = this.user.nok_state;
   },
-
   data(): Partial<NOKDATA> {
     return {
       nok_name: "",
@@ -187,7 +195,7 @@ export default Vue.extend({
   },
 
   computed: {
-    ...mapState(["apiCall", "states"]),
+    ...mapState(["apiCall", "states", "user"]),
 
     computedNigerianStates(): any[] {
       this.nigerianStates = [...this.states];
