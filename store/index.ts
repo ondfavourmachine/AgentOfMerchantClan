@@ -11,30 +11,30 @@ interface State {
     agent_no: string;
     date_of_birth?: string;
     start_date?: string;
-    bank_name?: null | string;
+    bank_name?: string;
     account_name?: string;
     account_number?: string;
     bank_branch?: string;
-    address?: "";
-    state?: null | string;
+    address?: string;
+    state?: string;
     suburb?: string;
     home_phone?: string;
     postcode?: string;
     email?: string;
     mobile?: string;
     full_name: string;
-    nok_name?: "";
-    nok_relationship?: "";
-    nok_address?: "";
-    nok_suburb?: "";
-    nok_state?: null;
+    nok_name?: string;
+    nok_relationship?: string;
+    nok_address?: string;
+    nok_suburb?: string;
+    nok_state?: string;
 
-    nok_postcode?: "";
-    nok_home_phone?: "";
-    nok_mobile?: "";
-    nok_work?: "";
-    employee_signature?: "";
-    date_signed?: "";
+    nok_postcode?: string;
+    nok_home_phone?: string;
+    nok_mobile?: string;
+    nok_work?: string;
+    employee_signature?: string;
+    date_signed?: string;
   };
 
   states: Array<NigerianState>;
@@ -83,7 +83,7 @@ export const state = (): State => ({
     nok_relationship: "",
     nok_address: "",
     nok_suburb: "",
-    nok_state: undefined,
+    nok_state: "",
     nok_postcode: "",
     nok_home_phone: "",
     nok_mobile: "",
@@ -96,7 +96,7 @@ export const state = (): State => ({
   currentState: "personal",
   agentsInterest: new Set(),
   apiCall: false,
-  token: undefined,
+  token: "",
   url:
     "https://covidreliefbackend.covidrelief.com.ng/merchantclan/public/index.php/api/"
 });
@@ -144,7 +144,7 @@ export const mutations: MutationTree<RootState> = {
     state.user = { ...state.user, ...newValue };
   },
 
-  INSERT_LOGGED_IN_USER(state: State, user: Record<string, string>) {
+  INSERT_LOGGED_IN_USER(state: State, user: any) {
     state.user = { ...user };
   },
 

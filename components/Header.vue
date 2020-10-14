@@ -3,7 +3,7 @@
 <template>
   <div class="heading">
     <div class="left">
-      <div v-html="getInitials" class="avatar"></div>
+      <div class="avatar">{{getInitials}}</div>
     </div>
     <div class="right">
       <div class="hamburger">
@@ -27,6 +27,7 @@ export default Vue.extend({
 
     getInitials() {
       let userName: string | Array<string> = this.currentUser.full_name;
+      if (userName.length < 1) return "mc".toUpperCase();
       try {
         userName = (userName as string).split(" ");
         userName = (userName as string[]).map(element =>

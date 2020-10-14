@@ -1,83 +1,102 @@
 <template>
-  <div>
-    <p class="heading-title">Address and Contact Information</p>
-    <b-form>
-      <b-form-group id="input-group-5" label-for="input-5">
-        <b-form-input id="input-5" v-model="address" required placeholder="Address"></b-form-input>
-      </b-form-group>
+  <div class="main-container">
+    <div class="parent">
+      <div class="child-one">
+        <div class="heading">
+          <Header />
+        </div>
+      </div>
 
-      <b-form-group id="input-group-5" label-for="input-5">
-        <b-form-input
-          id="input-5"
-          v-model="suburb"
-          required
-          placeholder="Suburb: eg Victoria Island"
-        ></b-form-input>
-      </b-form-group>
+      <div class="child-two">
+        <p class="heading-title">Address Details</p>
+        <b-form>
+          <b-form-group id="input-group-5" label-for="input-5">
+            <b-form-input id="input-5" v-model="address" required placeholder="Address"></b-form-input>
+          </b-form-group>
 
-      <b-form-group>
-        <b-form-select v-model="state">
-          <b-form-select-option value>Please select a state</b-form-select-option>
-          <b-form-select-option
-            v-for="computedState in computedNigerianStates"
-            :key="computedState.id"
-            :value="computedState.name"
-          >{{ computedState.name }}</b-form-select-option>
-        </b-form-select>
-      </b-form-group>
+          <b-form-group id="input-group-5" label-for="input-5">
+            <b-form-input
+              id="input-5"
+              v-model="suburb"
+              required
+              placeholder="Suburb: eg Victoria Island"
+            ></b-form-input>
+          </b-form-group>
 
-      <b-form-group id="input-group-5" label-for="input-5">
-        <b-form-input id="input-5" v-model="postcode" required placeholder="Post code: eg 10020"></b-form-input>
-      </b-form-group>
+          <b-form-group>
+            <b-form-select v-model="state">
+              <b-form-select-option value>Please select a state</b-form-select-option>
+              <b-form-select-option
+                v-for="computedState in computedNigerianStates"
+                :key="computedState.id"
+                :value="computedState.name"
+              >{{ computedState.name }}</b-form-select-option>
+            </b-form-select>
+          </b-form-group>
 
-      <b-form-group id="input-group-5" label-for="input-5">
-        <b-form-input
-          type="number"
-          id="input-5"
-          v-model="home_phone"
-          required
-          placeholder="Home phone: eg 08033445059"
-        ></b-form-input>
-      </b-form-group>
+          <b-form-group id="input-group-5" label-for="input-5">
+            <b-form-input
+              id="input-5"
+              v-model="postcode"
+              required
+              placeholder="Post code: eg 10020"
+            ></b-form-input>
+          </b-form-group>
 
-      <b-form-group id="input-group-5" label-for="input-5">
-        <b-form-input
-          id="input-5"
-          type="number"
-          v-model="mobile"
-          required
-          placeholder="Mobile no: eg 090334567890"
-        ></b-form-input>
-      </b-form-group>
+          <b-form-group id="input-group-5" label-for="input-5">
+            <b-form-input
+              type="number"
+              id="input-5"
+              v-model="home_phone"
+              required
+              placeholder="Home phone: eg 08033445059"
+            ></b-form-input>
+          </b-form-group>
 
-      <b-form-group id="input-group-5" label-for="input-5">
-        <b-form-input id="input-5" v-model="email" required placeholder="Email: eg nuc@sahwn.com"></b-form-input>
-      </b-form-group>
+          <b-form-group id="input-group-5" label-for="input-5">
+            <b-form-input
+              id="input-5"
+              type="number"
+              v-model="mobile"
+              required
+              placeholder="Mobile no: eg 090334567890"
+            ></b-form-input>
+          </b-form-group>
 
-      <b-button
-        :disabled="!$data.address || !$data.state || !$data.suburb || !$data.home_phone 
-        || !$data.postcode || !$data.mobile || !$data.email "
-        class="mt-3"
-        @click="submitAddressForm"
-        type="button"
-        variant="primary"
-      >
-        Next
-        <span
-          :class="!$data.address || !$data.state || !$data.suburb || !$data.home_phone || !$data.postcode || !$data.mobile || !$data.email ? '': 'btn-child'"
-        ></span>
-      </b-button>
-    </b-form>
+          <b-form-group id="input-group-5" label-for="input-5">
+            <b-form-input
+              id="input-5"
+              v-model="email"
+              required
+              placeholder="Email: eg nuc@sahwn.com"
+            ></b-form-input>
+          </b-form-group>
 
-    <!-- <b-card class="mt-3" header="Data Result">
-      <pre class="m-0">{{ $data }}</pre>
-    </b-card>-->
+          <b-button
+            :disabled="!$data.address || !$data.state || !$data.suburb || !$data.home_phone 
+             || !$data.postcode || !$data.mobile || !$data.email "
+            class="mt-3"
+            @click="submitAddressForm"
+            type="button"
+            variant="primary"
+          >
+            Next
+            <span
+              :class="!$data.address || !$data.state || !$data.suburb || !$data.home_phone || !$data.postcode || !$data.mobile || !$data.email ? '': 'btn-child'"
+            ></span>
+          </b-button>
+        </b-form>
+      </div>
+    </div>
+    <Spinner v-if="myApiCall" />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import { mapState, mapActions } from "vuex";
+import Header from "~/components/Header.vue";
+import Spinner from "~/components/Spinner.vue";
 
 interface AddressData {
   address: string;
@@ -91,6 +110,10 @@ interface AddressData {
 }
 
 export default Vue.extend({
+  components: {
+    Header,
+    Spinner
+  },
   data(): AddressData {
     return {
       address: "",
@@ -106,7 +129,8 @@ export default Vue.extend({
 
   computed: {
     ...mapState({
-      stateFromServer: "states"
+      stateFromServer: "states",
+      myApiCall: "apiCall"
     }),
 
     computedNigerianStates(): any[] {
@@ -144,5 +168,29 @@ export default Vue.extend({
 });
 </script>
 
-<style>
+<style scoped>
+.parent {
+  grid-template-rows: 10vh 75vh 1vh;
+}
+
+div.child-two {
+  grid-row: 2/3;
+  padding: 12px;
+
+  align-items: center;
+  grid-gap: 5px;
+}
+div.child-two div,
+div.child-two fieldset {
+  color: rgba(20, 0, 204, 0.789);
+  border-radius: 5px;
+  padding: 2px;
+  max-width: 100%;
+}
+
+.btn-primary,
+.btn-primary.disabled,
+.btn-primary:disabled {
+  width: 26%;
+}
 </style>

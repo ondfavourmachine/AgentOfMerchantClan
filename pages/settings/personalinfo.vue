@@ -134,28 +134,29 @@ export default Vue.extend({
         title,
         gender
       });
-      console.log(this.currentUser);
+  
       // this.$store.dispatch("setNextStage", "address");
       this.$store.dispatch("setApiCallState", true);
       const formData = new FormData();
 
-      for (let key in this.currentUser) {
-        formData.append(`${key}`, this.currentUser[key]);
-      }
+       
       try {
-        const response = await fetch(`${this.agentUrl}agent/settings`, {
-          body: formData,
+        const response: Response | any = await fetch(`${this.agentUrl}agent/settings`, {
+          body: JSON.stringify(this.currentUser),
           method: "POST",
           headers: {
-            Authorization: `Bearer ${this.$store.state.token}`
+            Authorization: `Bearer ${this.$store.state.token}`,
+              "Content-Type": "application/json"
           }
         });
 
-        console.log(response);
+        const {data} = response;
+
+        this.$store.dispatch("setLoggedInUser", );
         this.$store.dispatch("setApiCallState", false);
         this.$nuxt.$emit(
           "SuccessNotification",
-          "Bank Details updated successfully"
+          "Personal details updated successfully"
         );
       } catch (error) {
         this.$nuxt.$emit("GeneralError", "Could not update your Bank Details");
