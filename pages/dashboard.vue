@@ -46,12 +46,12 @@
         </div>
       </div>
       <div class="child-three">
-        <h3 class="recent">Recent Activities</h3>
+        <!-- <h3 class="recent">Recent Activities</h3>
         <div class="my-table-container">
           <div>
             <b-table striped hover :items="items"></b-table>
           </div>
-        </div>
+        </div>-->
       </div>
     </div>
   </div>

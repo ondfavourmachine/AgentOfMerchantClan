@@ -83,7 +83,7 @@ export default Vue.extend({
         };
         reader.readAsDataURL(event.target["files"][0]);
       }
-
+      this.$store.dispatch("setApiCallState", true);
       this.uploadPhoto();
     },
 
@@ -117,9 +117,9 @@ export default Vue.extend({
           message: "Passport photo updated successfully",
           variant: "success"
         });
-        setTimeout(() => {
-          this.$router.push("/settings");
-        }, 2000);
+        // setTimeout(() => {
+        //   this.$router.push("/settings");
+        // }, 2000);
       } catch (error) {
         this.$nuxt.$emit("GeneralError", {
           message: "Upload your picture. Please try again later",

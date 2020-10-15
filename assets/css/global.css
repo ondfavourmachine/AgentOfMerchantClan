@@ -177,8 +177,8 @@
   padding: 15px;
   margin: 2px;
   display: grid;
-  grid-template-rows: 37vh 20vh 34vh;
-  grid-gap: 20px;
+  grid-template-rows: 35vh 20vh 34vh;
+  grid-gap: 15px;
 }
 
 div.child-one,
@@ -289,11 +289,11 @@ div.other-stuff {
 }
 
 .holder {
-  padding: 5px;
+  padding: 5px 0px 8px 11px;
   display: flex;
   flex-direction: column;
   height: 75%;
-  margin-top: 33px;
+  margin-top: 20px;
   border-radius: 5px;
   border: 1px solid rgb(229 229 229 / 0.3);
   box-shadow: 4px 10px 12px #e5e5e5;
@@ -318,11 +318,11 @@ div.other-stuff {
 
 .holder .text {
   text-align: left;
-  margin-top: 30px;
-  line-height: 2;
+  margin-top: 15px;
+  /* line-height: 2; */
   font-size: 1.15rem;
   font-weight: bold;
-  color: #6562cf;
+  color: rgba(0, 0, 0, 0.7);
 }
 
 .child-two-parent {
@@ -348,6 +348,7 @@ div.other-stuff {
 .sub-two-holder {
   display: flex;
   flex-direction: column;
+  padding: 0px 0px 0px 5px;
 }
 
 .sub-two-holder span:first-child,
@@ -359,13 +360,14 @@ div.other-stuff {
 .sub-two-holder span:first-child img,
 .sub-one-holder span:first-child img {
   object-fit: contain;
-  width: 80%;
+  width: 65%;
 }
 
 .sub-two-holder span:last-child,
 .sub-one-holder span:last-child {
   font-weight: bold;
   font-size: 1.15rem;
+  color: rgba(0, 0, 0, 0.7);
 }
 
 .recent {

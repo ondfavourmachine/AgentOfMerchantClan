@@ -189,7 +189,7 @@ export default Vue.extend({
 
         mobile
       });
-      console.log(state);
+      this.$store.dispatch("setApiCallState", true);
       try {
         let response: Response | any = await fetch(
           `${this.$store.state.url}agent/settings`,

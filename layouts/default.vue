@@ -28,6 +28,10 @@
         </li>
       </ul>
     </div>
+
+    <div class="floating-icon">
+      <img src="../assets/css/images/activity-white.svg" alt />
+    </div>
     <nuxt />
   </div>
 </template>
@@ -113,9 +117,12 @@ export default Vue.extend({
     );
   },
 
+  computed: {},
+
   watch: {
     $route(to, from) {
       this.showDismissibleAlert = false;
+      console.log(to);
     }
   },
 
@@ -260,5 +267,26 @@ html {
 
 .side-bar.show {
   transform: scale(1);
+}
+
+.floating-icon {
+  top: 75%;
+  right: 10px;
+  position: absolute;
+  height: 65px;
+  width: 65px;
+  z-index: 30;
+  border-radius: 50%;
+  border: 1px solid rgb(229, 229, 229, 0.3);
+  background-color: rgba(20, 0, 204, 0.888);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 4px 10px 12px rgba(20, 0, 204, 0.2);
+}
+
+.floating-icon img {
+  width: 50%;
+  object-fit: contain;
 }
 </style>
