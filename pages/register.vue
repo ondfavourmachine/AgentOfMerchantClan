@@ -179,15 +179,15 @@ export default Vue.extend({
       } catch (error) {
         const { message } = error.response.data;
         if ((message as string).includes("SQLSTATE")) {
-          this.$nuxt.$emit(
-            "RegistrationError",
-            `Sorry we couldn't register you at this time. Please try again later!`
-          );
+          this.$nuxt.$emit("RegistrationError", {
+            message: `Sorry we couldn't register you at this time. Please try again later!`,
+            variant: "danger"
+          });
           this.$store.dispatch("setApiCallState", false);
           return;
         }
 
-        this.$nuxt.$emit("RegistrationError", message);
+        this.$nuxt.$emit("RegistrationError", { message, variant: "danger" });
         this.$store.dispatch("setApiCallState", false);
       }
     },

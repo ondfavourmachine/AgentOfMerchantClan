@@ -29,7 +29,7 @@
       </ul>
     </div>
 
-    <div v-if="showFloating" class="floating-icon">
+    <div v-if="false" class="floating-icon">
       <img src="../assets/css/images/activity-white.svg" alt />
     </div>
     <nuxt />
@@ -77,13 +77,17 @@ export default Vue.extend({
   },
 
   created() {
-    this.$nuxt.$on("RegistrationError", (e: any) => {
-      this.message = e;
-      this.showDismissibleAlert = true;
+    this.$nuxt.$on(
+      "RegistrationError",
+      (e: { message: string; variant: string }) => {
+        this.message = e.message;
+        this.variant = e["variant"];
+        this.showDismissibleAlert = true;
 
-      // this.$store.dispatch("fetchAllBanks");
-      // this.$store.dispatch("fetchAllStates");
-    });
+        // this.$store.dispatch("fetchAllBanks");
+        // this.$store.dispatch("fetchAllStates");
+      }
+    );
 
     this.$nuxt.$on("LoginError", (e: any) => {
       this.message = e;
@@ -130,7 +134,7 @@ export default Vue.extend({
       ) {
         this.showFloating = false;
       } else {
-        this.showFloating = true;
+        this.showFloating = false;
       }
     }
   },

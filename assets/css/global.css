@@ -74,7 +74,7 @@
   width: 207px; */
 
   position: absolute;
-  right: -10px;
+  right: -33px;
   bottom: -56px;
   height: 395px;
   width: 207px;
@@ -289,6 +289,7 @@ div.other-stuff {
   width: 89%;
   margin: 3px;
 }
+/*  what is the commission for each agent per merchant,  transactions my merchant onboarded, is it by value or number */
 
 .holder {
   padding: 5px 0px 8px 11px;
