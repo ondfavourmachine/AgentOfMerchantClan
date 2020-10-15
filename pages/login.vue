@@ -3,7 +3,7 @@
 <template>
   <div class="container">
     <div class="picture-container">
-      <img src="../assets/css/images/character 14.svg" style="width: 100%; height: 100%;" alt />
+      <img src="../assets/css/images/character 14.svg" style="width: 80%;" alt />
     </div>
 
     <div class="content-page">
@@ -47,6 +47,12 @@
               Sign in
               <span class :class="!email || !password ? '': 'btn-child'"></span>
             </b-button>
+            <div class="no-account">
+              <span>Not an agent?</span>,
+              <nuxt-link to="/interests">
+                <a>Sign up now</a>
+              </nuxt-link>
+            </div>
           </b-form>
         </div>
       </div>
@@ -159,5 +165,19 @@ button.join-us {
 .btn-primary.disabled,
 .btn-primary:disabled {
   width: 29%;
+}
+
+.no-account {
+  margin-top: 16px;
+  color: black;
+}
+.no-account span {
+  font-size: 1.05rem;
+}
+
+.no-account a {
+  text-decoration: underline;
+  letter-spacing: -1px;
+  color: #6562cf;
 }
 </style>

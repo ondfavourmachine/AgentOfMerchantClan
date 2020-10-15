@@ -67,15 +67,17 @@
   position: relative;
 }
 .picture-container {
-  position: absolute;
+  /* position: absolute;
   right: 0;
   bottom: -21px;
   height: 395px;
-  width: 207px;
+  width: 207px; */
 
-  /* background-repeat: no-repeat;
-  background-size: cover;
-  background-position: 70% 100%; */
+  position: absolute;
+  right: -10px;
+  bottom: -56px;
+  height: 395px;
+  width: 207px;
 }
 
 .picture-container img {

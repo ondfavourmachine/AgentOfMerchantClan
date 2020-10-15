@@ -29,7 +29,7 @@
       </ul>
     </div>
 
-    <div class="floating-icon">
+    <div v-if="showFloating" class="floating-icon">
       <img src="../assets/css/images/activity-white.svg" alt />
     </div>
     <nuxt />
@@ -71,7 +71,8 @@ export default Vue.extend({
       dismissSecs: 10,
       message: "",
       showDismissibleAlert: false,
-      variant: "success"
+      variant: "success",
+      showFloating: true
     };
   },
 
@@ -122,7 +123,15 @@ export default Vue.extend({
   watch: {
     $route(to, from) {
       this.showDismissibleAlert = false;
-      console.log(to);
+      if (
+        (to.name as string).toLowerCase() == "login" ||
+        (to.name as string).toLowerCase() == "register" ||
+        (to.name as string).toLowerCase() == "interests"
+      ) {
+        this.showFloating = false;
+      } else {
+        this.showFloating = true;
+      }
     }
   },
 
