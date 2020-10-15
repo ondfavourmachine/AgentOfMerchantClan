@@ -149,7 +149,7 @@ export default {
 };
 </script>
 
-<style >
+<style scoped >
 .main {
   overflow: hidden;
   /* background: #e5e5e5; */

@@ -126,7 +126,7 @@ export default Vue.extend({
           return;
         }
 
-        this.$nuxt.$emit("LoginError", message);
+        this.$nuxt.$emit("LoginError", {message, variant: "danger"});
         this.$store.dispatch("setApiCallState", false);
       }
     }

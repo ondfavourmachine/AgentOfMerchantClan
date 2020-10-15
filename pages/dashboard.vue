@@ -1,33 +1,42 @@
 
 <template>
+  <!-- ../assets/css/images/settings.svg -->
   <div class="main-container">
     <div class="parent">
       <div class="child-one">
         <Header />
 
         <div class="other-stuff" style>
-          <div class="settings">
-            <!-- ../assets/css/images/settings.svg -->
+          <p>My Merchants</p>
+          <p>
+            <button class="view">View</button>
+          </p>
+          <div>
+            <img src="../assets/css/images/seller.svg" alt />
+          </div>
+
+          <!-- <div class="settings">
+            
             <div @click="routeToSettings" class="holder">
               <span class="settings-img">
                 <img src="../assets/css/images/settings-colored.svg" alt />
               </span>
               <span class="text">Settings</span>
             </div>
-          </div>
-          <div class="my-merchant">
+          </div>-->
+          <!-- <div class="my-merchant">
             <div class="holder">
               <span class="seller-img">
                 <img src="../assets/css/images/seller.svg" alt />
               </span>
               <span class="text">My Merchants</span>
             </div>
-          </div>
+          </div>-->
         </div>
       </div>
       <div class="child-two">
         <div class="child-two-parent">
-          <div class="sub-one">
+          <!-- <div class="sub-one">
             <div class="sub-one-holder">
               <span>
                 <img src="../assets/css/images/collect.svg" alt />
@@ -42,7 +51,14 @@
               </span>
               <span>AVS</span>
             </div>
-          </div>
+          </div>-->
+
+          <VueSlickCarousel :dots="true" v-bind="setting">
+            <div>1</div>
+            <div>2</div>
+            <div>3</div>
+            <div>4</div>
+          </VueSlickCarousel>
         </div>
       </div>
       <div class="child-three">
@@ -53,28 +69,37 @@
           </div>
         </div>-->
       </div>
+
+      <div class="child-four"></div>
     </div>
   </div>
 </template>
 
-<script lang="ts">
+<script >
 import Vue from "vue";
 import Header from "~/components/Header.vue";
+import VueSlickCarousel from "vue-slick-carousel";
+import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
 
-export default Vue.extend({
+export default {
   components: {
-    Header
+    Header,
+    VueSlickCarousel
   },
 
   middleware: "authenticated",
   data() {
     return {
-      items: [
-        { "m-ID": 40, Type: "Sales", time: "4:23pm" },
-        { "m-ID": 42, Type: "Repayment", time: "1:23pm" },
-        { "m-ID": 32, Type: "Order", time: "2:23pm" },
-        { "m-ID": 62, Type: "Order", time: "1:43pm" }
-      ]
+      setting: {
+        dots: true,
+        arrows: false,
+        dotsClass: "slick-dots custom-dot-class",
+        edgeFriction: 0.35,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1
+      }
     };
   },
 
@@ -83,7 +108,7 @@ export default Vue.extend({
       this.$router.push("/settings");
     }
   }
-});
+};
 </script>
 
 <style scoped>
