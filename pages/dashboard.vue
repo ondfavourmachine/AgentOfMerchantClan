@@ -32,7 +32,7 @@
               <span>
                 <img src="../assets/css/images/collect.svg" alt />
               </span>
-              <span>Collections</span>
+              <span>Commissions</span>
             </div>
           </div>
           <div class="sub-two">

@@ -188,7 +188,7 @@ html {
   height: 120vh;
   border-bottom-right-radius: 50px;
   transform: scale(0);
-  opacity: 0;
+
   transform-origin: top left;
   transition: all 0.3s ease-in-out;
   padding: 10px;
@@ -260,7 +260,5 @@ html {
 
 .side-bar.show {
   transform: scale(1);
-  opacity: 1;
-  transition: all 0.3s ease-in-out;
 }
 </style>
