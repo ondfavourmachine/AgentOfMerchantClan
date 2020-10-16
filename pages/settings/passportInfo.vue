@@ -35,6 +35,7 @@
       name="img"
       accept="image/*"
     />
+    <Spinner v-if="apiCall" />
   </div>
 </template>
 
@@ -42,22 +43,28 @@
 import Vue from "vue";
 import Header from "~/components/Header.vue";
 import { mapState } from "vuex";
+import Spinner from "~/components/Spinner.vue";
 
 export default Vue.extend({
   components: {
-    Header
+    Header,
+    Spinner
   },
   data() {
     return {
-      passport: ""
+      passport: "../../assets/css/images/no-product.svg",
+      apiCall: false
     };
   },
-  middleware: "authenticated",
+  // middleware: "authenticated",
   computed: {
     ...mapState(["user"])
   },
   mounted() {
-    (this.$refs.imgDisplay as HTMLImageElement).src = this.user.passport != 'null' || null ? this.user.passport :'../../assets/css/images/no-product.svg' ;
+    console.log(this.user.passport, typeof this.user.passport);
+    this.user.passport == "null"
+      ? "../../assets/css/images/no-product.svg"
+      : this.user.passport;
   },
   methods: {
     takePicture() {
@@ -72,7 +79,6 @@ export default Vue.extend({
         return;
       }
       this.passport = event.target["files"][0];
-      console.log(this.passport);
       let reader: FileReader;
       if (FileReader) {
         // check if the filereader api is supported by browser
@@ -83,7 +89,7 @@ export default Vue.extend({
         };
         reader.readAsDataURL(event.target["files"][0]);
       }
-      
+
       this.uploadPhoto();
     },
 
@@ -95,7 +101,7 @@ export default Vue.extend({
       for (let key in formToSubmit) {
         formData.append(key, formToSubmit[key]);
       }
-      this.$store.dispatch("setApiCallState", true); 
+      this.apiCall = true;
       try {
         let response: Response | any = await fetch(
           `${this.$store.state.url}agent/settings`,
@@ -104,7 +110,6 @@ export default Vue.extend({
             method: "POST",
             headers: {
               Authorization: `Bearer ${this.$store.state.token}`
-              "Content-Type": "application/json"
             }
           }
         );
@@ -112,7 +117,8 @@ export default Vue.extend({
         response = await response.json();
         const { data } = response;
         this.$store.dispatch("setLoggedInUser", data);
-        this.$store.dispatch("setApiCallState", false);
+        // this.$store.dispatch("setApiCallState", false);
+        this.apiCall = false;
         this.$nuxt.$emit("SuccessNotification", {
           message: "Passport photo updated successfully",
           variant: "success"
@@ -122,9 +128,10 @@ export default Vue.extend({
         // }, 2000);
       } catch (error) {
         this.$nuxt.$emit("GeneralError", {
-          message: `We couldn't upload your picture at the moment. Please try again later!`,
+          message: "Upload your picture. Please try again later",
           variant: "danger"
         });
+        this.apiCall = false;
         setTimeout(() => {
           this.$nuxt.$emit("SwitchOffNotification");
         }, 3000);
