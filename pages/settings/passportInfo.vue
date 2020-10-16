@@ -61,7 +61,6 @@ export default Vue.extend({
     ...mapState(["user"])
   },
   mounted() {
-    console.log(this.user.passport, typeof this.user.passport);
     this.user.passport == "null"
       ? "../../assets/css/images/no-product.svg"
       : this.user.passport;
