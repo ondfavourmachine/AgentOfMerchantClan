@@ -83,7 +83,7 @@ export default Vue.extend({
         };
         reader.readAsDataURL(event.target["files"][0]);
       }
-      this.$store.dispatch("setApiCallState", true);
+      
       this.uploadPhoto();
     },
 
@@ -93,9 +93,9 @@ export default Vue.extend({
       let formToSubmit = { ...this.user };
       formToSubmit.passport = this.passport;
       for (let key in formToSubmit) {
-        formData.append(`${key}`, formToSubmit[key]);
+        formData.append(key, formToSubmit[key]);
       }
-
+      this.$store.dispatch("setApiCallState", true); 
       try {
         let response: Response | any = await fetch(
           `${this.$store.state.url}agent/settings`,
@@ -122,7 +122,7 @@ export default Vue.extend({
         // }, 2000);
       } catch (error) {
         this.$nuxt.$emit("GeneralError", {
-          message: "Upload your picture. Please try again later",
+          message: `We couldn't upload your picture at the moment. Please try again later!`,
           variant: "danger"
         });
         setTimeout(() => {
