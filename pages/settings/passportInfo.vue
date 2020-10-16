@@ -57,7 +57,7 @@ export default Vue.extend({
     ...mapState(["user"])
   },
   mounted() {
-    (this.$refs.imgDisplay as HTMLImageElement).src = this.user.passport;
+    (this.$refs.imgDisplay as HTMLImageElement).src = this.user.passport != 'null' || null ? this.user.passport :'../../assets/css/images/no-product.svg' ;
   },
   methods: {
     takePicture() {
@@ -104,7 +104,7 @@ export default Vue.extend({
             method: "POST",
             headers: {
               Authorization: `Bearer ${this.$store.state.token}`
-              //   "Content-Type": "application/json"
+              "Content-Type": "application/json"
             }
           }
         );
