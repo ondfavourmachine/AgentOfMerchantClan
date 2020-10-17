@@ -85,7 +85,7 @@
           </div>
           <div class="second-half" id="multiple-two">
             <p class="activities">
-              <img src="../assets/css/images/open-email.svg" alt />
+              <img src="../assets/css/images/open_email.svg" alt />
             </p>
             <p class="activities-text">
               <span>Send us an email</span>
@@ -158,9 +158,14 @@ div.child-two {
 
 #multiple-one p,
 #multiple-two p {
-  margin-bottom: 0.5rem !important;
+  margin: 1rem 0 0.1rem 0 !important;
   line-height: 0.8 !important;
   font-size: 0.85rem;
+}
+
+#multiple-one p:nth-child(1),
+#multiple-two p:nth-child(1) {
+  margin: 0.5rem 0 0.8rem 0 !important;
 }
 
 #multiple-one p img,
