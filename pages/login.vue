@@ -49,7 +49,7 @@
             </b-button>
             <div class="no-account">
               <span>Not an agent?</span>,
-              <nuxt-link to="/interests">
+              <nuxt-link to="/">
                 <a>Sign up now</a>
               </nuxt-link>
             </div>

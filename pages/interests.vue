@@ -88,7 +88,7 @@
       </div>
 
       <div class="child-two">
-        <div class="sub-one">
+        <div class="sub sub-one">
           Merchant Acquisition
           <span>
             <b-form-checkbox
@@ -101,7 +101,7 @@
           </span>
         </div>
 
-        <div class="sub-two">
+        <div class="sub sub-two">
           Collections
           <span>
             <b-form-checkbox
@@ -114,7 +114,7 @@
           </span>
         </div>
 
-        <div class="sub-three">
+        <div class="sub sub-three">
           Address Verification System
           <span>
             <b-form-checkbox
@@ -153,9 +153,9 @@ export default {
     inputs.forEach(element => {
       element.addEventListener("change", e => {
         if (this.status.indexOf(e.target.value) != -1) {
-          e.target.closest(".child").classList.add("selected");
+          e.target.closest(".sub").classList.add("selected");
         } else {
-          e.target.closest(".child").classList.remove("selected");
+          e.target.closest(".sub").classList.remove("selected");
         }
       });
     });
@@ -273,7 +273,7 @@ div.child-two div span {
 .img-background .join-us {
   position: absolute;
   width: 67px;
-  top: 18%;
+  top: -15px;
   left: 5%;
   padding: 10px;
 }
@@ -282,13 +282,14 @@ div.child-two div span {
   top: 11px;
 }
 
-.child.selected {
-  border: 2px solid rgba(101, 98, 207, 0.6);
+.sub.selected {
+  border: 2px solid rgba(101, 98, 207, 0.6) !important;
   /* padding: 15px; */
 }
 
 .heading {
   justify-content: flex-end;
   padding-right: 20px;
+  padding-bottom: 10px;
 }
 </style>

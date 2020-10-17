@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="picture-container">
-      <img src="../assets/css/images/working-laptop.svg" style="width: 100%; height: 100%;" alt />
+      <img src="../assets/css/images/working-laptop.svg" style="width: 75%;" alt />
     </div>
 
     <div class="content-page">
