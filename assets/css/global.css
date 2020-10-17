@@ -292,7 +292,7 @@
   margin: 2px;
   display: grid;
   grid-template-rows: 35vh 35vh 30vh 20vh;
-  grid-template-columns: 100vw;
+  grid-template-columns: 96vw;
   grid-gap: 7px;
 }
 
