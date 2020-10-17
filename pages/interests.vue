@@ -1,7 +1,7 @@
 
 
 <template>
-  <div class="main">
+  <!-- <div class="main">
     <div class="general-parent">
       <div class="sign-in">
         <nuxt-link to="/login">
@@ -66,7 +66,6 @@
           </div>
         </div>
       </div>
-      <!-- <div class="my-div">4</div> -->
     </VueSlickCarousel>
 
     <div class="img-background">
@@ -74,7 +73,69 @@
         Next
         <span></span>
       </span>
-      <!-- <img src="../assets/css/images/character 6.svg" alt /> -->
+      <img src="../assets/css/images/character 6.svg" alt />
+    </div>
+  </div>-->
+
+  <div class="main-container">
+    <div class="parent">
+      <div class="child-one">
+        <div class="heading">
+          <nuxt-link to="/login">
+            <a style="color: rgba(20, 0, 204, 0.789)">Sign in</a>
+          </nuxt-link>
+        </div>
+      </div>
+
+      <div class="child-two">
+        <div class="sub-one">
+          Merchant Acquisition
+          <span>
+            <b-form-checkbox
+              id="checkbox-1"
+              v-model="status"
+              name="checkbox-1"
+              value="merchant acquisition"
+              unchecked-value="not_accepted"
+            ></b-form-checkbox>
+          </span>
+        </div>
+
+        <div class="sub-two">
+          Collections
+          <span>
+            <b-form-checkbox
+              id="checkbox-2"
+              v-model="status"
+              name="checkbox-2"
+              value="collection"
+              unchecked-value="not_accepted"
+            ></b-form-checkbox>
+          </span>
+        </div>
+
+        <div class="sub-three">
+          Address Verification System
+          <span>
+            <b-form-checkbox
+              id="checkbox-3"
+              v-model="status"
+              name="checkbox-3"
+              value="avs"
+              unchecked-value="not_accepted"
+            ></b-form-checkbox>
+          </span>
+        </div>
+      </div>
+      <div class="child-three">
+        <div class="img-background">
+          <span @click="addInterests" v-if="statusArray.length > 0" class="join-us">
+            Next
+            <span></span>
+          </span>
+          <img src="../assets/css/images/character 6.svg" alt />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -156,87 +217,48 @@ export default {
   height: 100vh;
 }
 
-.general-parent .sign-in {
-  align-self: flex-end;
+.parent {
+  grid-template-rows: 10vh 40vh 45vh;
 }
 
-.general-parent .text-home {
-  align-self: flex-start;
-}
-
-.general-parent {
-  width: 92%;
-  height: 100px;
-  padding: 6px;
-  margin: 10px;
-
-  display: flex;
-  flex-flow: column wrap;
-  justify-content: flex-start;
+div.child-two {
+  grid-row: 2/3;
+  padding: 12px;
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
   align-items: center;
+  grid-gap: 5px;
 }
-
-.text-home {
-  width: 99%;
-  font-size: 1.3rem;
-  padding: 23px 3px 0 11px;
-  /* line-height: 3.1; */
-  transform: translateY(30px);
-}
-.my-div {
-  height: 200px;
-  padding: 15px;
-  color: white;
-}
-
-.my-div .child {
-  border: 1px solid rgba(101, 98, 207, 0.2);
+div.child-two .sub-one,
+div.child-two .sub-two,
+div.child-two .sub-three {
+  color: rgba(20, 0, 204, 0.789);
   border-radius: 5px;
-  height: 100%;
+  border: 1px solid rgba(101, 98, 207, 0.2);
+  box-shadow: 2px 10px 12px rgba(101, 98, 207, 0.2);
+  padding: 15px;
+  max-width: 100%;
+}
+
+div.child-two .sub-one {
+  /* justify-content: center; */
+  grid-row: 1/2;
   display: flex;
-  flex-flow: column wrap;
-  align-items: flex-start;
   justify-content: space-between;
-  box-shadow: 2px 10px 12px rgb(101, 98, 207, 0.2);
-  padding: 2px 4px 0px 4px;
 }
-.child-inner-first {
-  align-self: flex-end;
-}
-
-.child-inner-second {
-  position: relative;
-  height: 70%;
-  width: 100%;
-  font-weight: 600;
-  font-size: 1.05rem;
-  color: rgba(101, 98, 207, 1);
-  overflow: hidden;
+div.child-two .sub-two {
+  grid-row: 2/3;
   display: flex;
-  flex-direction: row;
+  justify-content: space-between;
+}
+div.child-two .sub-three {
+  grid-row: 3/4;
+  display: flex;
+  justify-content: space-between;
 }
 
-.child-inner-second img {
-  object-fit: contain;
-  width: 60%;
-  height: 60%;
-  position: absolute;
-  top: 24px;
-  right: -45px;
-}
-
-.child-inner-second span {
-  align-self: flex-end;
-  padding-bottom: 18px;
-  font-size: 1.2rem;
-}
-
-/* .my-div:first-child {
-  margin-right: 20px;
-} */
-
-.slick-dots {
-  bottom: -14px !important;
+div.child-two div span {
+  color: rgba(20, 0, 204, 0.789);
 }
 
 .img-background {
@@ -251,7 +273,7 @@ export default {
 .img-background .join-us {
   position: absolute;
   width: 67px;
-  top: 2%;
+  top: 18%;
   left: 5%;
   padding: 10px;
 }
@@ -263,5 +285,10 @@ export default {
 .child.selected {
   border: 2px solid rgba(101, 98, 207, 0.6);
   /* padding: 15px; */
+}
+
+.heading {
+  justify-content: flex-end;
+  padding-right: 20px;
 }
 </style>
