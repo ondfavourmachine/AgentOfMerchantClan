@@ -1,6 +1,5 @@
 
 <template>
-  <!-- ../assets/css/images/settings.svg -->
   <div class="main-container">
     <div class="parent">
       <div class="child-one">
@@ -14,63 +13,86 @@
           <div>
             <img src="../assets/css/images/seller.svg" alt />
           </div>
-
-          <!-- <div class="settings">
-            
-            <div @click="routeToSettings" class="holder">
-              <span class="settings-img">
-                <img src="../assets/css/images/settings-colored.svg" alt />
-              </span>
-              <span class="text">Settings</span>
-            </div>
-          </div>-->
-          <!-- <div class="my-merchant">
-            <div class="holder">
-              <span class="seller-img">
-                <img src="../assets/css/images/seller.svg" alt />
-              </span>
-              <span class="text">My Merchants</span>
-            </div>
-          </div>-->
         </div>
       </div>
       <div class="child-two">
-        <div class="child-two-parent">
-          <!-- <div class="sub-one">
-            <div class="sub-one-holder">
-              <span>
-                <img src="../assets/css/images/collect.svg" alt />
-              </span>
-              <span>Commissions</span>
-            </div>
+        <VueSlickCarousel style="margin: 10px;" v-bind="setting">
+          <div class="one" style>
+            <p class="one-child-paragraph">
+              <img src="../assets/css/images/block-user.svg" alt />
+            </p>
+            <p class="one-child-text">Account verification pending</p>
           </div>
-          <div class="sub-two">
-            <div class="sub-two-holder">
-              <span>
-                <img src="../assets/css/images/clipboard.svg" alt />
-              </span>
-              <span>AVS</span>
-            </div>
-          </div>-->
-
-          <VueSlickCarousel :dots="true" v-bind="setting">
-            <div>1</div>
-            <div>2</div>
-            <div>3</div>
-            <div>4</div>
-          </VueSlickCarousel>
-        </div>
+          <div class="two" style>
+            <p class="two-child-paragraph">
+              <img src="../assets/css/images/merchant_1.svg" alt />
+            </p>
+            <p class="two-child-text">
+              <span>0</span>
+              <span>Merchants</span>
+            </p>
+          </div>
+          <div class="third" style>
+            <p class="third-child-paragraph">
+              <img src="../assets/css/images/filled.svg" alt />
+            </p>
+            <p class="third-child-text">
+              <span>0</span>
+              <span>transactions</span>
+            </p>
+          </div>
+          <div class="four" style>
+            <p class="fourth-child-paragraph">
+              <img src="../assets/css/images/sale_label_1.svg" alt />
+            </p>
+            <p class="fourth-child-text">
+              <span>0</span>
+              <span>total sales</span>
+            </p>
+          </div>
+        </VueSlickCarousel>
       </div>
       <div class="child-three">
-        <!-- <h3 class="recent">Recent Activities</h3>
-        <div class="my-table-container">
-          <div>
-            <b-table striped hover :items="items"></b-table>
+        <div class="wrapper">
+          <div class="first-half">
+            <p class="earnings">
+              <img src="../assets/css/images/earn-money_1.svg" alt />
+            </p>
+            <p class="earnings-text">
+              <span>My Earnings</span>
+            </p>
           </div>
-        </div>-->
+          <div class="second-half">
+            <p class="activities">
+              <img src="../assets/css/images/new_activity.svg" alt />
+            </p>
+            <p class="activities-text">
+              <span>Activities</span>
+            </p>
+          </div>
+        </div>
       </div>
 
-      <div class="child-four"></div>
+      <div class="child-four">
+        <div class="wrapper">
+          <div class="first-half" id="multiple-one">
+            <p class="earnings">
+              <img src="../assets/css/images/whatsapp.svg" alt />
+            </p>
+            <p class="earnings-text">
+              <span>Chat with merchant</span>
+            </p>
+          </div>
+          <div class="second-half" id="multiple-two">
+            <p class="activities">
+              <img src="../assets/css/images/open-email.svg" alt />
+            </p>
+            <p class="activities-text">
+              <span>Send us an email</span>
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -78,10 +100,11 @@
 <script >
 import Vue from "vue";
 import Header from "~/components/Header.vue";
+
 import VueSlickCarousel from "vue-slick-carousel";
 import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
 
-export default {
+export default Vue.extend({
   components: {
     Header,
     VueSlickCarousel
@@ -91,14 +114,16 @@ export default {
   data() {
     return {
       setting: {
-        dots: true,
+        dots: false,
         arrows: false,
         dotsClass: "slick-dots custom-dot-class",
         edgeFriction: 0.35,
-        infinite: true,
+        infinite: false,
         speed: 500,
         slidesToShow: 1,
-        slidesToScroll: 1
+        slidesToScroll: 1,
+        variableWidth: true,
+        adaptiveHeight: true
       }
     };
   },
@@ -108,11 +133,38 @@ export default {
       this.$router.push("/settings");
     }
   }
-};
+});
 </script>
 
 <style scoped>
+div.child-two {
+  padding: 10px;
+}
 .holder {
   cursor: pointer;
+}
+
+#multiple-one {
+  background-color: #17a2b8;
+  color: white;
+  border-radius: 10px;
+}
+
+#multiple-two {
+  background-color: #dc3545;
+  border-radius: 10px;
+  color: white;
+}
+
+#multiple-one p,
+#multiple-two p {
+  margin-bottom: 0.5rem !important;
+  line-height: 0.8 !important;
+  font-size: 0.85rem;
+}
+
+#multiple-one p img,
+#multiple-two p img {
+  width: 20%;
 }
 </style>

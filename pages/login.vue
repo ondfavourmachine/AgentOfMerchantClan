@@ -151,6 +151,7 @@ export default Vue.extend({
 
 .form-control {
   /* background-color: #e5e5e5; */
+  border-radius: 0px;
 }
 
 button.join-us {

@@ -91,8 +91,8 @@ export default Vue.extend({
 
     this.$nuxt.$on("LoginError", (e: { message: string; variant: string }) => {
       this.message = e.message;
-        this.variant = e["variant"];
-        this.showDismissibleAlert = true;
+      this.variant = e["variant"];
+      this.showDismissibleAlert = true;
     });
 
     this.$nuxt.$on("NotConnectedToInternet", (e: string) => {
