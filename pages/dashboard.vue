@@ -16,7 +16,7 @@
         </div>
       </div>
       <div class="child-two">
-        <VueSlickCarousel style="margin: 10px;" v-bind="setting">
+        <VueSlickCarousel style="margin: 1px;" v-bind="setting">
           <div class="one" style>
             <p class="one-child-paragraph">
               <img src="../assets/css/images/block-user.svg" alt />
@@ -138,7 +138,7 @@ export default Vue.extend({
 
 <style scoped>
 div.child-two {
-  padding: 10px;
+  padding: 10px 10px 10px 2px;
 }
 .holder {
   cursor: pointer;

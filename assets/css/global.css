@@ -77,10 +77,10 @@
 
 /* styles for first vue-slick-carousel in dashboard  */
 .slick-slide {
-  width: 275px !important;
+  width: 313px !important;
   margin-right: 6px !important;
+  height: 90% !important;
   border-radius: 10px;
-  border-radius: 2px 10px 12px rgb(101, 98, 207, 0.2);
 }
 
 .one,
@@ -341,6 +341,7 @@ div.child-four {
   display: flex;
   justify-content: space-between;
   border-bottom: 0.12rem solid rgb(229, 229, 229, 0.7);
+  margin-bottom: 0.5rem;
 }
 
 .child-one .heading .right {
@@ -419,6 +420,7 @@ div.other-stuff {
   font-size: 1.45rem;
   font-weight: bold;
   margin-bottom: 6px;
+  padding: 5px;
 }
 
 .other-stuff p button {
@@ -581,6 +583,7 @@ div.child-three {
   width: 85%;
   padding: 3px;
   margin: 3px;
+  border-radius: 10px;
   box-shadow: 2px 10px 12px rgba(98, 82, 207, 0.25);
 }
 

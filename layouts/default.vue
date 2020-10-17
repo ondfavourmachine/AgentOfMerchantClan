@@ -202,7 +202,7 @@ html {
 
 .side-bar {
   position: absolute;
-  width: 100%;
+  width: 100vw;
   z-index: 10;
   background-color: rgba(20, 0, 204, 0.888);
   backdrop-filter: blur(2px);
@@ -211,13 +211,14 @@ html {
   transform: scale(0);
 
   transform-origin: top left;
-  transition: all 0.3s ease-in-out;
+
   padding: 10px;
   display: flex;
   flex-flow: column wrap;
   justify-content: flex-start;
   align-items: flex-start;
   overflow: hidden;
+  transition: all 0.3s ease-in-out;
 }
 
 /* .side-bar {
