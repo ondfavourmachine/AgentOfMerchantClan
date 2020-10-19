@@ -427,17 +427,19 @@ div.other-stuff {
 .other-stuff p button {
   outline: none;
   border: none;
-  background: #fff;
+  background: rgba(98, 82, 207);
   font-size: 1.15rem;
+  color: white;
   padding: 6px;
   border: 1px solid rgba(98, 82, 207, 0.55);
-  border-radius: 10px;
+  border-radius: 7px;
   text-transform: lowercase;
   transition: all 0.3s ease-in-out;
 }
 
 .other-stuff p button:hover {
   color: #6562cf;
+  background: white;
   border: 1px solid #6562cf;
 }
 
