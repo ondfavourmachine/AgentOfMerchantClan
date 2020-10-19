@@ -110,7 +110,7 @@ export default Vue.extend({
     VueSlickCarousel
   },
 
-  middleware: "authenticated",
+  // middleware: "authenticated",
   data() {
     return {
       setting: {
@@ -158,7 +158,7 @@ div.child-two {
 
 #multiple-one p,
 #multiple-two p {
-  margin: 1rem 0 0.1rem 0 !important;
+  margin: 1.5rem 0 0.1rem 0 !important;
   line-height: 0.8 !important;
   font-size: 0.85rem;
 }

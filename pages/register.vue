@@ -144,7 +144,7 @@ export default Vue.extend({
   },
 
   computed: {
-    ...mapState(["apiCall", "agentsInterest"])
+    ...mapState(["apiCall", "agentsInterest", "justRegistered"])
   },
 
   methods: {
@@ -176,6 +176,7 @@ export default Vue.extend({
         const { data } = response;
         this.$store.dispatch("setApiCallState", false);
         this.$router.push("/dashboard");
+        this.$store.dispatch("setJustRegistered");
       } catch (error) {
         const { message } = error.response.data;
         if ((message as string).includes("SQLSTATE")) {
@@ -184,6 +185,7 @@ export default Vue.extend({
             variant: "danger"
           });
           this.$store.dispatch("setApiCallState", false);
+
           return;
         }
 

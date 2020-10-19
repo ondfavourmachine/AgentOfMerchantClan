@@ -45,6 +45,7 @@ interface State {
   apiCall: boolean;
   token: string | undefined;
   url: string;
+  justRegistered: boolean;
 }
 
 interface Bank {
@@ -91,7 +92,7 @@ export const state = (): State => ({
     nok_work: "",
     employee_signature: "",
     date_signed: "",
-    passport: ''
+    passport: ""
   },
   states: [],
   NigerianBanks: [],
@@ -99,6 +100,7 @@ export const state = (): State => ({
   agentsInterest: new Set(),
   apiCall: false,
   token: "",
+  justRegistered: false,
   url:
     "https://covidreliefbackend.covidrelief.com.ng/merchantclan/public/index.php/api/"
 });
@@ -112,11 +114,20 @@ export const mutations: MutationTree<RootState> = {
     state.token = "";
     state.url =
       "https://covidreliefbackend.covidrelief.com.ng/merchantclan/public/index.php/api/";
+    state.justRegistered = false;
 
     let key: string;
     for (key in state.user) {
       state.user[key] = "";
     }
+  },
+
+  JUST_REGISTERED_TO_DEFAULT(state: State) {
+    state.justRegistered = false;
+  },
+
+  MODIFY_JUST_REGISTERED(state: State) {
+    state.justRegistered = true;
   },
 
   addBanksToStore(state: State, banks: Bank[]) {
@@ -254,5 +265,13 @@ export const actions: ActionTree<RootState, RootState> = {
 
   resetStore({ commit }) {
     commit("RESET_STORE");
+  },
+
+  setJustRegistered({ commit }) {
+    commit("MODIFY_JUST_REGISTERED");
+  },
+
+  setJustRegisteredBackToDefaultValue({ commit }) {
+    commit("JUST_REGISTERED_TO_DEFAULT");
   }
 };

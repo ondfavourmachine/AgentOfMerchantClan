@@ -33,13 +33,40 @@
       <img src="../assets/css/images/activity-white.svg" alt />
     </div>
     <nuxt />
+    <b-button id="show-btn" @click="showModal" hidden>Open Modal</b-button>
+    <!-- <b-button id="toggle-btn" @click="toggleModal">Toggle Modal</b-button> -->
+
+    <b-modal ref="my-modal" hide-footer>
+      <div class="d-block text-center">
+        <div class="alert-image">
+          <img src="../assets/css/images/alert.svg" alt />
+        </div>
+
+        <div
+          class="warning-message"
+        >Your account is under review and you will be notified when your account has been verified.</div>
+      </div>
+      <b-button class="mt-3" variant="outline-info" block @click="hideModal">Ok</b-button>
+      <!-- <b-button class="mt-2" variant="outline-warning" block @click="toggleModal">Toggle Me</b-button> -->
+    </b-modal>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
+import { mapState } from "vuex";
 export default Vue.extend({
+  computed: {
+    ...mapState(["justRegistered"])
+  },
   methods: {
+    showModal() {
+      (this.$refs["my-modal"] as any).show();
+    },
+    hideModal() {
+      (this.$refs["my-modal"] as any).hide();
+      this.$store.dispatch("setJustRegisteredBackToDefaultValue");
+    },
     closeSideBar() {
       const sideBar = document.querySelector(".side-bar") as HTMLElement;
       sideBar.classList.remove("show");
@@ -123,11 +150,18 @@ export default Vue.extend({
     );
   },
 
-  computed: {},
-
   watch: {
     $route(to, from) {
       this.showDismissibleAlert = false;
+      if (
+        this.justRegistered &&
+        (to.name as string).toLowerCase() == "dashboard"
+      ) {
+        this.showModal();
+      }
+
+      // this.showModal();
+
       if (
         (to.name as string).toLowerCase() == "login" ||
         (to.name as string).toLowerCase() == "register" ||
@@ -208,10 +242,8 @@ html {
   backdrop-filter: blur(2px);
   height: 120vh;
   border-bottom-right-radius: 50px;
-  transform: scale(0);
-
-  transform-origin: top left;
-
+  transform: translateX(-100%);
+  transform-origin: left center;
   padding: 10px;
   display: flex;
   flex-flow: column wrap;
@@ -281,7 +313,7 @@ html {
 }
 
 .side-bar.show {
-  transform: scale(1);
+  transform: translateX(0);
 }
 
 .floating-icon {
@@ -303,5 +335,26 @@ html {
 .floating-icon img {
   width: 50%;
   object-fit: contain;
+}
+
+div.alert-image {
+  height: 100px;
+  margin: 10px 0px 28px 0px;
+}
+
+div.alert-image img {
+  height: 100%;
+  object-fit: cover;
+}
+
+div.warning-message {
+  line-height: 1.5;
+  font-size: 1.6rem;
+  color: #343a40;
+  font-weight: 400;
+}
+
+.close {
+  visibility: hidden;
 }
 </style>
