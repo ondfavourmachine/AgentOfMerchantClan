@@ -240,8 +240,7 @@ html {
   z-index: 10;
   background-color: rgba(20, 0, 204, 0.888);
   backdrop-filter: blur(2px);
-  height: 120vh;
-  border-bottom-right-radius: 50px;
+  height: 100vh;
   transform: translateX(-100%);
   transform-origin: left center;
   padding: 10px;
