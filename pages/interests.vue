@@ -1,82 +1,6 @@
 
 
 <template>
-  <!-- <div class="main">
-    <div class="general-parent">
-      <div class="sign-in">
-        <nuxt-link to="/login">
-          <a style="color: rgba(20, 0, 204, 0.789)">Sign in</a>
-        </nuxt-link>
-      </div>
-      <div class="text-home">What are you interested in?</div>
-    </div>
-
-    <VueSlickCarousel style="margin: 10px;" :dots="true" v-bind="setting">
-      <div class="my-div">
-        <div class="child">
-          <div class="child-inner-first">
-            <b-form-checkbox
-              id="checkbox-1"
-              v-model="status"
-              name="checkbox-1"
-              value="merchant acquisition"
-              unchecked-value="not_accepted"
-            ></b-form-checkbox>
-          </div>
-
-          <div class="child-inner-second">
-            <span>Merchant Acquisition</span>
-            <img src="../assets/css/images/seller.svg" alt />
-          </div>
-        </div>
-      </div>
-      <div class="my-div">
-        <div class="child">
-          <div class="child-inner-first">
-            <b-form-checkbox
-              id="checkbox-2"
-              v-model="status"
-              name="checkbox-2"
-              value="collection"
-              unchecked-value="not_accepted"
-            ></b-form-checkbox>
-          </div>
-
-          <div class="child-inner-second">
-            <span>Collections</span>
-            <img src="../assets/css/images/collect.svg" alt />
-          </div>
-        </div>
-      </div>
-      <div class="my-div">
-        <div class="child">
-          <div class="child-inner-first">
-            <b-form-checkbox
-              id="checkbox-3"
-              v-model="status"
-              name="checkbox-3"
-              value="avs"
-              unchecked-value="not_accepted"
-            ></b-form-checkbox>
-          </div>
-
-          <div class="child-inner-second">
-            <span style="font-size: 1.7rem;">AVS</span>
-            <img src="../assets/css/images/clipboard.svg" alt />
-          </div>
-        </div>
-      </div>
-    </VueSlickCarousel>
-
-    <div class="img-background">
-      <span @click="addInterests" v-if="statusArray.length > 0" class="join-us">
-        Next
-        <span></span>
-      </span>
-      <img src="../assets/css/images/character 6.svg" alt />
-    </div>
-  </div>-->
-
   <div class="main-container">
     <div class="parent">
       <div class="child-one">
@@ -88,6 +12,7 @@
       </div>
 
       <div class="child-two">
+        <p class="heading-title-paragraph">What are you interested in?</p>
         <div class="sub sub-one">
           Merchant Acquisition
           <span>
@@ -219,6 +144,7 @@ export default {
 
 .parent {
   grid-template-rows: 10vh 40vh 45vh;
+  position: relative;
 }
 
 div.child-two {
@@ -229,6 +155,16 @@ div.child-two {
   align-items: center;
   grid-gap: 5px;
 }
+.heading-title-paragraph {
+  position: absolute;
+  top: 9%;
+  text-align: center;
+  left: 3%;
+  width: 100%;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
 div.child-two .sub-one,
 div.child-two .sub-two,
 div.child-two .sub-three {
