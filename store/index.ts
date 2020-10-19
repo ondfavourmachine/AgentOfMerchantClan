@@ -46,6 +46,13 @@ interface State {
   token: string | undefined;
   url: string;
   justRegistered: boolean;
+  getDashboardStatus: "notfetched" | "fetched" | "failed";
+  dashboardData: {
+    customer_count?: number;
+    merchant_transactions?: number;
+    onboarded_merchants_count?: number;
+    total_sales_amount?: number;
+  };
 }
 
 interface Bank {
@@ -101,6 +108,8 @@ export const state = (): State => ({
   apiCall: false,
   token: "",
   justRegistered: false,
+  getDashboardStatus: "notfetched",
+  dashboardData: {},
   url:
     "https://covidreliefbackend.covidrelief.com.ng/merchantclan/public/index.php/api/"
 });
@@ -115,7 +124,8 @@ export const mutations: MutationTree<RootState> = {
     state.url =
       "https://covidreliefbackend.covidrelief.com.ng/merchantclan/public/index.php/api/";
     state.justRegistered = false;
-
+    state.dashboardData = {};
+    state.getDashboardStatus = "notfetched";
     let key: string;
     for (key in state.user) {
       state.user[key] = "";
@@ -124,6 +134,13 @@ export const mutations: MutationTree<RootState> = {
 
   JUST_REGISTERED_TO_DEFAULT(state: State) {
     state.justRegistered = false;
+  },
+
+  SET_GETDASHBOARD_STATUS(state: State, status) {
+    state.getDashboardStatus = status;
+  },
+  SET_DASHBOARD_DATA(state: State, data) {
+    state.dashboardData = data;
   },
 
   MODIFY_JUST_REGISTERED(state: State) {
@@ -273,5 +290,26 @@ export const actions: ActionTree<RootState, RootState> = {
 
   setJustRegisteredBackToDefaultValue({ commit }) {
     commit("JUST_REGISTERED_TO_DEFAULT");
+  },
+
+  async fetchAllAgentsMerchants({ commit, state }) {
+    try {
+      let response: Response | any = await fetch(
+        `${state.url}agent/dashboard/7`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${state.token}`
+          }
+        }
+      );
+
+      response = await response.json();
+      console.log(response);
+      commit("SET_GETDASHBOARD_STATUS", "fetched");
+      commit("SET_DASHBOARD_DATA", response.data);
+    } catch (error) {
+      commit("SET_GETDASHBOARD_STATUS", "failed");
+    }
   }
 };

@@ -61,9 +61,10 @@ export default Vue.extend({
     ...mapState(["user"])
   },
   mounted() {
-    this.user.passport == "null"
-      ? "../../assets/css/images/no-product.svg"
-      : this.user.passport;
+    (this.$refs.imgDisplay as HTMLImageElement).src =
+      !this.user.passport || !(this.user.passport as string).includes("https")
+        ? this.passport
+        : this.user.passport;
   },
   methods: {
     takePicture() {

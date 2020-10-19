@@ -82,6 +82,7 @@ export default Vue.extend({
 <style scoped>
 .parent {
   grid-template-rows: 10vh 65vh 15vh;
+  grid-gap: 0px;
 }
 
 div.child-two {

@@ -8,7 +8,9 @@
         <div class="other-stuff" style>
           <p>My Merchants</p>
           <p>
-            <button class="view">View</button>
+            <nuxt-link to="/mymerchants">
+              <button class="view">View</button>
+            </nuxt-link>
           </p>
           <div>
             <img src="../assets/css/images/seller.svg" alt />
@@ -28,7 +30,7 @@
               <img src="../assets/css/images/merchant_1.svg" alt />
             </p>
             <p class="two-child-text">
-              <span>0</span>
+              <span>{{ dashboardData.onboarded_merchants_count || 0 }}</span>
               <span>Merchants</span>
             </p>
           </div>
@@ -37,7 +39,7 @@
               <img src="../assets/css/images/filled.svg" alt />
             </p>
             <p class="third-child-text">
-              <span>0</span>
+              <span>{{ dashboardData.merchant_transactions || 0 }}</span>
               <span>transactions</span>
             </p>
           </div>
@@ -46,7 +48,7 @@
               <img src="../assets/css/images/sale_label_1.svg" alt />
             </p>
             <p class="fourth-child-text">
-              <span>0</span>
+              <span>{{ dashboardData.total_sales_amount || 0}}</span>
               <span>total sales</span>
             </p>
           </div>
@@ -100,11 +102,15 @@
 <script >
 import Vue from "vue";
 import Header from "~/components/Header.vue";
+import { mapState } from "vuex";
 
 import VueSlickCarousel from "vue-slick-carousel";
 import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
 
 export default Vue.extend({
+  mounted() {
+    this.$store.dispatch("fetchAllAgentsMerchants");
+  },
   components: {
     Header,
     VueSlickCarousel
@@ -126,6 +132,9 @@ export default Vue.extend({
         adaptiveHeight: true
       }
     };
+  },
+  computed: {
+    ...mapState(["dashboardData", "getDashboardStatus"])
   },
 
   methods: {

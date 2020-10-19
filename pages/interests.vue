@@ -68,8 +68,6 @@
 <script  >
 import Vue from "vue";
 import { mapState } from "vuex";
-import VueSlickCarousel from "vue-slick-carousel";
-import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
 
 export default {
   components: { VueSlickCarousel },
@@ -89,16 +87,7 @@ export default {
   data() {
     return {
       pageLoaded: true,
-      setting: {
-        dots: true,
-        arrows: false,
-        dotsClass: "slick-dots custom-dot-class",
-        edgeFriction: 0.35,
-        infinite: false,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1
-      },
+
       status: []
     };
   },
