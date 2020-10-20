@@ -11,47 +11,49 @@
         </div>
       </div>
 
-      <div class="child-two">
-        <p class="heading-title-paragraph">What are you interested in?</p>
-        <div class="sub sub-one">
-          Merchant Acquisition
-          <span>
-            <b-form-checkbox
-              id="checkbox-1"
-              v-model="status"
-              name="checkbox-1"
-              value="merchant acquisition"
-              unchecked-value="not_accepted"
-            ></b-form-checkbox>
-          </span>
-        </div>
+      <no-ssr>
+        <div class="child-two">
+          <p class="heading-title-paragraph">What are you interested in?</p>
+          <div class="sub sub-one">
+            Merchant Acquisition
+            <span>
+              <b-form-checkbox
+                id="checkbox-1"
+                v-model="status"
+                name="checkbox-1"
+                value="merchant acquisition"
+                unchecked-value="not_accepted"
+              ></b-form-checkbox>
+            </span>
+          </div>
 
-        <div class="sub sub-two">
-          Collections
-          <span>
-            <b-form-checkbox
-              id="checkbox-2"
-              v-model="status"
-              name="checkbox-2"
-              value="collection"
-              unchecked-value="not_accepted"
-            ></b-form-checkbox>
-          </span>
-        </div>
+          <div class="sub sub-two">
+            Collections
+            <span>
+              <b-form-checkbox
+                id="checkbox-2"
+                v-model="status"
+                name="checkbox-2"
+                value="collection"
+                unchecked-value="not_accepted"
+              ></b-form-checkbox>
+            </span>
+          </div>
 
-        <div class="sub sub-three">
-          Address Verification System
-          <span>
-            <b-form-checkbox
-              id="checkbox-3"
-              v-model="status"
-              name="checkbox-3"
-              value="avs"
-              unchecked-value="not_accepted"
-            ></b-form-checkbox>
-          </span>
+          <div class="sub sub-three">
+            Address Verification System
+            <span>
+              <b-form-checkbox
+                id="checkbox-3"
+                v-model="status"
+                name="checkbox-3"
+                value="avs"
+                unchecked-value="not_accepted"
+              ></b-form-checkbox>
+            </span>
+          </div>
         </div>
-      </div>
+      </no-ssr>
       <div class="child-three">
         <div class="img-background">
           <span @click="addInterests" v-if="statusArray.length > 0" class="join-us">
@@ -70,7 +72,6 @@ import Vue from "vue";
 import { mapState } from "vuex";
 
 export default {
-  components: { VueSlickCarousel },
   mounted() {
     const inputs = document.querySelectorAll("input");
     inputs.forEach(element => {
@@ -103,9 +104,6 @@ export default {
 
   methods: {
     async addInterests(e) {
-      // console.log(e);
-      // const element = document.getElementById(e);
-      // console.log(element);
       this.statusArray.forEach(element => {
         if (element == "avs") {
           this.$store.dispatch("setAgentInterests", "1");

@@ -161,16 +161,6 @@ export default Vue.extend({
       }
 
       // this.showModal();
-
-      if (
-        (to.name as string).toLowerCase() == "login" ||
-        (to.name as string).toLowerCase() == "register" ||
-        (to.name as string).toLowerCase() == "interests"
-      ) {
-        this.showFloating = false;
-      } else {
-        this.showFloating = false;
-      }
     }
   },
 

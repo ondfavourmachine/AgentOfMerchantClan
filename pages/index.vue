@@ -52,7 +52,7 @@ export default Vue.extend({
       closeAndBegin: "setNextStage"
     }),
     gotoInterests() {
-      this.$router.push("interests");
+      this.$router.push("/interests");
     }
   }
 });
