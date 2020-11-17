@@ -71,7 +71,7 @@ export default Vue.extend({
       (this.$refs.pictureTrigger as HTMLInputElement).click();
     },
     insertAnImage(event: Event | any) {
-      if (event.target["files"][0].size > 2000000) {
+      if (event.target["files"][0].size > 6000000) {
         this.$nuxt.$emit("GeneralError", {
           message: "Please upload pictures less than 2.0MB",
           variant: "danger"

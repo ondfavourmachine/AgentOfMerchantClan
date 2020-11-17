@@ -116,7 +116,7 @@ export default Vue.extend({
     VueSlickCarousel
   },
 
-  // middleware: "authenticated",
+  middleware: "authenticated",
   data() {
     return {
       setting: {
