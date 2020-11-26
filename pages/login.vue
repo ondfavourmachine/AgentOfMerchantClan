@@ -22,7 +22,7 @@
                 type="text"
                 v-model.lazy="email"
                 required
-                placeholder="email"
+                placeholder="Enter email"
               ></b-form-input>
             </b-form-group>
 
@@ -32,7 +32,7 @@
                 type="password"
                 v-model.lazy="password"
                 required
-                placeholder="Password"
+                placeholder="Enter password"
               ></b-form-input>
             </b-form-group>
 
