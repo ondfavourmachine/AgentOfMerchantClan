@@ -117,6 +117,7 @@ export default Vue.extend({
     );
 
     this.$nuxt.$on("LoginError", (e: { message: string; variant: string }) => {
+      // console.log(e);
       this.message = e.message;
       this.variant = e["variant"];
       this.showDismissibleAlert = true;
@@ -227,7 +228,7 @@ html {
 .side-bar {
   position: absolute;
   width: 100vw;
-  z-index: 10;
+  z-index: 1050;
   background-color: rgba(20, 0, 204, 0.888);
   backdrop-filter: blur(2px);
   height: 100vh;

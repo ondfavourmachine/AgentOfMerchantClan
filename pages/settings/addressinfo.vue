@@ -1,5 +1,5 @@
 <template>
-  <div class="main-container">
+  <div class="main-container position-relative">
     <div class="parent">
       <div class="child-one">
         <div class="heading">
@@ -83,11 +83,12 @@
             @click="submitAddressForm"
             type="button"
             variant="primary"
-          >Submit</b-button>
+          >Save and continue to bank details ➡</b-button>
         </b-form>
       </div>
     </div>
     <Spinner v-if="myApiCall" />
+    <BottomNav />
   </div>
 </template>
 
@@ -95,6 +96,7 @@
 import Vue from "vue";
 import { mapState, mapActions } from "vuex";
 import Header from "~/components/Header.vue";
+import BottomNav from "~/components/BottomNav.vue";
 import Spinner from "~/components/Spinner.vue";
 
 interface AddressData {
@@ -113,7 +115,8 @@ interface AddressData {
 export default Vue.extend({
   components: {
     Header,
-    Spinner
+    Spinner,
+    BottomNav
   },
 
   middleware: "authenticated",
@@ -122,7 +125,7 @@ export default Vue.extend({
     let selectedstate = this.stateFromServer.find(
       (element: any) => element.id == this.currentUser.state
     );
-    this.state = selectedstate.id;
+    this.state = selectedstate ? selectedstate.id : "";
     this.suburb = this.currentUser.suburb;
     this.postcode = this.currentUser.postcode;
     this.home_phone = this.currentUser.home_phone;
@@ -211,7 +214,7 @@ export default Vue.extend({
           variant: "success"
         });
         setTimeout(() => {
-          this.$router.push("/settings");
+          this.$router.push("/settings/bankdetails");
         }, 2000);
       } catch (error) {
         this.$nuxt.$emit("GeneralError", {
@@ -267,7 +270,7 @@ div.child-two fieldset {
 .btn-primary,
 .btn-primary.disabled,
 .btn-primary:disabled {
-  width: 26%;
+  width: 100%;
 }
 
 /* legend,

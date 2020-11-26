@@ -117,6 +117,7 @@ export default Vue.extend({
         this.$router.push("/dashboard");
       } catch (error) {
         const { message } = error.response.data;
+
         if ((message as string).includes("SQLSTATE")) {
           this.$nuxt.$emit(
             "LoginError",
@@ -126,7 +127,7 @@ export default Vue.extend({
           return;
         }
 
-        this.$nuxt.$emit("LoginError", {message, variant: "danger"});
+        this.$nuxt.$emit("LoginError", { message, variant: "danger" });
         this.$store.dispatch("setApiCallState", false);
       }
     }

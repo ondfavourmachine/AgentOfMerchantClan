@@ -63,7 +63,7 @@
             type="button"
             variant="primary"
           >
-            Submit
+            Save and continue to next of kin ➡
             <!-- <span
               :class="!bank_name || !account_number || !account_name || !bank_branch ? '': 'join-us'"
             ></span>-->
@@ -201,7 +201,7 @@ export default Vue.extend({
           variant: "success"
         });
         setTimeout(() => {
-          this.$router.push("/settings");
+          this.$router.push("/settings/nextofkin");
         }, 2000);
       } catch (error) {
         this.$nuxt.$emit("GeneralError", {

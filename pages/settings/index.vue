@@ -1,6 +1,6 @@
 
 <template>
-  <div class="main-container">
+  <div class="main-container position-relative">
     <div class="parent">
       <div class="child-one">
         <div class="heading">
@@ -54,12 +54,14 @@
         </nuxt-link>
       </div>
     </div>
+    <BottomNav />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import Header from "~/components/Header.vue";
+import BottomNav from "~/components/BottomNav.vue";
 import {
   BIcon,
   BIconArrowUp,
@@ -69,7 +71,8 @@ import {
 export default Vue.extend({
   components: {
     Header,
-    BIconArrowRight
+    BIconArrowRight,
+    BottomNav
   },
   middleware: "authenticated",
   created() {

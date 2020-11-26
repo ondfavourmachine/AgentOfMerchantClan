@@ -20,6 +20,11 @@ export default {
         rel: "stylesheet",
         href:
           "https://fonts.googleapis.com/css2?family=Varela+Round&display=swap"
+      },
+      {
+        rel: "stylesheet",
+        href:
+          "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
       }
     ]
   },
@@ -51,10 +56,15 @@ export default {
   modules: [
     // Doc: https://bootstrap-vue.js.org
     "bootstrap-vue/nuxt",
+
     // Doc: https://axios.nuxtjs.org/usage
     "@nuxtjs/axios",
     "@nuxtjs/pwa"
   ],
+
+  bootstrapVue: {
+    icons: true // Install the IconsPlugin (in addition to BootStrapVue plugin
+  },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options

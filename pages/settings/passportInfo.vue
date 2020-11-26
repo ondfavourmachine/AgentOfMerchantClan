@@ -2,7 +2,7 @@
 <template>
   <!-- <p class="heading-title">Bank Account Details</p> -->
 
-  <div class="main-container">
+  <div class="main-container position-relative">
     <div class="parent">
       <div class="child-one">
         <div class="heading">
@@ -36,19 +36,22 @@
       accept="image/*"
     />
     <Spinner v-if="apiCall" />
+    <BottomNav />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import Header from "~/components/Header.vue";
+import BottomNav from "~/components/BottomNav.vue";
 import { mapState } from "vuex";
 import Spinner from "~/components/Spinner.vue";
 
 export default Vue.extend({
   components: {
     Header,
-    Spinner
+    Spinner,
+    BottomNav
   },
   data() {
     return {
@@ -123,9 +126,9 @@ export default Vue.extend({
           message: "Passport photo updated successfully",
           variant: "success"
         });
-        // setTimeout(() => {
-        //   this.$router.push("/settings");
-        // }, 2000);
+        setTimeout(() => {
+          this.$router.push("/settings");
+        }, 2000);
       } catch (error) {
         this.$nuxt.$emit("GeneralError", {
           message: "Upload your picture. Please try again later",

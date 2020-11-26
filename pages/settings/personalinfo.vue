@@ -49,16 +49,17 @@
           </div>-->
 
           <b-button
-            class="mt-1"
+            class="mt-1 btn btn-block"
             :disabled="!$data.date_of_birth || !$data.first_name || !$data.last_name || !$data.gender || !$data.title "
             @click="handleSubmitOfPersonalInfo"
             type="button"
             variant="primary"
-          >submit</b-button>
+          >Save and continue to address ➡</b-button>
         </b-form>
       </div>
     </div>
     <Spinner v-if="myApiCall" />
+    <BottomNav />
   </div>
 </template>
 
@@ -70,6 +71,7 @@ import Vue from "vue";
 import { mapActions, mapState } from "vuex";
 import Header from "~/components/Header.vue";
 import Spinner from "~/components/Spinner.vue";
+import BottomNav from "~/components/BottomNav.vue";
 
 interface PersonalData {
   first_name: string;
@@ -83,7 +85,8 @@ interface PersonalData {
 export default Vue.extend({
   components: {
     Header,
-    Spinner
+    Spinner,
+    BottomNav
   },
   mounted() {
     this.first_name = this.currentUser.full_name.split(" ")[0];
@@ -158,7 +161,7 @@ export default Vue.extend({
           variant: "success"
         });
         setTimeout(() => {
-          this.$router.push("/settings");
+          this.$router.push("/settings/addressinfo");
         }, 2000);
       } catch (error) {
         this.$nuxt.$emit("GeneralError", "Could not update your Bank Details");
@@ -186,14 +189,13 @@ div.child-two {
 div.child-two div,
 div.child-two fieldset {
   color: rgba(20, 0, 204, 0.789);
-  /* border-radius: 5px; */
   max-width: 100%;
 }
 
 .btn-primary,
 .btn-primary.disabled,
 .btn-primary:disabled {
-  width: 26%;
+  width: 100% !important;
 }
 .custom-control {
   display: inline-block;

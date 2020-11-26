@@ -1,6 +1,6 @@
 
 <template>
-  <div class="main-container">
+  <div class="main-container position-relative">
     <div class="parent">
       <div class="child-one">
         <Header />
@@ -96,14 +96,15 @@
         </div>
       </div>
     </div>
+      <BottomNav />
   </div>
 </template>
 
 <script >
 import Vue from "vue";
 import Header from "~/components/Header.vue";
+import BottomNav from '~/components/BottomNav.vue';
 import { mapState } from "vuex";
-
 import VueSlickCarousel from "vue-slick-carousel";
 import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
 
@@ -113,7 +114,8 @@ export default Vue.extend({
   },
   components: {
     Header,
-    VueSlickCarousel
+    VueSlickCarousel,
+    BottomNav
   },
 
   middleware: "authenticated",

@@ -1,5 +1,5 @@
 <template>
-  <div class="main-container">
+  <div class="main-container position-relative">
     <div class="parent">
       <div class="child-one">
         <div class="heading">
@@ -7,7 +7,7 @@
         </div>
       </div>
 
-      <div class="child-two">
+      <div class="child-two" style="overflow-y: scroll">
         <p class="heading-title">Next of Kin Information</p>
         <b-form @submit.prevent="onSubmitForm">
           <b-form-group id="input-group-5" label-for="input-5">
@@ -126,11 +126,16 @@
              || !$data.nok_home_phone 
           || !$data.nok_mobile || !$data.date_signed"-->
 
-          <b-button class="mt-3" type="submit" variant="primary">Submit</b-button>
+          <b-button
+            class="mt-3 btn btn-block"
+            type="submit"
+            variant="primary"
+          >Save and continue to photo ➡</b-button>
         </b-form>
       </div>
     </div>
     <Spinner v-if="apiCall" />
+    <BottomNav />
   </div>
 </template>
 
@@ -138,6 +143,7 @@
 import Vue from "vue";
 import Header from "~/components/Header.vue";
 import Spinner from "~/components/Spinner.vue";
+import BottomNav from "~/components/BottomNav.vue";
 import { mapState } from "vuex";
 
 interface NOKDATA {
@@ -161,7 +167,8 @@ interface NOKDATA {
 export default Vue.extend({
   components: {
     Header,
-    Spinner
+    Spinner,
+    BottomNav
   },
   middleware: "authenticated",
   mounted() {
@@ -174,6 +181,7 @@ export default Vue.extend({
     this.nok_work = this.user.nok_work;
     this.nok_home_phone = this.user.nok_home_phone;
     this.nok_state = this.user.nok_state;
+    this;
   },
   data(): Partial<NOKDATA> {
     return {
@@ -205,6 +213,7 @@ export default Vue.extend({
 
   methods: {
     async onSubmitForm() {
+      console.log("i am here");
       const {
         nok_name,
         nok_relationship,
@@ -267,7 +276,7 @@ export default Vue.extend({
           variant: "success"
         });
         setTimeout(() => {
-          this.$router.push("/settings");
+          this.$router.push("/settings/passportInfo");
         }, 2000);
       } catch (error) {
         this.$nuxt.$emit("GeneralError", {
@@ -320,9 +329,9 @@ div.child-two fieldset {
   max-width: 100%;
 }
 
-.btn-primary,
+/* .btn-primary,
 .btn-primary.disabled,
 .btn-primary:disabled {
-  width: 30%;
-}
+ 
+} */
 </style>
