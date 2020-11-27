@@ -11,7 +11,7 @@
         <div class="company-logo"></div>
 
         <div class="welcome-text">
-          <p class="heading-title">Sign in</p>
+          <p class="heading-title signin">Sign in</p>
           <b-form>
             <b-form-group class="spinnerParent" id="input-group-5" label-for="input-5">
               <!-- <div v-if="apiCall" class="text-right spinner">

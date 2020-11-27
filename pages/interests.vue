@@ -6,7 +6,7 @@
       <div class="child-one">
         <div class="heading">
           <nuxt-link to="/login">
-            <a style="color: rgba(20, 0, 204, 0.789)">Sign in</a>
+            <a class="signin">Sign in</a>
           </nuxt-link>
         </div>
       </div>
@@ -60,9 +60,90 @@
             Next
             <span></span>
           </span>
-          <img src="../assets/css/images/character 6.svg" alt />
+          <img src="../assets/css/images/modified-character-6.svg" alt />
         </div>
       </div>
+    </div>
+    <!-- Welcome modal -->
+    <div>
+      <b-button v-b-modal.modal-lg variant="primary" hidden>lg modal</b-button>
+
+      <b-modal ref="infoModal" hide-footer id="modal-lg" size="lg" title>
+        <VueSlickCarousel style="margin: 1px;" v-bind="setting">
+          <div style>
+            <div class="row">
+              <div class="col-12">
+                <div style>
+                  <img
+                    class="img-fluid"
+                    style="max-width: 200px;"
+                    src="../assets/css/images/welcome-1.svg"
+                    alt
+                  />
+
+                  <h4 class="title mt-5 font-weight-bold text-center">Welcome</h4>
+                  <p
+                    class="text-center mb-3"
+                    style="max-width: 400px; margin: auto; "
+                  >Joining our agent program can be very lucative!. Swipe to see how you can be part of this amazing program.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style>
+            <div class="row">
+              <div class="col-12">
+                <div style>
+                  <img
+                    class="img-fluid"
+                    style="max-width: 150px;"
+                    src="../assets/css/images/select-task.svg"
+                    alt
+                  />
+
+                  <h4 class="title mt-5 font-weight-bold text-center">Make your choice!</h4>
+                  <p
+                    class="text-center mb-3"
+                    style="max-width: 400px; margin: auto; "
+                  >Select your preferred interest. You can opt to participate an AVS, Merchant acquisition or Collections agents. You can choose all options too!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style>
+            <div class="row">
+              <div class="col-12">
+                <div style>
+                  <img class="img-fluid" src="../assets/css/images/register.svg" alt />
+
+                  <h4 class="title mt-5 font-weight-bold text-center">Register with us</h4>
+                  <p
+                    class="text-center mb-3"
+                    style="max-width: 400px; margin: auto; "
+                  >Enter a few details so that we can get to know you more.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style>
+            <div class="row">
+              <div class="col-12">
+                <div style>
+                  <img class="img-fluid" src="../assets/css/images/Ready-lets-go.svg" alt />
+
+                  <h4 class="title mt-5 font-weight-bold text-center">Ready to join us?</h4>
+                  <p
+                    class="text-center mb-3"
+                    style="max-width: 400px; margin: auto; "
+                  >When you are ready click the button below</p>
+
+                  <button @click="hideModal" class="btn btn-block custom-btn-color mt-1">Continue</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </VueSlickCarousel>
+      </b-modal>
     </div>
   </div>
 </template>
@@ -70,9 +151,14 @@
 <script  >
 import Vue from "vue";
 import { mapState } from "vuex";
+import VueSlickCarousel from "vue-slick-carousel";
+import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
 // import BottomNav from '~/components/BottomNav.vue';
 
 export default {
+  components: {
+    VueSlickCarousel
+  },
   mounted() {
     const inputs = document.querySelectorAll("input");
     inputs.forEach(element => {
@@ -84,10 +170,23 @@ export default {
         }
       });
     });
+    this.showModal();
   },
 
   data() {
     return {
+      setting: {
+        dots: true,
+        arrows: false,
+        dotsClass: "slick-dots custom-dot-class",
+        edgeFriction: 0.35,
+        infinite: false,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        variableWidth: true,
+        adaptiveHeight: true
+      },
       pageLoaded: true,
 
       status: []
@@ -104,6 +203,12 @@ export default {
   },
 
   methods: {
+    showModal() {
+      this.$refs["infoModal"].show();
+    },
+    hideModal() {
+      this.$refs["infoModal"].hide();
+    },
     async addInterests(e) {
       this.statusArray.forEach(element => {
         if (element == "avs") {
@@ -156,7 +261,7 @@ div.child-two {
 div.child-two .sub-one,
 div.child-two .sub-two,
 div.child-two .sub-three {
-  color: rgba(20, 0, 204, 0.789);
+  color: rgba(20, 0, 204, 1);
   border-radius: 5px;
   border: 1px solid rgba(101, 98, 207, 0.2);
   box-shadow: 2px 10px 12px rgba(101, 98, 207, 0.2);
@@ -215,5 +320,15 @@ div.child-two div span {
   justify-content: flex-end;
   padding-right: 20px;
   padding-bottom: 10px;
+}
+
+h4 {
+  color: #1400cc;
+}
+
+.custom-btn-color {
+  background-color: #cad2e1;
+  color: #1400cc;
+  cursor: pointer;
 }
 </style>

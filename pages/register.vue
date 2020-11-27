@@ -13,7 +13,7 @@
             <img src alt />
           </span>
           <nuxt-link to="/login">
-            <a>Sign in</a>
+            <a class="signin">Sign in</a>
           </nuxt-link>
         </div>
 

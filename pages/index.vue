@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="picture-container">
-      <img src="../assets/css/images/working-laptop.svg" style="width: 75%;" alt />
+      <img src="../assets/css/images/modified-working-laptop.svg" style="width: 75%;" alt />
     </div>
 
     <div class="content-page">
@@ -11,7 +11,7 @@
             <img src alt />
           </span>
           <nuxt-link to="/login">
-            <a>Sign in</a>
+            <a class="signin">Sign in</a>
           </nuxt-link>
         </div>
 

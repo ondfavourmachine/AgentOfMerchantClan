@@ -165,6 +165,10 @@
   font-weight: bold;
 }
 
+.signin {
+  color: #1400cc !important;
+}
+
 .btn-primary.disabled,
 .btn-primary:disabled {
   color: #fff;
@@ -229,13 +233,13 @@
 }
 
 .welcome-text p {
-  color: #6562cf;
+  color: #1400cc;
 }
 
 .welcome-text span {
   font-size: 1.25rem;
   line-height: 0.5;
-  color: black;
+  color: #1400cc;
 }
 
 .welcome-text small {
@@ -246,16 +250,17 @@
 
 .join-us {
   width: 150px;
-  border: 1px solid black;
+  border: 1px solid #1400cc;
   position: relative;
   padding: 10px;
+  color: #1400cc;
   border-radius: 29px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
 
 .join-us:hover {
-  color: #6562cf;
+  color: #1400cc;
 }
 
 .company-logo a {
@@ -610,4 +615,27 @@ div.child-three {
 label {
   margin-bottom: 0 !important;
   margin-left: 10px !important;
+}
+
+/* modifying modal for Welcome */
+
+.modal-header {
+  border-bottom: none;
+}
+
+.modal-backdrop {
+  width: 105vw !important;
+}
+
+.modal.show .modal-dialog {
+  transform: translate(3px, 1px);
+}
+
+.modal-content {
+  height: 96vh;
+}
+
+/* styling the button */
+.slick-dots li button:before {
+  color: #1400cc !important;
 }
