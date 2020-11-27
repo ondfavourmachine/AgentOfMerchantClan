@@ -624,18 +624,24 @@ label {
 }
 
 .modal-backdrop {
-  width: 105vw !important;
+  width: 100vw !important;
 }
 
 .modal.show .modal-dialog {
-  transform: translate(3px, 1px);
+  transform: translate(3px, 75px);
 }
 
 .modal-content {
   height: 96vh;
+  width: 96%;
 }
 
 /* styling the button */
 .slick-dots li button:before {
   color: #1400cc !important;
+}
+
+.modal-body .slick-slide {
+  width: 362px !important;
+  margin-right: 10px !important;
 }
