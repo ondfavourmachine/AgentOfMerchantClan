@@ -12,7 +12,7 @@
       <div class="child-two">
         <p class="heading-title">Bank Account Details</p>
         <b-form>
-          <b-form-group>
+          <b-form-group label="Bank name">
             <b-form-select @change="modify($event)" v-model="bank_name">
               <b-form-select-option selected value></b-form-select-option>
               <b-form-select-option
@@ -23,7 +23,13 @@
             </b-form-select>
           </b-form-group>
 
-          <b-form-group class="spinnerParent" id="input-group-5" label-for="input-5">
+          <b-form-group
+            label="Enter your account"
+            class="spinnerParent"
+            id="input-group-5"
+            label-for="input-5"
+          >
+            <!--  -->
             <div v-if="fetching" class="text-right spinner">
               <b-spinner label="Spinning"></b-spinner>
             </div>
@@ -32,11 +38,11 @@
               type="number"
               v-model.lazy="account_number"
               required
-              placeholder="Account number: eg 08033445059"
+              placeholder="eg: 123456790"
             ></b-form-input>
           </b-form-group>
 
-          <b-form-group id="input-group-5" label-for="input-5">
+          <b-form-group label="Bank branch" id="input-group-5" label-for="input-5">
             <b-form-input
               id="input-5"
               v-model.lazy="bank_branch"
@@ -45,7 +51,7 @@
             ></b-form-input>
           </b-form-group>
 
-          <b-form-group id="input-group-5" label-for="input-5">
+          <b-form-group label="Account name" id="input-group-5" label-for="input-5">
             <b-form-input
               id="input-5"
               v-model="account_name"
@@ -72,13 +78,14 @@
       </div>
     </div>
     <Spinner v-if="myApiCall" />
+    <BottomNav />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import axios from "@nuxtjs/axios";
-
+import BottomNav from "~/components/BottomNav.vue";
 import Header from "~/components/Header.vue";
 import Spinner from "~/components/Spinner.vue";
 import { mapState, mapActions } from "vuex";
@@ -103,7 +110,8 @@ interface BankDetailsData {
 export default Vue.extend({
   components: {
     Header,
-    Spinner
+    Spinner,
+    BottomNav
   },
 
   middleware: "authenticated",
@@ -122,6 +130,7 @@ export default Vue.extend({
   },
 
   mounted() {
+    // console.log(this.currentUser);
     this.bank_name = this.currentUser.bank_name;
     this.account_name = this.currentUser.account_name;
     this.account_number = this.currentUser.account_number;
@@ -138,7 +147,7 @@ export default Vue.extend({
     }),
     computedBanks(): Bank[] {
       this.allBanks = [...this.banks];
-      // console.log(this.allBanks);
+
       return this.allBanks;
     }
   },
@@ -161,21 +170,30 @@ export default Vue.extend({
       this.fromStore = false;
     },
     async submitBankDetailsToStore(e: Event): Promise<any> {
+      if (!window.navigator.onLine) {
+        this.$nuxt.$emit(
+          "NotConnectedToInternet",
+          `Please check your internet and try again!`
+        );
+        return;
+      }
       const {
         account_name,
         account_number,
         bank_branch,
         bank_name
       } = this.$data;
-      const nameOfBank = this.allBanks.filter(
-        element => element.bank_code == (this.bank_name as string).trim()
-      );
+      // console.log(bank_name);
+      // const nameOfBank = this.allBanks.filter(
+      //   element => element.bank_code == (this.bank_name as string).trim()
+      // );
       await this.saveBankDetailsInStore({
-        bank_name: nameOfBank[0].bank_code,
+        bank_name,
         account_name,
         account_number,
         bank_branch
       });
+      // console.log(this.currentUser);
 
       this.$store.dispatch("setApiCallState", true);
 
@@ -204,6 +222,7 @@ export default Vue.extend({
           this.$router.push("/settings/nextofkin");
         }, 2000);
       } catch (error) {
+        console.log(error);
         this.$nuxt.$emit("GeneralError", {
           message: "Could not update your Bank Details. Please try again later",
           variant: "danger"
@@ -286,12 +305,12 @@ div.child-two fieldset {
 .spinnerParent .spinner {
   position: absolute;
   right: 0;
-  top: 0;
+  top: 31px;
 }
 
 .btn-primary,
 .btn-primary.disabled,
 .btn-primary:disabled {
-  width: 26%;
+  width: 100%;
 }
 </style>

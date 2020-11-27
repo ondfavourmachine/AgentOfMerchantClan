@@ -604,3 +604,10 @@ div.child-three {
   object-fit: contain;
   width: 35%;
 }
+
+.form-group label,
+.form-group legend,
+label {
+  margin-bottom: 0 !important;
+  margin-left: 10px !important;
+}

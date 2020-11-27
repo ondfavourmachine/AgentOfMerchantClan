@@ -33,6 +33,7 @@
                 v-model.lazy="password"
                 required
                 placeholder="Enter password"
+                @keydown.enter="submitLoginForm"
               ></b-form-input>
             </b-form-group>
 
@@ -88,7 +89,7 @@ export default Vue.extend({
   },
 
   methods: {
-    async submitLoginForm() {
+    async submitLoginForm(event: Event) {
       if (!window.navigator.onLine) {
         this.$nuxt.$emit(
           "NotConnectedToInternet",
@@ -97,6 +98,9 @@ export default Vue.extend({
         return;
       }
       const { email, password } = this.$data;
+      if (event && event instanceof KeyboardEvent && (!email || !password)) {
+        return;
+      }
       const formToSubmit = {
         email,
         password
@@ -112,6 +116,7 @@ export default Vue.extend({
 
         this.$store.dispatch("setApiCallState", false);
         this.$store.dispatch("setLoggedInUser", user);
+        // console.log(this.user);
 
         this.$store.dispatch("setToken", token);
         this.$router.push("/dashboard");

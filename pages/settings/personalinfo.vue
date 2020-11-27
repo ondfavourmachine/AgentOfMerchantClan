@@ -10,27 +10,22 @@
       <div class="child-two">
         <p class="heading-title">Personal Details</p>
         <b-form>
-          <b-form-group id="input-group-2" label-for="input-2">
+          <b-form-group label="Title" id="input-group-2" label-for="input-2">
             <b-form-input id="input-2" v-model="title" required placeholder="Title eg: Mr/Mrs/Miss"></b-form-input>
           </b-form-group>
 
-          <b-form-group id="input-group-1" label-for="input-1">
+          <b-form-group label="First name" id="input-group-1" label-for="input-1">
             <b-form-input
               id="input-1"
               v-model="first_name"
               type="email"
               required
-              placeholder="First name: eg Tosin"
+              placeholder="eg: Tosin"
             ></b-form-input>
           </b-form-group>
 
-          <b-form-group id="input-group-2" label-for="input-2">
-            <b-form-input
-              id="input-2"
-              v-model="last_name"
-              required
-              placeholder="Last name:eg Chukwuma"
-            ></b-form-input>
+          <b-form-group label="Last name" id="input-group-2" label-for="input-2">
+            <b-form-input id="input-2" v-model="last_name" required placeholder="eg: Chukwuma"></b-form-input>
           </b-form-group>
 
           <b-form-group label="Gender">
@@ -42,11 +37,6 @@
             <label for="example-datepicker">Date of birth</label>
             <b-form-datepicker id="example-datepicker" v-model="date_of_birth" class="mb-2"></b-form-datepicker>
           </div>
-
-          <!-- <div>
-            <label for="example-datepicker-1">Start Date</label>
-            <b-form-datepicker id="example-datepicker-1" v-model="start_date" class="mb-2"></b-form-datepicker>
-          </div>-->
 
           <b-button
             class="mt-1 btn btn-block"

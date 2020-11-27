@@ -226,7 +226,7 @@ export const actions: ActionTree<RootState, RootState> = {
 
       commit("addBanksToStore", response.data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   },
 
@@ -240,7 +240,7 @@ export const actions: ActionTree<RootState, RootState> = {
       const { data } = response;
       commit("addStateToStore", data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   },
 
@@ -305,7 +305,7 @@ export const actions: ActionTree<RootState, RootState> = {
       );
 
       response = await response.json();
-      console.log(response);
+      // console.log(response);
       commit("SET_GETDASHBOARD_STATUS", "fetched");
       commit("SET_DASHBOARD_DATA", response.data);
     } catch (error) {

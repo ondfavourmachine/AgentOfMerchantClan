@@ -10,7 +10,7 @@
       <div class="child-two" style="overflow-y: scroll">
         <p class="heading-title">Next of Kin Information</p>
         <b-form @submit.prevent="onSubmitForm">
-          <b-form-group id="input-group-5" label-for="input-5">
+          <b-form-group label="Name" id="input-group-5" label-for="input-5">
             <b-form-input
               id="input-5"
               v-model="nok_name"
@@ -19,7 +19,7 @@
             ></b-form-input>
           </b-form-group>
 
-          <b-form-group id="input-group-5" label-for="input-5">
+          <b-form-group label="Relationship" id="input-group-5" label-for="input-5">
             <b-form-input
               id="input-5"
               v-model.lazy="nok_relationship"
@@ -28,7 +28,7 @@
             ></b-form-input>
           </b-form-group>
 
-          <b-form-group id="input-group-5" label-for="input-5">
+          <b-form-group label="Address" id="input-group-5" label-for="input-5">
             <b-form-input
               id="input-5"
               v-model="nok_address"
@@ -37,7 +37,7 @@
             ></b-form-input>
           </b-form-group>
 
-          <b-form-group id="input-group-16" label-for="input-16">
+          <b-form-group label="Suburb" id="input-group-16" label-for="input-16">
             <b-form-input
               id="input-16"
               v-model="nok_suburb"
@@ -46,7 +46,7 @@
             ></b-form-input>
           </b-form-group>
 
-          <b-form-group>
+          <b-form-group label="State of origin">
             <b-form-select v-model="nok_state">
               <b-form-select-option value>Please select a state</b-form-select-option>
               <b-form-select-option
@@ -65,7 +65,7 @@
             ></b-form-select>
           </b-form-group>-->
 
-          <b-form-group id="input-group-17" label-for="input-17">
+          <b-form-group label="Post code" id="input-group-17" label-for="input-17">
             <b-form-input
               id="input-17"
               v-model="nok_postcode"
@@ -74,7 +74,7 @@
             ></b-form-input>
           </b-form-group>
 
-          <b-form-group id="input-group-18" label-for="input-18">
+          <b-form-group label="Home phone" id="input-group-18" label-for="input-18">
             <b-form-input
               id="input-18"
               v-model="nok_home_phone"
@@ -86,7 +86,7 @@
             <small v-html="homePhoneValidationMessage" style="color: tomato; font-size: 0.7rem;"></small>
           </b-form-group>
 
-          <b-form-group id="input-group-19" label-for="input-19">
+          <b-form-group label="Mobile" id="input-group-19" label-for="input-19">
             <b-form-input
               id="input-19"
               type="number"
@@ -98,7 +98,7 @@
             <small v-html="mobilePhoneValidation" style="color: tomato; font-size: 0.7rem;"></small>
           </b-form-group>
 
-          <b-form-group id="input-group-5" label-for="input-5">
+          <b-form-group label="Work" id="input-group-5" label-for="input-5">
             <b-form-input
               id="input-5"
               v-model.lazy="nok_work"

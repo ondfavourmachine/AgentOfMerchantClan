@@ -7,14 +7,19 @@
         </div>
       </div>
 
-      <div class="child-two">
+      <div class="child-two" style="overflow-y: scroll">
         <p class="heading-title">Address Details</p>
         <b-form>
-          <b-form-group id="input-group-5" label-for="input-5">
-            <b-form-input id="input-5" v-model="address" required placeholder="Address"></b-form-input>
+          <b-form-group label="Address" id="input-group-5" label-for="input-5">
+            <b-form-input
+              id="input-5"
+              v-model="address"
+              required
+              placeholder="eg: 21, Somolu street"
+            ></b-form-input>
           </b-form-group>
 
-          <b-form-group id="input-group-5" label-for="input-5">
+          <b-form-group label="Suburb" id="input-group-5" label-for="input-5">
             <b-form-input
               id="input-5"
               v-model="suburb"
@@ -23,7 +28,7 @@
             ></b-form-input>
           </b-form-group>
 
-          <b-form-group>
+          <b-form-group label="State of origin">
             <b-form-select id="address-state-select" v-model="state">
               <b-form-select-option value>Please select a state</b-form-select-option>
               <b-form-select-option
@@ -34,7 +39,7 @@
             </b-form-select>
           </b-form-group>
 
-          <b-form-group id="input-group-5" label-for="input-5">
+          <b-form-group label="Post code" id="input-group-5" label-for="input-5">
             <b-form-input
               id="input-5"
               v-model="postcode"
@@ -43,7 +48,7 @@
             ></b-form-input>
           </b-form-group>
 
-          <b-form-group id="input-group-5" label-for="input-5">
+          <b-form-group label="Home phone" id="input-group-5" label-for="input-5">
             <b-form-input
               type="number"
               id="input-5"
@@ -55,7 +60,7 @@
             <small v-html="homePhoneNumberValidation" style="color: tomato; font-size: 0.7rem;"></small>
           </b-form-group>
 
-          <b-form-group id="input-group-5" label-for="input-5">
+          <b-form-group label="Mobile" id="input-group-5" label-for="input-5">
             <b-form-input
               id="input-5"
               type="number"
@@ -66,15 +71,6 @@
             ></b-form-input>
             <small v-html="mobilePhoneValidation" style="color: tomato; font-size: 0.7rem;"></small>
           </b-form-group>
-
-          <!-- <b-form-group id="input-group-5" label-for="input-5">
-            <b-form-input
-              id="input-5"
-              v-model="email"
-              required
-              placeholder="Email: eg nuc@sahwn.com"
-            ></b-form-input>
-          </b-form-group>-->
 
           <b-button
             :disabled="!$data.address || !$data.state || !$data.suburb || !$data.home_phone 
