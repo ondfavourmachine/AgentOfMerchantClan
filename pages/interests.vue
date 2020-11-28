@@ -64,14 +64,14 @@
         </div>
       </div>
     </div>
-    <!-- Welcome modal -->
+    <!-- Welcome modal    @click="showModal($event)" -->
     <div>
-      <b-button v-b-modal.modal-lg variant="primary" hidden>lg modal</b-button>
+      <b-button ref="modalCtrl" v-b-modal.modal-lg variant="primary" hidden>lg modal</b-button>
 
       <b-modal ref="infoModal" hide-footer id="modal-lg" size="lg" title>
         <VueSlickCarousel style="margin: 1px;" v-bind="setting">
           <div style>
-            <div class="row">
+            <div class="row pl-3">
               <div class="col-12">
                 <div style>
                   <img
@@ -91,7 +91,7 @@
             </div>
           </div>
           <div style>
-            <div class="row">
+            <div class="row pl-3">
               <div class="col-12">
                 <div style>
                   <img
@@ -111,7 +111,7 @@
             </div>
           </div>
           <div style>
-            <div class="row">
+            <div class="row pl-3">
               <div class="col-12">
                 <div style>
                   <img class="img-fluid" src="../assets/css/images/register.svg" alt />
@@ -126,7 +126,7 @@
             </div>
           </div>
           <div style>
-            <div class="row">
+            <div class="row pl-3">
               <div class="col-12">
                 <div style>
                   <img class="img-fluid" src="../assets/css/images/Ready-lets-go.svg" alt />
@@ -137,7 +137,10 @@
                     style="max-width: 400px; margin: auto; "
                   >When you are ready click the button below</p>
 
-                  <button @click="hideModal" class="btn btn-block custom-btn-color mt-1">Continue</button>
+                  <button
+                    @click.once.stop="hideModal($event)"
+                    class="btn btn-block custom-btn-color mt-1"
+                  >Continue</button>
                 </div>
               </div>
             </div>
@@ -173,6 +176,8 @@ export default {
     this.showModal();
   },
 
+  beforeUpdate() {},
+
   data() {
     return {
       setting: {
@@ -188,7 +193,7 @@ export default {
         adaptiveHeight: true
       },
       pageLoaded: true,
-
+      showTutorial: true,
       status: []
     };
   },
@@ -203,11 +208,11 @@ export default {
   },
 
   methods: {
-    showModal() {
-      this.$refs["infoModal"].show();
-    },
-    hideModal() {
+    hideModal(event) {
       this.$refs["infoModal"].hide();
+    },
+    showModal(event) {
+      this.$refs["infoModal"].show();
     },
     async addInterests(e) {
       this.statusArray.forEach(element => {
