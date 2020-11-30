@@ -107,14 +107,6 @@
             ></b-form-input>
           </b-form-group>
 
-          <!-- <b-form-group id="input-group-5" label-for="input-5">
-            <b-form-input
-              id="input-5"
-              v-model.lazy="employee_signature"
-              placeholder="Signature: eg nuc@sahwn.com"
-            ></b-form-input>
-          </b-form-group>-->
-
           <div>
             <label for="example-datepicker-5">Date Signed</label>
             <b-form-datepicker id="example-datepicker-5" v-model="date_signed" class="mb-2"></b-form-datepicker>
@@ -145,6 +137,7 @@ import Header from "~/components/Header.vue";
 import Spinner from "~/components/Spinner.vue";
 import BottomNav from "~/components/BottomNav.vue";
 import { mapState } from "vuex";
+import { NigerianStates } from "~/models/states.ts";
 
 interface NOKDATA {
   nok_name: string;
@@ -206,14 +199,13 @@ export default Vue.extend({
     ...mapState(["apiCall", "states", "user"]),
 
     computedNigerianStates(): any[] {
-      this.nigerianStates = [...this.states];
+      this.nigerianStates = [...NigerianStates()];
       return this.nigerianStates;
     }
   },
 
   methods: {
     async onSubmitForm() {
-      console.log("i am here");
       const {
         nok_name,
         nok_relationship,
@@ -226,9 +218,7 @@ export default Vue.extend({
         nok_work,
         date_signed
       } = this.$data;
-      // const nameOfBank = this.computedNigerianStates.filter(
-      //   element => element.bank_code == (this.bank_name as string).trim()
-      // );
+
       if (nok_home_phone.length < 11 || nok_home_phone.length > 11) {
         this.homePhoneValidationMessage = "";
         this.homePhoneValidationMessage =

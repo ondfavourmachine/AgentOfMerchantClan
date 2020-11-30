@@ -35,7 +35,7 @@
                 v-for="computedState in computedNigerianStates"
                 :key="computedState.id"
                 :value="computedState.id"
-              >{{ computedState.name }}</b-form-select-option>
+              >{{ computedState.value }}</b-form-select-option>
             </b-form-select>
           </b-form-group>
 
@@ -94,6 +94,7 @@ import { mapState, mapActions } from "vuex";
 import Header from "~/components/Header.vue";
 import BottomNav from "~/components/BottomNav.vue";
 import Spinner from "~/components/Spinner.vue";
+import { NigerianStates } from "~/models/states.ts";
 
 interface AddressData {
   address: string;
@@ -118,7 +119,7 @@ export default Vue.extend({
   middleware: "authenticated",
   mounted() {
     this.address = this.currentUser.address;
-    let selectedstate = this.stateFromServer.find(
+    let selectedstate = NigerianStates().find(
       (element: any) => element.id == this.currentUser.state
     );
     this.state = selectedstate ? selectedstate.id : "";
@@ -150,7 +151,8 @@ export default Vue.extend({
     }),
 
     computedNigerianStates(): any[] {
-      this.nigerianStates = [...this.stateFromServer];
+      this.nigerianStates = [...NigerianStates()];
+      // console.log(this.nigerianStates);
       return this.nigerianStates;
     }
   },
@@ -188,6 +190,8 @@ export default Vue.extend({
 
         mobile
       });
+
+      // console.log(this.currentUser);
       this.$store.dispatch("setApiCallState", true);
       try {
         let response: Response | any = await fetch(
