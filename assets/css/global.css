@@ -642,6 +642,5 @@ label {
 }
 
 .modal-body .slick-slide {
-  /* width: 362px !important; */
-  margin-right: 43px !important;
+  width: 330px !important;
 }

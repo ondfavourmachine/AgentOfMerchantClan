@@ -65,10 +65,18 @@
       </div>
     </div>
     <!-- Welcome modal    @click="showModal($event)" -->
-    <div>
-      <b-button ref="modalCtrl" v-b-modal.modal-lg variant="primary" hidden>lg modal</b-button>
+    <!-- <div>
+      <b-button ref="modalCtrl" v-b-modal.modal-lg variant="primary">lg modal</b-button>
 
       <b-modal ref="infoModal" hide-footer id="modal-lg" size="lg" title>
+        
+      </b-modal>
+    </div>-->
+
+    <div>
+      <b-button ref="infoModal" v-b-modal.modal-12>Launch demo modal</b-button>
+
+      <b-modal ref="currentModal" id="modal-12" hide-footer title>
         <VueSlickCarousel style="margin: 1px;" v-bind="setting">
           <div style>
             <div class="row pl-3">
@@ -138,7 +146,7 @@
                   >When you are ready click the button below</p>
 
                   <button
-                    @click.once.stop="hideModal($event)"
+                    @click.once.stop="hideModal()"
                     class="btn btn-block custom-btn-color mt-1"
                   >Continue</button>
                 </div>
@@ -173,10 +181,10 @@ export default {
         }
       });
     });
-    this.showModal();
+    if (!document.getElementById("modal-12")) {
+      this.showModal();
+    }
   },
-
-  beforeUpdate() {},
 
   data() {
     return {
@@ -208,11 +216,11 @@ export default {
   },
 
   methods: {
-    hideModal(event) {
-      this.$refs["infoModal"].hide();
-    },
     showModal(event) {
-      this.$refs["infoModal"].show();
+      this.$refs["infoModal"].click();
+    },
+    hideModal() {
+      this.$refs["currentModal"].hide();
     },
     async addInterests(e) {
       this.statusArray.forEach(element => {
