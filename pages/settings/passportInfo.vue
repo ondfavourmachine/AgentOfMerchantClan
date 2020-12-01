@@ -21,7 +21,7 @@
             <img @click="takePicture" src="../../assets/css/images/noun_Camera_3546601.svg" alt />
           </span>
 
-          <p class="direction">Click the camera icon to add a photo</p>
+          <p class="direction text-center">Click the camera icon to add a photo</p>
         </div>
       </div>
     </div>
@@ -64,6 +64,7 @@ export default Vue.extend({
     ...mapState(["user"])
   },
   mounted() {
+    // console.log(this.user);
     (this.$refs.imgDisplay as HTMLImageElement).src =
       !this.user.passport || !(this.user.passport as string).includes("https")
         ? this.passport
@@ -104,6 +105,7 @@ export default Vue.extend({
       for (let key in formToSubmit) {
         formData.append(key, formToSubmit[key]);
       }
+      console.log(passport);
       this.apiCall = true;
       try {
         let response: Response | any = await fetch(
@@ -128,7 +130,7 @@ export default Vue.extend({
         });
         setTimeout(() => {
           this.$router.push("/settings");
-        }, 2000);
+        }, 1000);
       } catch (error) {
         this.$nuxt.$emit("GeneralError", {
           message: "Upload your picture. Please try again later",
@@ -186,9 +188,10 @@ div.child-two .photo-container {
 .photo-parent {
   height: 200px;
   width: 200px;
-  border: 1px solid rgb(136, 136, 136, 0.2);
+  border: 1px solid rgb(136, 136, 136);
   border-radius: 99px !important;
   margin: 20px auto;
+  overflow: hidden;
 }
 
 .camera-icon {
@@ -200,8 +203,8 @@ div.child-two .photo-container {
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  top: 46%;
-  right: 15%;
+  top: 38%;
+  right: 20%;
   background-color: rgb(136, 136, 136, 0.2);
 }
 
@@ -212,6 +215,7 @@ div.child-two .photo-container {
 
 .photo-parent img {
   object-fit: cover;
+  max-width: 100%;
   height: 100%;
 }
 </style>

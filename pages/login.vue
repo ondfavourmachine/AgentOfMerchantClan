@@ -115,6 +115,7 @@ export default Vue.extend({
         const { user, token } = response;
 
         this.$store.dispatch("setApiCallState", false);
+        console.log(user);
         this.$store.dispatch("setLoggedInUser", user);
         // console.log(this.user);
 

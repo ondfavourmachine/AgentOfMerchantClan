@@ -53,7 +53,7 @@
                 v-for="computedState in computedNigerianStates"
                 :key="computedState.id"
                 :value="computedState.id"
-              >{{ computedState.name }}</b-form-select-option>
+              >{{ computedState.value }}</b-form-select-option>
             </b-form-select>
           </b-form-group>
           <!-- <b-form-group>
@@ -267,7 +267,7 @@ export default Vue.extend({
         });
         setTimeout(() => {
           this.$router.push("/settings/passportInfo");
-        }, 2000);
+        }, 1000);
       } catch (error) {
         this.$nuxt.$emit("GeneralError", {
           message: "Could not update your Next of Kin details!",

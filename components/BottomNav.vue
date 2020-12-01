@@ -4,7 +4,7 @@
       <div class="col-4 text-center border-right d-flex flex-column justify-content-center">
         <nuxt-link to="/dashboard">
           <div title="dashboard" class="text-capitalize text-white">
-            <i class="fa fa-th-large fa-2x"></i>
+            <i class="fa fa-th-large fa-2x d-block"></i>
             <small>Dashboard</small>
           </div>
         </nuxt-link>

@@ -220,7 +220,7 @@ export default Vue.extend({
         });
         setTimeout(() => {
           this.$router.push("/settings/nextofkin");
-        }, 2000);
+        }, 1000);
       } catch (error) {
         console.log(error);
         this.$nuxt.$emit("GeneralError", {

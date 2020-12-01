@@ -15,7 +15,7 @@
         <div class="child-two">
           <p class="heading-title-paragraph">What are you interested in?</p>
           <div class="sub sub-one">
-            Merchant Acquisition
+            Merchant onboarding
             <span>
               <b-form-checkbox
                 id="checkbox-1"
@@ -41,7 +41,7 @@
           </div>
 
           <div class="sub sub-three">
-            Address Verification System
+            Address Verification
             <span>
               <b-form-checkbox
                 id="checkbox-3"
@@ -93,7 +93,7 @@
                   <p
                     class="text-center mb-3"
                     style="max-width: 400px; margin: auto; "
-                  >Joining our agent program can be very lucative!. Swipe to see how you can be part of this amazing program.</p>
+                  >Thank you for your interest in joining our team as an agent. Kindly swipe and follow the steps to register</p>
                 </div>
               </div>
             </div>
@@ -109,11 +109,11 @@
                     alt
                   />
 
-                  <h4 class="title mt-5 font-weight-bold text-center">Make your choice!</h4>
+                  <h4 class="title mt-5 font-weight-bold text-center">Select your choice!</h4>
                   <p
                     class="text-center mb-3"
                     style="max-width: 400px; margin: auto; "
-                  >Select your preferred interest. You can opt to participate an AVS, Merchant acquisition or Collections agents. You can choose all options too!</p>
+                  >Select your preferred services you wish to register for. This can be Merchant acquisition, Address verification, or Collections. You can select 1, 2, or the 3 options.</p>
                 </div>
               </div>
             </div>
@@ -128,7 +128,7 @@
                   <p
                     class="text-center mb-3"
                     style="max-width: 400px; margin: auto; "
-                  >Enter a few details so that we can get to know you more.</p>
+                  >Click continue below to start registration.</p>
                 </div>
               </div>
             </div>

@@ -152,7 +152,7 @@ export default Vue.extend({
         });
         setTimeout(() => {
           this.$router.push("/settings/addressinfo");
-        }, 2000);
+        }, 1000);
       } catch (error) {
         this.$nuxt.$emit("GeneralError", "Could not update your Bank Details");
         setTimeout(() => {
