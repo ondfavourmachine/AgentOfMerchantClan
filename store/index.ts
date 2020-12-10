@@ -107,7 +107,7 @@ export const state = (): State => ({
   agentsInterest: new Set(),
   apiCall: false,
   token: "",
-  justRegistered: false,
+  justRegistered: true,
   getDashboardStatus: "notfetched",
   dashboardData: {},
   url:
@@ -123,7 +123,7 @@ export const mutations: MutationTree<RootState> = {
     state.token = "";
     state.url =
       "https://covidreliefbackend.covidrelief.com.ng/merchantclan/public/index.php/api/";
-    state.justRegistered = false;
+    state.justRegistered = true;
     state.dashboardData = {};
     state.getDashboardStatus = "notfetched";
     let key: string;
@@ -133,7 +133,7 @@ export const mutations: MutationTree<RootState> = {
   },
 
   JUST_REGISTERED_TO_DEFAULT(state: State) {
-    state.justRegistered = false;
+    state.justRegistered = true;
   },
 
   SET_GETDASHBOARD_STATUS(state: State, status) {

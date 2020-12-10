@@ -74,7 +74,7 @@
     </div>-->
 
     <div>
-      <b-button ref="infoModal" v-b-modal.modal-12>Launch demo modal</b-button>
+      <b-button ref="infoModal" v-b-modal.modal-12 hidden>Launch demo modal</b-button>
 
       <b-modal ref="currentModal" id="modal-12" hide-footer title>
         <VueSlickCarousel style="margin: 1px;" v-bind="setting">

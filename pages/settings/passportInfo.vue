@@ -105,7 +105,7 @@ export default Vue.extend({
       for (let key in formToSubmit) {
         formData.append(key, formToSubmit[key]);
       }
-      console.log(passport);
+      // console.log(passport);
       this.apiCall = true;
       try {
         let response: Response | any = await fetch(

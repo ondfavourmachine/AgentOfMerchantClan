@@ -65,7 +65,7 @@ export default Vue.extend({
     },
     hideModal() {
       (this.$refs["my-modal"] as any).hide();
-      this.$store.dispatch("setJustRegisteredBackToDefaultValue");
+      // this.$store.dispatch("setJustRegisteredBackToDefaultValue");
     },
     closeSideBar() {
       const sideBar = document.querySelector(".side-bar") as HTMLElement;
@@ -158,6 +158,7 @@ export default Vue.extend({
         this.justRegistered &&
         (to.name as string).toLowerCase() == "dashboard"
       ) {
+        // console.log("i am here");
         this.showModal();
       }
 
