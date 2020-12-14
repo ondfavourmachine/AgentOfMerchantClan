@@ -6,10 +6,13 @@
       <div class="avatar">{{getInitials}}</div>
     </div>
     <div class="right d-flex justify-content-center">
-      <div class="notification-bell h4 mr-3 position-relative">
+      <div
+        class="notification-bell h4 mr-3 position-relative"
+        v-if="unopened_notifications_ids.length > 0"
+      >
         <b-icon icon="bell"></b-icon>
         <h5 @click="gotoNotificationsPage" class="bell position-absolute" style>
-          <b-badge pill variant="warning">1</b-badge>
+          <b-badge pill variant="warning">{{ unopened_notifications_ids.length }}</b-badge>
         </h5>
       </div>
       <div @click="showSideBar" class="hamburger">
@@ -45,7 +48,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    ...mapState(["user"]),
+    ...mapState(["user", "unopened_notifications_ids"]),
 
     getInitials() {
       let userName: string | Array<string> = this.user.full_name;

@@ -35,19 +35,71 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from "vue";
 import Header from "~/components/Header.vue";
 import BottomNav from "~/components/BottomNav.vue";
 import { BIcon } from "bootstrap-vue";
+import { mapState } from "vuex";
 
 export default Vue.extend({
+  created() {
+    const arrToSend = [...(this.unopened_notifications_ids as Array<any>)];
+    this.sendOpenedNotificationsBackToServer(arrToSend);
+  },
   components: {
     Header,
     BottomNav,
     BIcon
   },
-  middleware: "authenticated"
+  middleware: "authenticated",
+  computed: {
+    ...mapState(["unopened_notifications_ids", "url", "token"])
+  },
+
+  methods: {
+    async sendOpenedNotificationsBackToServer(arrToSend: Array<any>) {
+      // await this.$axios.$put("avs/messages", {
+      //   unopened_notifications_ids: arrToSend
+      // });
+
+      const whatToSend = { unopened_notifications_ids: arrToSend };
+
+      await fetch(`${this.url}avs/messages`, {
+        method: "PUT",
+        body: JSON.stringify(whatToSend),
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+          "Content-Type": "application/json"
+        }
+      });
+      // try {
+      //   const response = await this.$axios.$post("avs/messages", {unopened_notifications_ids: arrToSend});
+      //   // const { user, token } = response;
+
+      //   // this.$store.dispatch("setApiCallState", false);
+
+      //   // this.$store.dispatch("setLoggedInUser", user);
+
+      //   // this.$store.dispatch("setToken", token);
+      //   // this.$router.push("/dashboard");
+      // } catch (error) {
+      //   const { message } = error.response.data;
+
+      //   if ((message as string).includes("SQLSTATE")) {
+      //     this.$nuxt.$emit(
+      //       "LoginError",
+      //       `Sorry we couldn't Log you in at this time. Please try again later!`
+      //     );
+      //     this.$store.dispatch("setApiCallState", false);
+      //     return;
+      //   }
+
+      //   this.$nuxt.$emit("LoginError", { message, variant: "danger" });
+      //   this.$store.dispatch("setApiCallState", false);
+      // }
+    }
+  }
 });
 </script>
 
