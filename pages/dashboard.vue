@@ -39,7 +39,7 @@
               <img src="../assets/css/images/filled.svg" alt />
             </p>
             <p class="third-child-text">
-              <span>{{ dashboardData.merchant_transactions || 0 }}</span>
+              <span>{{ formatNumber(dashboardData.merchant_transactions) || 0 }}</span>
               <span>transactions</span>
             </p>
           </div>
@@ -48,7 +48,7 @@
               <img src="../assets/css/images/sale_label_1.svg" alt />
             </p>
             <p class="fourth-child-text">
-              <span>{{ dashboardData.total_sales_amount || 0}}</span>
+              <span>{{ formatNumber(dashboardData.total_sales_amount) || 0}}</span>
               <span>total sales</span>
             </p>
           </div>
@@ -96,14 +96,14 @@
         </div>
       </div>
     </div>
-      <BottomNav />
+    <BottomNav />
   </div>
 </template>
 
 <script >
 import Vue from "vue";
 import Header from "~/components/Header.vue";
-import BottomNav from '~/components/BottomNav.vue';
+import BottomNav from "~/components/BottomNav.vue";
 import { mapState } from "vuex";
 import VueSlickCarousel from "vue-slick-carousel";
 import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
@@ -142,6 +142,15 @@ export default Vue.extend({
   methods: {
     routeToSettings() {
       this.$router.push("/settings");
+    },
+
+    formatNumber(num) {
+      return !isNaN(num)
+        ? new Intl.NumberFormat("en", {
+            signDisplay: "always",
+            notation: "compact"
+          }).format(num)
+        : 0;
     }
   }
 });

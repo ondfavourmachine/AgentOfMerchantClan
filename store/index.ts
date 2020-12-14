@@ -45,8 +45,19 @@ interface State {
   apiCall: boolean;
   token: string | undefined;
   url: string;
+  assigned_tasks: Array<{
+    phone: string;
+    full_name: string;
+    email: null | string;
+    gender: null | string;
+    date_of_birth: null | string;
+    address: null | string;
+    picture: null | string;
+  }>;
+  assigned_tasks_number: number;
   justRegistered: boolean;
   getDashboardStatus: "notfetched" | "fetched" | "failed";
+  unopened_notifications_ids: any[];
   dashboardData: {
     customer_count?: number;
     merchant_transactions?: number;
@@ -101,9 +112,12 @@ export const state = (): State => ({
     date_signed: "",
     passport: ""
   },
+  unopened_notifications_ids: [],
   states: [],
   NigerianBanks: [],
   currentState: "personal",
+  assigned_tasks: [],
+  assigned_tasks_number: 0,
   agentsInterest: new Set(),
   apiCall: false,
   token: "",
@@ -130,6 +144,12 @@ export const mutations: MutationTree<RootState> = {
     for (key in state.user) {
       state.user[key] = "";
     }
+  },
+
+  SET_ASSIGNED_TASKS(state: State, tasks) {
+    state.assigned_tasks = { ...state.assigned_tasks, ...tasks };
+    state.assigned_tasks_number = state.assigned_tasks.length;
+    state.unopened_notifications_ids = tasks["unopened_notifications_ids"];
   },
 
   JUST_REGISTERED_TO_DEFAULT(state: State) {
@@ -310,6 +330,24 @@ export const actions: ActionTree<RootState, RootState> = {
       commit("SET_DASHBOARD_DATA", response.data);
     } catch (error) {
       commit("SET_GETDASHBOARD_STATUS", "failed");
+    }
+  },
+
+  async getAssignedTasks({ commit, state }) {
+    try {
+      let response: Response | any = await fetch(`${state.url}avs/requests`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${state.token}`
+        }
+      });
+
+      response = await response.json();
+      // console.log(response);
+      commit("SET_ASSIGNED_TASKS", response);
+    } catch (error) {
+      // commit("SET_GETDASHBOARD_STATUS", "failed");
+      console.log(error);
     }
   }
 };

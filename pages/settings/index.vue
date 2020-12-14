@@ -72,7 +72,8 @@ export default Vue.extend({
   components: {
     Header,
     BIconArrowRight,
-    BottomNav
+    BottomNav,
+    BIcon
   },
   middleware: "authenticated",
   created() {

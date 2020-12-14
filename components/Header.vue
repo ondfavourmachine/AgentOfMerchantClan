@@ -5,7 +5,13 @@
     <div class="left">
       <div class="avatar">{{getInitials}}</div>
     </div>
-    <div class="right">
+    <div class="right d-flex justify-content-center">
+      <div class="notification-bell h4 mr-3 position-relative">
+        <b-icon icon="bell"></b-icon>
+        <h5 @click="gotoNotificationsPage" class="bell position-absolute" style>
+          <b-badge pill variant="warning">1</b-badge>
+        </h5>
+      </div>
       <div @click="showSideBar" class="hamburger">
         <div></div>
         <div></div>
@@ -18,12 +24,24 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
+
+import { BIcon } from "bootstrap-vue";
 export default Vue.extend({
+  components: {
+    BIcon
+  },
+  created() {
+    this.$store.dispatch("getAssignedTasks");
+  },
   methods: {
     showSideBar() {
       const sideBar = document.querySelector(".side-bar") as HTMLElement;
       sideBar.classList.add("show");
+    },
+
+    gotoNotificationsPage() {
+      this.$router.push("/notifications");
     }
   },
   computed: {
@@ -48,4 +66,8 @@ export default Vue.extend({
 </script>
 
 <style>
+.bell {
+  top: -13px;
+  left: 11px;
+}
 </style>

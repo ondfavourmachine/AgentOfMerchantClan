@@ -37,17 +37,26 @@
               ></b-form-input>
             </b-form-group>
 
-            <b-button
-              class="mt-3"
-              type="button"
-              variant="primary"
-              :disabled="!email || !password "
-              :class="!email || !password ? '': 'join-us'"
-              @click="submitLoginForm"
-            >
-              Sign in
-              <span class :class="!email || !password ? '': 'btn-child'"></span>
-            </b-button>
+            <div class="d-flex justify-content-between">
+              <b-button
+                class="mt-3"
+                type="button"
+                variant="primary"
+                :disabled="!email || !password "
+                :class="!email || !password ? '': 'join-us'"
+                @click="submitLoginForm"
+              >
+                Sign in
+                <span class :class="!email || !password ? '': 'btn-child'"></span>
+              </b-button>
+
+              <span class="align-self-end pb-2 reset-password">
+                <nuxt-link to="/forgotpassword">
+                  <a>reset password</a>
+                </nuxt-link>
+              </span>
+            </div>
+
             <div class="no-account">
               <span>Not an agent?</span>,
               <nuxt-link to="/">
@@ -183,7 +192,8 @@ button.join-us {
   font-size: 1.05rem;
 }
 
-.no-account a {
+.no-account a,
+.reset-password a {
   text-decoration: underline;
   letter-spacing: -1px;
   color: #6562cf;

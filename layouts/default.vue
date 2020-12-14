@@ -149,6 +149,15 @@ export default Vue.extend({
         this.message = e["message"];
       }
     );
+
+    this.$nuxt.$on(
+      "resetCodeSent",
+      (e: { message: string; variant: string }) => {
+        this.showDismissibleAlert = true;
+        this.variant = e["variant"];
+        this.message = e["message"];
+      }
+    );
   },
 
   watch: {

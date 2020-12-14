@@ -116,6 +116,8 @@ export default Vue.extend({
     BottomNav
   },
 
+ 
+
   middleware: "authenticated",
   mounted() {
     this.address = this.currentUser.address;
