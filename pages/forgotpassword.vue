@@ -125,48 +125,60 @@ export default Vue.extend({
   },
 
   methods: {
-    resetMyPassword() {},
-    submitLoginForm() {
-      //   console.log(this.email);
-      this.$nuxt.$emit("resetCodeSent", {
-        message: `Your reset code has been sent to ${this.email}`,
-        variant: "success"
-      });
+    async resetMyPassword() {
+      const formToSubmit = {
+        identity: this.email,
+        type: 1,
+        table: "agents",
+        token: this.token,
+        password: this.password
+      };
+      this.$store.dispatch("setApiCallState", true);
+      try {
+        const response = await this.$axios.$post(
+          "reset/password",
+          formToSubmit
+        );
+        const { message } = response;
+        this.$nuxt.$emit("resetCodeSent", {
+          message,
+          variant: "success"
+        });
 
-      //     try {
-      //     const response = await this.$axios.$post<{
-      //       data: Record<string, string>;
-      //       token: string;
-      //       user: boolean;
-      //     }>("agent/login", formToSubmit);
-      //     const { user, token } = response;
-
-      //     this.$store.dispatch("setApiCallState", false);
-      //     // console.log(user);
-      //     this.$store.dispatch("setLoggedInUser", user);
-      //     // console.log(this.user);
-
-      //     this.$store.dispatch("setToken", token);
-      //     this.$router.push("/dashboard");
-      //   } catch (error) {
-      //     const { message } = error.response.data;
-
-      //     if ((message as string).includes("SQLSTATE")) {
-      //       this.$nuxt.$emit(
-      //         "LoginError",
-      //         `Sorry we couldn't Log you in at this time. Please try again later!`
-      //       );
-      //       this.$store.dispatch("setApiCallState", false);
-      //       return;
-      //     }
-
-      //     this.$nuxt.$emit("LoginError", { message, variant: "danger" });
-      //     this.$store.dispatch("setApiCallState", false);
-      //   }
-      setTimeout(() => {
-        this.$nuxt.$emit("SwitchOffNotification");
+        this.$store.dispatch("setApiCallState", false);
+        setTimeout(() => {
+          this.$router.replace("/login");
+        }, 2000);
+      } catch (error) {
+        const { message } = error.response.data;
+        this.$nuxt.$emit("LoginError", { message, variant: "danger" });
+        setTimeout(() => {
+          this.$nuxt.$emit("SwitchOffNotification");
+        }, 2500);
+      }
+    },
+    async submitLoginForm() {
+      const formToSubmit = { identity: this.email, type: 1, table: "agents" };
+      this.$store.dispatch("setApiCallState", true);
+      try {
+        const response = await this.$axios.$post("reset/code", formToSubmit);
+        const { message } = response;
+        this.$nuxt.$emit("resetCodeSent", {
+          message,
+          variant: "success"
+        });
         this.formToshow = "reset";
-      }, 2500);
+        this.$store.dispatch("setApiCallState", false);
+        setTimeout(() => {
+          this.$nuxt.$emit("SwitchOffNotification");
+        }, 2500);
+      } catch (error) {
+        const { message } = error.response.data;
+        this.$nuxt.$emit("LoginError", { message, variant: "danger" });
+        setTimeout(() => {
+          this.$nuxt.$emit("SwitchOffNotification");
+        }, 2500);
+      }
     }
   }
 });
