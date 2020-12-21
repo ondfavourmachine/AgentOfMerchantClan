@@ -28,7 +28,7 @@
             ></b-form-input>
           </b-form-group>
 
-          <b-form-group label="State of origin">
+          <b-form-group label="State of Residence">
             <b-form-select id="address-state-select" v-model="state">
               <b-form-select-option value>Please select a state</b-form-select-option>
               <b-form-select-option

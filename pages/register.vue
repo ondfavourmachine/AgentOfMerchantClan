@@ -7,7 +7,9 @@
     </div>
 
     <div class="content-page">
-      <div class="welcome-section">
+      <div class="welcome-section" style="
+    overflow: scroll;
+">
         <div class="company-logo">
           <span style>
             <img src alt />
@@ -76,6 +78,34 @@
               <small v-html="emailValidationMessage" style="color: tomato; font-size: 0.7rem;"></small>
             </b-form-group>
 
+            <b-form-group label id="input-group-5" label-for="input-5">
+              <b-form-input
+                id="input-5"
+                v-model="address"
+                required
+                placeholder="eg: 21, Somolu street"
+              ></b-form-input>
+            </b-form-group>
+            <b-form-group label id="input-group-5" label-for="input-5">
+              <b-form-input
+                id="input-5"
+                v-model="nearest_bustop"
+                required
+                placeholder="Nearest Bustop eg: Fadeyi Bustop"
+              ></b-form-input>
+            </b-form-group>
+
+            <b-form-group label>
+              <b-form-select id="address-state-select" v-model="state">
+                <b-form-select-option value>Please select a state</b-form-select-option>
+                <b-form-select-option
+                  v-for="computedState in computedNigerianStates"
+                  :key="computedState.id"
+                  :value="computedState.id"
+                >{{ computedState.value }}</b-form-select-option>
+              </b-form-select>
+            </b-form-group>
+
             <!-- Password -->
 
             <b-form-group class="spinnerParent" id="input-group-10" label-for="input-10">
@@ -84,12 +114,12 @@
                 type="password"
                 v-model.lazy="password"
                 required
-                placeholder="password"
+                placeholder=" Enter a password"
               ></b-form-input>
             </b-form-group>
 
             <b-button
-              :disabled="!$data.date_of_birth || !$data.full_name || !$data.mobile || !$data.email || !$data.gender || !$data.password "
+              :disabled="!$data.address || !$data.state || !$data.nearest_bustop || !$data.date_of_birth || !$data.full_name || !$data.mobile || !$data.email || !$data.gender || !$data.password "
               class="mt-3"
               type="button"
               variant="primary"
@@ -111,7 +141,11 @@ interface RegistrationData {
   mobile: string;
   email: string;
   gender: string;
+  state: string;
+  nearest_bustop: string;
+  address: string;
   password: string;
+  nigerianStates: Array<any>;
   message: string;
   showDismissibleAlert: boolean;
   alertType: string;
@@ -122,6 +156,7 @@ interface RegistrationData {
 import Vue from "vue";
 import Spinner from "~/components/Spinner.vue";
 import { mapState } from "vuex";
+import { NigerianStates } from "~/models/states";
 export default Vue.extend({
   components: {
     Spinner
@@ -133,6 +168,10 @@ export default Vue.extend({
       mobile: "",
       email: "",
       gender: "",
+      address: "",
+      state: "",
+      nearest_bustop: "",
+      nigerianStates: [],
       password: "",
       message: "",
       showDismissibleAlert: false,
@@ -144,7 +183,11 @@ export default Vue.extend({
   },
 
   computed: {
-    ...mapState(["apiCall", "agentsInterest", "justRegistered"])
+    ...mapState(["apiCall", "agentsInterest", "justRegistered"]),
+    computedNigerianStates(): any[] {
+      this.nigerianStates = [...NigerianStates()];
+      return this.nigerianStates;
+    }
   },
 
   methods: {
@@ -155,8 +198,12 @@ export default Vue.extend({
         mobile,
         email,
         gender,
-        password
+        password,
+        state,
+        nearest_bustop,
+        address
       } = this.$data;
+
       const formToSubmit = {
         full_name,
         date_of_birth,
@@ -164,8 +211,12 @@ export default Vue.extend({
         email,
         gender,
         password,
+        state,
+        nearest_bus_stop: nearest_bustop,
+        address,
         interests: Array.from(this.agentsInterest).join(",")
       };
+      // console.log(formToSubmit);
       this.$store.dispatch("setApiCallState", true);
       try {
         const response = await this.$axios.$post<{
