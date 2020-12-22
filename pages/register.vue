@@ -83,7 +83,7 @@
                 id="input-5"
                 v-model="address"
                 required
-                placeholder="eg: 21, Somolu street"
+                placeholder="Enter your Address eg: 21, Somolu street"
               ></b-form-input>
             </b-form-group>
             <b-form-group label id="input-group-5" label-for="input-5">
