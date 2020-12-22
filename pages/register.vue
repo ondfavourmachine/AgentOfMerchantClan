@@ -97,7 +97,7 @@
 
             <b-form-group label>
               <b-form-select id="address-state-select" v-model="state">
-                <b-form-select-option value>Please select a state</b-form-select-option>
+                <b-form-select-option value>State of residence</b-form-select-option>
                 <b-form-select-option
                   v-for="computedState in computedNigerianStates"
                   :key="computedState.id"
